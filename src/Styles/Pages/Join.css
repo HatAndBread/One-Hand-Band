@@ -1,0 +1,26 @@
+caption {
+  font-size: 28px;
+  height: 40px;
+}
+
+table,
+td,
+caption {
+  border-style: solid;
+  border-width: 1px;
+  border-collapse: collapse;
+}
+
+td {
+  cursor: pointer;
+  width: 70px;
+  height: 70px;
+  text-align: center;
+  font-size: 42px;
+  transition: 0.4s;
+  user-select: none;
+}
+
+td:hover {
+  background-color: pink;
+}

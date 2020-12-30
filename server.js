@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const cors = require('cors');
+require('./db/createTables')();
 const PORT = 8080 || process.env.PORT;
 
 const server = require('http').createServer(app);
