@@ -1,0 +1,26 @@
+.keyboard-keys {
+  background-color: pink;
+  box-sizing: border-box;
+  display: flex;
+  height: 70vh;
+  touch-action: none;
+}
+
+.white-key {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+  height: 100%;
+  width: 100%;
+}
+
+.black-key {
+  position: relative;
+  background-color: black;
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+  left: 75%;
+  height: 60%;
+  width: 50%;
+}

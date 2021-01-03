@@ -8,6 +8,8 @@ import Host from './Pages/Host';
 import Join from './Pages/Join';
 import Instrument from './Pages/Instrument';
 import socket from './clientSocketHandler';
+import Nav from './Components/Nav/Nav';
+import MusicData from './MusicLogic/MusicData';
 
 export const Context = createContext();
 
@@ -22,7 +24,14 @@ function App() {
 
   useEffect(() => {
     console.log('Username has been set to ' + userName);
-  }, [userName]);
+    console.log('Socket Id was set to: ' + socketId);
+    console.log('Session pin was set to ' + sessionPin);
+  }, [userName, socketId, sessionPin]);
+  const setAll = (params) => {
+    setSessionPin(params.sessionPin);
+    setSocketId(params.socketId);
+    setUserName(params.userName);
+  };
   return (
     <Context.Provider
       value={{
@@ -31,27 +40,19 @@ function App() {
         userName,
         setSessionPin,
         setSocketId,
-        setUserName
+        setUserName,
+        setAll
       }}
     >
       <Router>
         <div className="App">
-          <nav>
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/about">About</Link>
-              </li>
-            </ul>
-          </nav>
+          <Nav sessionPin={sessionPin} sessionId={socketId} userName={userName}></Nav>
+          <Route path="/" exact component={Home}></Route>
+          <Route path="/about" component={About}></Route>
+          <Route path="/host" component={Host}></Route>
+          <Route path="/join" component={Join}></Route>
+          <Route path="/instrument" component={Instrument}></Route>
         </div>
-        <Route path="/" exact component={Home}></Route>
-        <Route path="/about" component={About}></Route>
-        <Route path="/host" component={Host}></Route>
-        <Route path="/join" component={Join}></Route>
-        <Route path="/instrument" component={Instrument}></Route>
       </Router>
     </Context.Provider>
   );

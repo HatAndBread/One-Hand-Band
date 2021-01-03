@@ -1,11 +1,18 @@
+import { useEffect } from 'react';
 import { Link, Route } from 'react-router-dom';
 import Noise from '../Components/Instruments/Noise';
 import Keyboard from '../Components/Instruments/Keyboard';
 import Skronk from '../Components/Instruments/Skronk';
 import Theremin from '../Components/Instruments/Theremin';
 import Percussion from '../Components/Instruments/Percussion';
+import playMusic from '../MusicLogic/playMusic';
+import socket from '../clientSocketHandler';
 
 export default function Instrument() {
+  useEffect(() => {
+    socket.on('update', playMusic);
+  }, []);
+
   return (
     <div>
       <div>

@@ -3,21 +3,24 @@ import { useState, useEffect, useContext } from 'react';
 import Keypad from '../Components/Join/Keypad';
 import { Context } from '../App';
 import socket from '../clientSocketHandler';
+import { Redirect, Route } from 'react-router-dom';
 
 export default function Join() {
   const context = useContext(Context);
   const [enteredPin, setEnteredPin] = useState('');
+
   useEffect(() => {
     socket.on('joinSuccess', (data) => {
-      console.log(data);
-      context.setUserName(data.userName);
-      context.setSocketId(data.socketId);
-      context.setSessionPin(data.pin);
+      context.setAll({ userName: data.userName, socketId: data.socketId, sessionPin: data.pin });
     });
     socket.on('joinFailure', () => {
       alert("That session doesn't seem to exist. Please try again! 🌈");
     });
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    return () => {
+      socket.removeAllListeners('joinSuccess');
+      socket.removeAllListeners('joinFailure');
+    };
+  }, [context]);
 
   const join = () => {
     socket.emit('joinSession', enteredPin);
@@ -44,13 +47,11 @@ export default function Join() {
       document.removeEventListener('keyup', keyUp);
     };
   });
-  useEffect(() => {
-    console.log(enteredPin);
-  }, [enteredPin]);
   return (
     <div>
       <div>This is the join page</div>
       <Keypad enteredPin={enteredPin} keyUp={keyUp} />
+      {context.sessionPin && <Redirect to="/instrument"></Redirect>}
     </div>
   );
 }

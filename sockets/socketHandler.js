@@ -20,7 +20,8 @@ io.on('connection', (socket) => {
     console.log(`This is a new session: ${session}`);
     console.log(session);
     session.create();
-    io.to(socket.id).emit('getPin', pin);
+    const newUser = session.addUser(socket.id, pin);
+    io.to(socket.id).emit('getPin', newUser);
   });
   socket.on('joinSession', (pin) => {
     Session.findByPin(pin).then(

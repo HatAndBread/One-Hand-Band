@@ -1,4 +1,3 @@
-const Session = require('./Session');
 const generateName = require('./generateName');
 const run = require('../db/run');
 
