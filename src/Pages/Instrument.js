@@ -11,14 +11,25 @@ import socket from '../clientSocketHandler';
 
 export default function Instrument() {
   const context = useContext(Context);
+  const handleSocketMusic = (musicData, user) => {
+    console.log(musicData);
+    console.log(user);
+    playMusic(musicData);
+  };
   useEffect(() => {
-    socket.on('update', playMusic);
+    socket.on('musicData', handleSocketMusic);
+    return () => {
+      socket.removeAllListeners('musicData', handleSocketMusic);
+    };
   }, []);
 
   useEffect(() => {
-    console.log('music data changed');
-    playMusic(context.musicData);
-  }, [context.musicData]);
+    if (context.sessionPin) {
+      socket.emit('musicData', context.musicData, context.sessionPin, context.userName);
+    } else {
+      playMusic(context.musicData);
+    }
+  }, [context.musicData, context.sessionPin]);
 
   return (
     <div>

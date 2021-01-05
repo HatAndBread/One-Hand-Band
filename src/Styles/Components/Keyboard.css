@@ -24,3 +24,13 @@
   height: 60%;
   width: 50%;
 }
+
+.octave-setter-container {
+  display: flex;
+  width: 100vw;
+  background-color: pink;
+}
+
+.octave-setter-container button {
+  flex-grow: 1;
+}

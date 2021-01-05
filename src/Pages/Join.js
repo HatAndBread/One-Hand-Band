@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from 'react';
 import Keypad from '../Components/Join/Keypad';
 import { Context } from '../App';
 import socket from '../clientSocketHandler';
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 export default function Join() {
   const context = useContext(Context);

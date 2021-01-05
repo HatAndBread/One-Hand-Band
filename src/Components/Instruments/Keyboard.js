@@ -1,8 +1,11 @@
 import { useState, useEffect, createContext, useContext } from 'react';
 import { Context } from '../../App';
+import { Link, Route } from 'react-router-dom';
 import '../../Styles/Components/Keyboard.css';
 import KeyboardKeys from './Keyboard/KeyboardKeys';
 import MusicData from '../../MusicLogic/MusicData';
+import OctaveSetter from './Keyboard/OctaveSetter';
+import KeyboardSettings from './Keyboard/KeyboardSettings';
 
 export const KeyboardContext = createContext();
 
@@ -12,6 +15,7 @@ export default function Keyboard() {
   const [touches, setTouches] = useState({ x: null, y: null });
   const [pointerDown, setPointerDown] = useState(false);
   const [currentNote, setCurrentNote] = useState({ note: null, octave: 1 });
+  const [mainOctave, setMainOctave] = useState(2);
 
   useEffect(() => {
     const handleTouchMove = (e) => setTouches({ x: e.touches[0].clientX, y: e.touches[0].clientY });
@@ -19,8 +23,10 @@ export default function Keyboard() {
     const updateWindowSize = () => setWindowSize({ width: window.innerWidth, height: window.innerHeight });
     const handlePointerMove = (e) => setTouches({ x: e.x, y: e.y });
     const handlePointerDown = (e) => {
-      setPointerDown(true);
-      e.touches && handleTouchMove(e);
+      if (e.target.className === 'white-key' || e.target.className === 'black-key') {
+        setPointerDown(true);
+        e.touches && handleTouchMove(e);
+      }
     };
     window.addEventListener('resize', updateWindowSize);
     window.addEventListener('touchmove', handleTouchMove);
@@ -43,15 +49,17 @@ export default function Keyboard() {
 
   useEffect(() => {
     if (pointerDown) {
-      setMusicData(new MusicData({ instrument: 'keyboard', data: currentNote }));
+      setMusicData({ instrument: 'keyboard', data: currentNote, type: 'play' });
     } else {
-      setMusicData(new MusicData({ instrument: 'keyboard', data: 'stop' }));
+      setMusicData({ instrument: 'keyboard', data: 'stop', type: 'stop' });
     }
   }, [setMusicData, currentNote, pointerDown]);
 
   return (
-    <KeyboardContext.Provider value={{ pointerDown, setTouches, touches, setCurrentNote, currentNote }}>
-      <div>This is the keyboard</div>
+    <KeyboardContext.Provider value={{ pointerDown, setTouches, touches, setCurrentNote, currentNote, mainOctave }}>
+      <Link to="/instrument/keyboard/settings">Keyboard settings</Link>
+      <Route path="/instrument/keyboard/settings" component={KeyboardSettings}></Route>
+      <OctaveSetter octave={mainOctave} setOctave={setMainOctave}></OctaveSetter>
       <div style={{ display: 'flex' }}>
         <KeyboardKeys
           windowWidth={windowSize.width}

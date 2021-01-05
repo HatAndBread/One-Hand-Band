@@ -5,7 +5,7 @@ import { KeyboardContext } from '../Keyboard';
 export default function KeyboardKey(props) {
   const c = useContext(KeyboardContext);
   const white = useRef(null);
-  const black = useRef(null);
+  const black = useRef();
   const preventer = (e) => {
     e.preventDefault();
   };
@@ -23,7 +23,8 @@ export default function KeyboardKey(props) {
         )
       ) {
         if (props.blackKey !== c.currentNote.note) {
-          c.setCurrentNote({ note: props.blackKey, octave: props.octave });
+          console.info(props.blackKey, c.currentNote.note);
+          c.setCurrentNote({ note: props.blackKey.toUpperCase(), octave: props.octave + c.mainOctave });
         }
       } else if (
         checkOverlap(
@@ -32,13 +33,14 @@ export default function KeyboardKey(props) {
           white.current.offsetTop,
           white.current.offsetLeft,
           c.touches.x,
-          c.touches.y
+          c.touches.y,
+          props.precededByBlack
         )
       ) {
-        if (props.octave !== c.currentNote.octave) {
-          c.setCurrentNote({ note: props.note, octave: props.octave });
+        if (props.octave + c.mainOctave !== c.currentNote.octave) {
+          c.setCurrentNote({ note: props.note.toUpperCase(), octave: props.octave + c.mainOctave });
         } else if (props.note !== c.currentNote.note) {
-          c.setCurrentNote({ note: props.note, octave: props.octave });
+          c.setCurrentNote({ note: props.note.toUpperCase(), octave: props.octave + c.mainOctave });
         }
       }
     }
@@ -52,8 +54,13 @@ export default function KeyboardKey(props) {
   );
 }
 
-const checkOverlap = (height, width, top, left, x, y) => {
+const checkOverlap = (height, width, top, left, x, y, preceded) => {
   if (x > left && x < left + width && y > top && y < top + height) {
+    if (preceded) {
+      if (x <= left + 1 + width / 4 && y < 2 + top + height * 0.6) {
+        return false;
+      }
+    }
     return true;
   }
   return false;

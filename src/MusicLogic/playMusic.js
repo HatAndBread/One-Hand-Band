@@ -13,19 +13,19 @@ const percussion = 'percussion';
 function handler(data) {
   switch (data.instrument) {
     case keyboard:
-      handleKeyboard(data.data);
+      handleKeyboard(data);
       break;
     case noise:
-      handleNoise(data.data);
+      handleNoise(data);
       break;
     case skronk:
-      handleSkronk(data.data);
+      handleSkronk(data);
       break;
     case theremin:
-      handleTheremin(data.data);
+      handleTheremin(data);
       break;
     case percussion:
-      handlePercussion(data.data);
+      handlePercussion(data);
       break;
     default:
       console.error(`No such instrument: ${data.instrument}`);
