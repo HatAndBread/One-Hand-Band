@@ -1,33 +1,26 @@
-import { useState, useEffect, createContext } from 'react';
+import { useState, useEffect, createContext, useContext } from 'react';
+import { Context } from '../../App';
 import '../../Styles/Components/Keyboard.css';
 import KeyboardKeys from './Keyboard/KeyboardKeys';
+import MusicData from '../../MusicLogic/MusicData';
 
 export const KeyboardContext = createContext();
 
 export default function Keyboard() {
+  const setMusicData = useContext(Context).setMusicData;
   const [windowSize, setWindowSize] = useState({ width: window.innerWidth, height: window.innerHeight });
   const [touches, setTouches] = useState({ x: null, y: null });
   const [pointerDown, setPointerDown] = useState(false);
   const [currentNote, setCurrentNote] = useState({ note: null, octave: 1 });
 
   useEffect(() => {
-    const handleTouchMove = (e) => {
-      setTouches({ x: e.touches[0].clientX, y: e.touches[0].clientY });
-    };
-    const handlePointerUp = (e) => {
-      setPointerDown(false);
-    };
-    const updateWindowSize = () => {
-      setWindowSize({ width: window.innerWidth, height: window.innerHeight });
-    };
-    const handlePointerMove = (e) => {
-      setTouches({ x: e.x, y: e.y });
-    };
+    const handleTouchMove = (e) => setTouches({ x: e.touches[0].clientX, y: e.touches[0].clientY });
+    const handlePointerUp = (e) => setPointerDown(false);
+    const updateWindowSize = () => setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+    const handlePointerMove = (e) => setTouches({ x: e.x, y: e.y });
     const handlePointerDown = (e) => {
       setPointerDown(true);
-      if (e.touches) {
-        handleTouchMove(e);
-      }
+      e.touches && handleTouchMove(e);
     };
     window.addEventListener('resize', updateWindowSize);
     window.addEventListener('touchmove', handleTouchMove);
@@ -49,15 +42,12 @@ export default function Keyboard() {
   }, []);
 
   useEffect(() => {
-    console.log(currentNote);
-  }, [currentNote]);
-  useEffect(() => {
     if (pointerDown) {
-      console.log('PLAY');
+      setMusicData(new MusicData({ instrument: 'keyboard', data: currentNote }));
     } else {
-      console.log('StOP Playing');
+      setMusicData(new MusicData({ instrument: 'keyboard', data: 'stop' }));
     }
-  }, [pointerDown]);
+  }, [setMusicData, currentNote, pointerDown]);
 
   return (
     <KeyboardContext.Provider value={{ pointerDown, setTouches, touches, setCurrentNote, currentNote }}>

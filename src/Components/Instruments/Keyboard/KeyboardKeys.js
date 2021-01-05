@@ -20,7 +20,7 @@ export default function KeyboardKeys({ windowWidth, windowHeight, lastOctave, oc
       <KeyboardKey note={'a'} blackKey={'a#'} octave={octave}></KeyboardKey>
       <KeyboardKey note={'b'} octave={octave}></KeyboardKey>
 
-      {lastOctave && <KeyboardKey note={'c'} octave={octave}></KeyboardKey>}
+      {lastOctave && <KeyboardKey note={'c'} octave={octave === 1 ? 2 : 3}></KeyboardKey>}
     </div>
   );
 }

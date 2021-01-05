@@ -9,7 +9,6 @@ import Join from './Pages/Join';
 import Instrument from './Pages/Instrument';
 import socket from './clientSocketHandler';
 import Nav from './Components/Nav/Nav';
-import MusicData from './MusicLogic/MusicData';
 
 export const Context = createContext();
 
@@ -21,6 +20,7 @@ function App() {
   const [sessionPin, setSessionPin] = useState(null);
   const [socketId, setSocketId] = useState(null);
   const [userName, setUserName] = useState(null);
+  const [musicData, setMusicData] = useState(null);
 
   useEffect(() => {
     console.log('Username has been set to ' + userName);
@@ -41,7 +41,9 @@ function App() {
         setSessionPin,
         setSocketId,
         setUserName,
-        setAll
+        setAll,
+        musicData,
+        setMusicData
       }}
     >
       <Router>

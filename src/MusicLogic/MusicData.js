@@ -1,19 +1,8 @@
-const MusicData = {
-  keyboard: {
-    on: false
-  },
-  noise: {
-    on: false
-  },
-  theremin: {
-    on: false
-  },
-  skronk: {
-    on: false
-  },
-  percussion: {
-    on: false
+class MusicData {
+  constructor(params) {
+    this.instrument = params.instrument;
+    this.data = params.data;
   }
-};
+}
 
 export default MusicData;

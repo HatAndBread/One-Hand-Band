@@ -35,7 +35,9 @@ export default function KeyboardKey(props) {
           c.touches.y
         )
       ) {
-        if (props.note !== c.currentNote.note) {
+        if (props.octave !== c.currentNote.octave) {
+          c.setCurrentNote({ note: props.note, octave: props.octave });
+        } else if (props.note !== c.currentNote.note) {
           c.setCurrentNote({ note: props.note, octave: props.octave });
         }
       }

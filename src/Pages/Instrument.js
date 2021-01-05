@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import { Link, Route } from 'react-router-dom';
+import { Context } from '../App';
 import Noise from '../Components/Instruments/Noise';
 import Keyboard from '../Components/Instruments/Keyboard';
 import Skronk from '../Components/Instruments/Skronk';
@@ -9,9 +10,15 @@ import playMusic from '../MusicLogic/playMusic';
 import socket from '../clientSocketHandler';
 
 export default function Instrument() {
+  const context = useContext(Context);
   useEffect(() => {
     socket.on('update', playMusic);
   }, []);
+
+  useEffect(() => {
+    console.log('music data changed');
+    playMusic(context.musicData);
+  }, [context.musicData]);
 
   return (
     <div>
