@@ -6,10 +6,12 @@ export default function Host() {
   const context = useContext(Context);
   const [pinText, setPinText] = useState('');
   useEffect(() => {
-    socket.on('getPin', (data) => {
+    socket.on('getPin', (data, session) => {
       console.log(data);
       setPinText(data.pin);
       context.setAll({ userName: data.userName, socketId: data.socketId, sessionPin: data.pin });
+      context.setHost(true);
+      context.setUsers(session);
     });
 
     return () => {

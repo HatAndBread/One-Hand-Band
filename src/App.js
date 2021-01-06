@@ -1,5 +1,5 @@
 import './App.css';
-import { Route, BrowserRouter as Router, Link } from 'react-router-dom';
+import { Route, BrowserRouter as Router } from 'react-router-dom';
 import { createContext } from 'react';
 import { useEffect, useState } from 'react';
 import Home from './Pages/Home';
@@ -9,18 +9,18 @@ import Join from './Pages/Join';
 import Instrument from './Pages/Instrument';
 import socket from './clientSocketHandler';
 import Nav from './Components/Nav/Nav';
+import playMusic from './MusicLogic/playMusic';
 
 export const Context = createContext();
-
-socket.on('hello', (data) => {
-  console.log(`The socket says ${data}`);
-});
 
 function App() {
   const [sessionPin, setSessionPin] = useState(null);
   const [socketId, setSocketId] = useState(null);
   const [userName, setUserName] = useState(null);
   const [musicData, setMusicData] = useState(null);
+  const [myInstrument, setMyInstrument] = useState(undefined);
+  const [users, setUsers] = useState([]);
+  const [host, setHost] = useState(false);
 
   useEffect(() => {
     console.log('Username has been set to ' + userName);
@@ -32,6 +32,42 @@ function App() {
     setSocketId(params.socketId);
     setUserName(params.userName);
   };
+  useEffect(() => {
+    const handleNewMember = (session) => {
+      setUsers(session);
+    };
+    const handleInstrumentChange = (session) => {
+      setUsers(session);
+    };
+    socket.on('newMember', handleNewMember);
+    socket.on('instrumentChange', handleInstrumentChange);
+    console.info(users);
+    return () => {
+      socket.removeAllListeners('newMember', handleNewMember);
+      socket.removeAllListeners('instrumentChange', handleInstrumentChange);
+    };
+  }, [users]);
+
+  useEffect(() => {
+    console.log('instrument changed to ' + myInstrument);
+    if (sessionPin) {
+      socket.emit('instrumentChange', myInstrument, sessionPin, userName);
+    }
+  }, [myInstrument, sessionPin, userName]);
+
+  useEffect(() => {
+    if (!sessionPin) {
+      const handleResponse = (id) => {
+        setSocketId(id);
+        playMusic({ data: 'userUpdate', users: [{ socketId: id, instrument: myInstrument }] });
+      };
+      socket.emit('getSocketId');
+      socket.on('getSocketId', handleResponse);
+      return () => {
+        socket.removeAllListeners('getSocketId', handleResponse);
+      };
+    }
+  }, [myInstrument, sessionPin]);
   return (
     <Context.Provider
       value={{
@@ -43,7 +79,13 @@ function App() {
         setUserName,
         setAll,
         musicData,
-        setMusicData
+        setMusicData,
+        myInstrument,
+        setMyInstrument,
+        users,
+        setUsers,
+        host,
+        setHost
       }}
     >
       <Router>

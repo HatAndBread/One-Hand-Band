@@ -3,7 +3,6 @@ import { Context } from '../../App';
 import { Link, Route } from 'react-router-dom';
 import '../../Styles/Components/Keyboard.css';
 import KeyboardKeys from './Keyboard/KeyboardKeys';
-import MusicData from '../../MusicLogic/MusicData';
 import OctaveSetter from './Keyboard/OctaveSetter';
 import KeyboardSettings from './Keyboard/KeyboardSettings';
 
@@ -11,12 +10,19 @@ export const KeyboardContext = createContext();
 
 export default function Keyboard() {
   const setMusicData = useContext(Context).setMusicData;
+  const setMyInstrument = useContext(Context).setMyInstrument;
+  const socketId = useContext(Context).socketId;
   const [windowSize, setWindowSize] = useState({ width: window.innerWidth, height: window.innerHeight });
   const [touches, setTouches] = useState({ x: null, y: null });
   const [pointerDown, setPointerDown] = useState(false);
   const [currentNote, setCurrentNote] = useState({ note: null, octave: 1 });
   const [mainOctave, setMainOctave] = useState(2);
-
+  useEffect(() => {
+    setMyInstrument('keyboard');
+    return () => {
+      setMyInstrument(null);
+    };
+  }, [setMyInstrument]);
   useEffect(() => {
     const handleTouchMove = (e) => setTouches({ x: e.touches[0].clientX, y: e.touches[0].clientY });
     const handlePointerUp = (e) => setPointerDown(false);
@@ -49,11 +55,11 @@ export default function Keyboard() {
 
   useEffect(() => {
     if (pointerDown) {
-      setMusicData({ instrument: 'keyboard', data: currentNote, type: 'play' });
+      setMusicData({ instrument: 'keyboard', data: currentNote, type: 'play', socketId: socketId });
     } else {
-      setMusicData({ instrument: 'keyboard', data: 'stop', type: 'stop' });
+      setMusicData({ instrument: 'keyboard', data: 'stop', type: 'stop', socketId: socketId });
     }
-  }, [setMusicData, currentNote, pointerDown]);
+  }, [setMusicData, currentNote, pointerDown, socketId]);
 
   return (
     <KeyboardContext.Provider value={{ pointerDown, setTouches, touches, setCurrentNote, currentNote, mainOctave }}>

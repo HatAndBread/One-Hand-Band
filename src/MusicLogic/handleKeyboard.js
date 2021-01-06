@@ -1,12 +1,12 @@
 import * as Tone from 'tone';
+import { getMyInstrument } from './instrumentBank';
 
 const synth = new Tone.Synth().toDestination();
 
 export default function handleKeyboard(data) {
-  console.log(data);
   switch (data.type) {
     case 'play':
-      playNote(data.data);
+      playNote(data);
       break;
     case 'stop':
       stopNote(data);
@@ -17,13 +17,17 @@ export default function handleKeyboard(data) {
 }
 
 const playNote = (data) => {
-  const note = data.note + data.octave;
-  console.log(note);
-  console.log('PLAYING NOTE');
-  synth.triggerAttack(note, Tone.now());
+  const note = data.data.note + data.data.octave;
+  const instrument = getMyInstrument(data.socketId);
+  if (instrument) {
+    instrument.triggerAttack(note, Tone.now());
+  }
 };
 
 const stopNote = (data) => {
   console.log('stopping note!');
-  synth.triggerRelease(Tone.now());
+  const instrument = getMyInstrument(data.socketId);
+  if (instrument) {
+    instrument.triggerRelease(Tone.now());
+  }
 };

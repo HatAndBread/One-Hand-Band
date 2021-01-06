@@ -18,6 +18,7 @@ function createTables() {
         socketId TEXT NOT NULL, date TEXT NOT NULL,
         pin TEXT NOT NULL,
         userName TEXT NOT NULL,
+        instrument TEXT,
         FOREIGN KEY (pin) REFERENCES sessions (pin)
         )
     `);

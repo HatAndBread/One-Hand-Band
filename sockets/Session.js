@@ -1,6 +1,7 @@
 const run = require('../db/run');
 const get = require('../db/get');
 const all = require('../db/all');
+const generateName = require('./generateName');
 const User = require('./User');
 
 const getUsers = (pin, firstRow) => {
@@ -14,7 +15,7 @@ const getUsers = (pin, firstRow) => {
       } else {
         const params = { pin: firstRow.pin, host: firstRow.hostId, users: [] };
         secondRow.forEach((user) => {
-          params.users.push({ sockedId: user.socketId, userName: user.userName });
+          params.users.push({ socketId: user.socketId, userName: user.userName, instrument: user.instrument });
         });
         resolve(new Session(params));
       }
@@ -32,23 +33,21 @@ class Session {
     this.host = params.host;
     this.users = params.users;
   }
-  create() {
-    run([
-      {
-        query: /*sql*/ `
+  async create() {
+    return await run({
+      query: /*sql*/ `
       INSERT INTO sessions (pin, hostId, date)
       VALUES(?, ?, ?)`,
-        parameters: [this.pin, this.host, Date.now()]
-      }
-    ]);
+      parameters: [this.pin, this.host, Date.now()]
+    });
   }
   destroy() {
     console.log(`I'm destroying myself`);
   }
 
-  addUser(socketId, pin) {
-    const newUser = new User({ socketId: socketId, pin: pin });
-    newUser.create();
+  async addUser(socketId, pin) {
+    const newUser = new User({ socketId: socketId, pin: pin, userName: generateName(), instrument: null });
+    await newUser.create();
     this.users.push(newUser);
     return newUser;
   }

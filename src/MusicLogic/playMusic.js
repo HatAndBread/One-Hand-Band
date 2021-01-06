@@ -3,6 +3,7 @@ import handleNoise from './handleNoise';
 import handleSkronk from './handleSkronk';
 import handlePercussion from './handlePercussion';
 import handleTheremin from './handleTheremin';
+import handleUserUpdate from './handleUserUpdate';
 
 const skronk = 'skronk';
 const noise = 'noise';
@@ -35,5 +36,7 @@ function handler(data) {
 export default function playMusic(data) {
   if (data && data.instrument) {
     handler(data);
+  } else if (data && data.users) {
+    handleUserUpdate(data.users);
   }
 }

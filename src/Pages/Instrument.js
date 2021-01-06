@@ -7,6 +7,7 @@ import Skronk from '../Components/Instruments/Skronk';
 import Theremin from '../Components/Instruments/Theremin';
 import Percussion from '../Components/Instruments/Percussion';
 import playMusic from '../MusicLogic/playMusic';
+import Drone from '../Components/Instruments/Drone';
 import socket from '../clientSocketHandler';
 
 export default function Instrument() {
@@ -25,22 +26,34 @@ export default function Instrument() {
 
   useEffect(() => {
     if (context.sessionPin) {
-      socket.emit('musicData', context.musicData, context.sessionPin, context.userName);
+      if (context.musicData) {
+        socket.emit('musicData', context.musicData, context.sessionPin, context.userName);
+        context.setMusicData(null);
+      }
     } else {
-      playMusic(context.musicData);
+      if (context.musicData) {
+        playMusic(context.musicData);
+        context.setMusicData(null);
+      }
     }
-  }, [context.musicData, context.sessionPin]);
+  }, [context]);
+
+  useEffect(() => {
+    playMusic({ data: 'userUpdate', users: context.users.users });
+  }, [context.users]);
 
   return (
     <div>
       <div>
         <div>Select your instrument</div>
         <Link to="/instrument/noise">Noise</Link>
+        <Link to="/instrument/drone">Drone</Link>
         <Link to="/instrument/skronk">Skronk</Link>
         <Link to="/instrument/theremin">Theremin</Link>
         <Link to="/instrument/percussion">Percussion</Link>
         <Link to="/instrument/keyboard">Keyboard</Link>
         <Route path="/instrument/noise" component={Noise}></Route>
+        <Route path="/instrument/drone" component={Drone}></Route>
         <Route path="/instrument/percussion" component={Percussion}></Route>
         <Route path="/instrument/keyboard" component={Keyboard}></Route>
         <Route path="/instrument/skronk" component={Skronk}></Route>

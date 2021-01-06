@@ -5,7 +5,7 @@ export default function OctaveSetter({ octave, setOctave }) {
   const [colors, setColors] = useState([
     { backgroundColor: 'white' },
     { backgroundColor: 'white' },
-    { backgroundColor: 'white' },
+    { backgroundColor: 'red' },
     { backgroundColor: 'white' },
     { backgroundColor: 'white' }
   ]);
