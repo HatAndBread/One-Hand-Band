@@ -1,10 +1,11 @@
 import { useState, useEffect, createContext, useContext } from 'react';
 import { Context } from '../../App';
-import { Link, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import '../../Styles/Components/Keyboard.css';
 import KeyboardKeys from './Keyboard/KeyboardKeys';
 import OctaveSetter from './Keyboard/OctaveSetter';
 import KeyboardSettings from './Keyboard/KeyboardSettings';
+import SettingsLink from './SettingsLink';
 
 export const KeyboardContext = createContext();
 
@@ -63,7 +64,7 @@ export default function Keyboard() {
 
   return (
     <KeyboardContext.Provider value={{ pointerDown, setTouches, touches, setCurrentNote, currentNote, mainOctave }}>
-      <Link to="/instrument/keyboard/settings">Keyboard settings</Link>
+      <SettingsLink forInstrument="keyboard" />
       <Route path="/instrument/keyboard/settings" component={KeyboardSettings}></Route>
       <OctaveSetter octave={mainOctave} setOctave={setMainOctave}></OctaveSetter>
       <div style={{ display: 'flex' }}>
