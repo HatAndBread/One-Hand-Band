@@ -33,3 +33,11 @@
 .chord-container button {
   flex-grow: 1;
 }
+
+.octave-button-container {
+  display: flex;
+}
+
+.octave-button-container button {
+  flex-grow: 1;
+}

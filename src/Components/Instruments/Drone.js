@@ -18,6 +18,7 @@ export default function Drone() {
     three: { wave: 'sine', volume: '0.5', pitch: 'C3', playing: false }
   });
   const [showChords, setShowChords] = useState(false);
+  const [chordChange, setChordChange] = useState(false);
   const preventer = (e) => {
     e.preventDefault();
   };
@@ -39,16 +40,41 @@ export default function Drone() {
       <SettingsLink forInstrument="drone" />
       <Route path="/instrument/drone/settings" component={Settings} />
       <button onClick={chordsClick}>Chords</button>
-      {showChords && <Chords droneData={droneData} setDroneData={setDroneData} />}
+      {showChords && (
+        <Chords
+          droneData={droneData}
+          setDroneData={setDroneData}
+          chordChange={chordChange}
+          setChordChange={setChordChange}
+        />
+      )}
 
       <div className="single-drone-container">
-        <DroneFader min="1" max="60" defaultValue="24" number="one" droneData={droneData} setDroneData={setDroneData} />
+        <DroneFader
+          min="1"
+          max="60"
+          defaultValue="24"
+          number="one"
+          droneData={droneData}
+          setDroneData={setDroneData}
+          chordChange={chordChange}
+          setChordChange={setChordChange}
+        />
         <VolumeFader number="one" droneData={droneData} setDroneData={setDroneData} />
         <StartButton number="one" droneData={droneData} setDroneData={setDroneData} />
         <WaveChooser name="drone1" number="one" droneData={droneData} setDroneData={setDroneData} />
       </div>
       <div className="single-drone-container">
-        <DroneFader min="1" max="60" defaultValue="24" number="two" droneData={droneData} setDroneData={setDroneData} />
+        <DroneFader
+          min="1"
+          max="60"
+          defaultValue="24"
+          number="two"
+          droneData={droneData}
+          setDroneData={setDroneData}
+          chordChange={chordChange}
+          setChordChange={setChordChange}
+        />
         <VolumeFader number="two" droneData={droneData} setDroneData={setDroneData} />
         <StartButton number="two" droneData={droneData} setDroneData={setDroneData} />
         <WaveChooser name="drone2" number="two" droneData={droneData} setDroneData={setDroneData} />
@@ -61,6 +87,8 @@ export default function Drone() {
           number="three"
           droneData={droneData}
           setDroneData={setDroneData}
+          chordChange={chordChange}
+          setChordChange={setChordChange}
         />
         <VolumeFader number="three" droneData={droneData} setDroneData={setDroneData} />
         <StartButton number="three" droneData={droneData} setDroneData={setDroneData} />
