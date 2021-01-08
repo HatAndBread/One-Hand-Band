@@ -2,13 +2,9 @@ import { useEffect, useContext } from 'react';
 import { Link, Route } from 'react-router-dom';
 import { Context } from '../App';
 import Noise from '../Components/Instruments/Noise';
-import Keyboard from '../Components/Instruments/Keyboard';
-import Skronk from '../Components/Instruments/Skronk';
-import Theremin from '../Components/Instruments/Theremin';
-import Percussion from '../Components/Instruments/Percussion';
 import playMusic from '../MusicLogic/playMusic';
-import Drone from '../Components/Instruments/Drone';
 import socket from '../clientSocketHandler';
+import InstrumentTemplate from '../Components/Instruments/InstrumentTemplate';
 
 export default function Instrument() {
   const context = useContext(Context);
@@ -52,12 +48,24 @@ export default function Instrument() {
         <Link to="/instrument/theremin">Theremin</Link>
         <Link to="/instrument/percussion">Percussion</Link>
         <Link to="/instrument/keyboard">Keyboard</Link>
-        <Route path="/instrument/noise" component={Noise}></Route>
-        <Route path="/instrument/drone" component={Drone}></Route>
-        <Route path="/instrument/percussion" component={Percussion}></Route>
-        <Route path="/instrument/keyboard" component={Keyboard}></Route>
-        <Route path="/instrument/skronk" component={Skronk}></Route>
-        <Route path="/instrument/theremin" component={Theremin}></Route>
+        <Route path="/instrument/noise" component={Noise}>
+          <InstrumentTemplate instrument={'noise'} />
+        </Route>
+        <Route path="/instrument/drone">
+          <InstrumentTemplate instrument={'drone'} />
+        </Route>
+        <Route path="/instrument/percussion">
+          <InstrumentTemplate instrument={'percussion'} />
+        </Route>
+        <Route path="/instrument/keyboard">
+          <InstrumentTemplate instrument={'keyboard'} />
+        </Route>
+        <Route path="/instrument/skronk">
+          <InstrumentTemplate instrument={'skronk'} />
+        </Route>
+        <Route path="/instrument/theremin">
+          <InstrumentTemplate instrument={'theremin'} />
+        </Route>
       </div>
     </div>
   );

@@ -44,7 +44,7 @@ export default function KeyboardKey(props) {
         }
       }
     }
-  }, [c, props.note, props.octave, props.blackKey]);
+  }, [c, props.note, props.octave, props.blackKey, props.precededByBlack]);
   return (
     <div className="white-key" data-note={props.note} ref={white} onDragStart={preventer}>
       {props.blackKey && (

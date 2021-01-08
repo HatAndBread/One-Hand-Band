@@ -3,6 +3,7 @@ import handleNoise from './handleNoise';
 import handleSkronk from './handleSkronk';
 import handlePercussion from './handlePercussion';
 import handleTheremin from './handleTheremin';
+import handleDrone from './handleDrone';
 import handleUserUpdate from './handleUserUpdate';
 
 const skronk = 'skronk';
@@ -10,6 +11,7 @@ const noise = 'noise';
 const keyboard = 'keyboard';
 const theremin = 'theremin';
 const percussion = 'percussion';
+const drone = 'drone';
 
 function handler(data) {
   switch (data.instrument) {
@@ -27,6 +29,9 @@ function handler(data) {
       break;
     case percussion:
       handlePercussion(data);
+      break;
+    case drone:
+      handleDrone(data);
       break;
     default:
       console.error(`No such instrument: ${data.instrument}`);

@@ -12,19 +12,17 @@ const getNumber = (pitch) => {
 
 export default function DroneFader({ number, droneData, setDroneData, chordChange, setChordChange }) {
   const [note, setNote] = useState('C3');
-  const [pointerDown, setPointerDown] = useState(false);
   const faderRef = useRef();
   const handleChange = (e) => {
-    if (!pointerDown) {
-      const newPitch = `${NOTES[e.target.value % 12]}${Math.floor(e.target.value / 12)}`;
-      setNote(newPitch);
-      const copy = JSON.parse(JSON.stringify(droneData));
-      copy[number].pitch = newPitch;
-      setDroneData(copy);
-    }
+    const newPitch = `${NOTES[e.target.value % 12]}${Math.floor(e.target.value / 12)}`;
+    setNote(newPitch);
+    const copy = JSON.parse(JSON.stringify(droneData));
+    copy[number].pitch = newPitch;
+    setDroneData(copy);
   };
   useEffect(() => {
     faderRef.current.value = getNumber(droneData[number].pitch);
+    setNote(droneData[number].pitch);
     setChordChange(false);
   }, [chordChange, setChordChange, number, droneData]);
 
@@ -32,12 +30,6 @@ export default function DroneFader({ number, droneData, setDroneData, chordChang
     <div className="pitch-fader">
       <label htmlFor="range-fader">Pitch: </label>
       <input
-        onPointerDown={() => {
-          setPointerDown(true);
-        }}
-        onPointerUp={() => {
-          setPointerDown(false);
-        }}
         ref={faderRef}
         type="range"
         name="range-fader"
@@ -46,7 +38,9 @@ export default function DroneFader({ number, droneData, setDroneData, chordChang
         max="72"
         defaultValue="36"
       />
-      <label htmlFor="range-fader">{note}</label>
+      <label className="pitch-label" htmlFor="range-fader">
+        {note}
+      </label>
     </div>
   );
 }

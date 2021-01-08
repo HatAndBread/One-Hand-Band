@@ -18,6 +18,10 @@
   width: 72%;
 }
 
+.pitch-fader .pitch-label {
+  width: 20px;
+}
+
 .wave-selector {
   width: 100vw;
   display: flex;

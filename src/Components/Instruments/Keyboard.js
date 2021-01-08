@@ -1,29 +1,18 @@
 import { useState, useEffect, createContext, useContext } from 'react';
 import { Context } from '../../App';
-import { Route } from 'react-router-dom';
 import '../../Styles/Components/Keyboard.css';
 import KeyboardKeys from './Keyboard/KeyboardKeys';
 import OctaveSetter from './Keyboard/OctaveSetter';
-import KeyboardSettings from './Keyboard/KeyboardSettings';
-import SettingsLink from './SettingsLink';
 
 export const KeyboardContext = createContext();
 
-export default function Keyboard() {
-  const setMusicData = useContext(Context).setMusicData;
-  const setMyInstrument = useContext(Context).setMyInstrument;
+export default function Keyboard({ setMusicData, effects }) {
   const socketId = useContext(Context).socketId;
   const [windowSize, setWindowSize] = useState({ width: window.innerWidth, height: window.innerHeight });
   const [touches, setTouches] = useState({ x: null, y: null });
   const [pointerDown, setPointerDown] = useState(false);
   const [currentNote, setCurrentNote] = useState({ note: null, octave: 1 });
   const [mainOctave, setMainOctave] = useState(2);
-  useEffect(() => {
-    setMyInstrument('keyboard');
-    return () => {
-      setMyInstrument(null);
-    };
-  }, [setMyInstrument]);
   useEffect(() => {
     const handleTouchMove = (e) => setTouches({ x: e.touches[0].clientX, y: e.touches[0].clientY });
     const handlePointerUp = (e) => setPointerDown(false);
@@ -61,11 +50,12 @@ export default function Keyboard() {
       setMusicData({ instrument: 'keyboard', data: 'stop', type: 'stop', socketId: socketId });
     }
   }, [setMusicData, currentNote, pointerDown, socketId]);
+  useEffect(() => {
+    console.log(effects);
+  }, [effects]);
 
   return (
     <KeyboardContext.Provider value={{ pointerDown, setTouches, touches, setCurrentNote, currentNote, mainOctave }}>
-      <SettingsLink forInstrument="keyboard" />
-      <Route path="/instrument/keyboard/settings" component={KeyboardSettings}></Route>
       <OctaveSetter octave={mainOctave} setOctave={setMainOctave}></OctaveSetter>
       <div style={{ display: 'flex' }}>
         <KeyboardKeys

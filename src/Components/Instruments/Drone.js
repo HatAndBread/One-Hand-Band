@@ -1,45 +1,39 @@
-import { useContext, useEffect, useState } from 'react';
-import { Context } from '../../App';
-import { Route } from 'react-router-dom';
-import Settings from './Drone/Settings';
+import { useEffect, useState } from 'react';
 import DroneFader from './Drone/DroneFader';
 import VolumeFader from './Drone/VolumeFader';
 import StartButton from './Drone/StartButton';
 import WaveChooser from './Drone/WaveChooser';
-import SettingsLink from './SettingsLink';
 import Chords from './Drone/Chords';
 import '../../Styles/Components/Drone.css';
 
-export default function Drone() {
-  const setMyInstrument = useContext(Context).setMyInstrument;
+export default function Drone({ setMusicData, effects }) {
   const [droneData, setDroneData] = useState({
     one: { wave: 'sine', volume: '0.5', pitch: 'C3', playing: false },
     two: { wave: 'sine', volume: '0.5', pitch: 'C3', playing: false },
-    three: { wave: 'sine', volume: '0.5', pitch: 'C3', playing: false }
+    three: { wave: 'sine', volume: '0.5', pitch: 'C3', playing: false },
+    effects: effects,
+    settings: {},
+    instrument: 'drone'
   });
   const [showChords, setShowChords] = useState(false);
   const [chordChange, setChordChange] = useState(false);
-  const preventer = (e) => {
-    e.preventDefault();
-  };
+  const [chordButtText, setChordButtText] = useState('Chords');
   useEffect(() => {
-    setMyInstrument('drone');
-    return () => {
-      setMyInstrument(null);
-    };
-  }, [setMyInstrument]);
-  useEffect(() => {
-    console.log(droneData);
+    setMusicData(droneData);
   }, [droneData]);
   const chordsClick = () => {
-    showChords ? setShowChords(false) : setShowChords(true);
+    if (showChords) {
+      setShowChords(false);
+      setChordButtText('Chords');
+    } else {
+      setShowChords(true);
+      setChordButtText('Hide Chords');
+    }
   };
 
   return (
-    <div onContextMenu={preventer}>
-      <SettingsLink forInstrument="drone" />
-      <Route path="/instrument/drone/settings" component={Settings} />
-      <button onClick={chordsClick}>Chords</button>
+    <div>
+      <button onClick={chordsClick}>{chordButtText}</button>
       {showChords && (
         <Chords
           droneData={droneData}

@@ -1,5 +1,3 @@
-import { useEffect, useRef } from 'react';
-
 export default function Keypad(props) {
   const tdClick = (e) => {
     props.keyUp(e);
