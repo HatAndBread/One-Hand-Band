@@ -2,6 +2,7 @@ import '../../../Styles/Components/Drone.css';
 import { useState, useEffect } from 'react';
 import OctaveButton from './OctaveButton';
 import ChordButton from './ChordButton';
+import useTrigger from '../../../Hooks/useTrigger';
 
 const NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
@@ -29,21 +30,19 @@ const getNotes = (chord, octave) => {
   return parseChord(obj, note, third, octave);
 };
 
-let cheat;
 export default function Chords({ droneData, setDroneData, chordChange, setChordChange }) {
   const [chord, setChord] = useState(null);
   const [previousChord, setPreviousChord] = useState(null);
   const [octave, setOctave] = useState(3);
   const [chordUpdated, setChordUpdated] = useState(false);
-  cheat = droneData;
 
-  useEffect(() => {
-    const copy = JSON.parse(JSON.stringify(cheat));
+  useTrigger(() => {
+    const copy = JSON.parse(JSON.stringify(droneData));
     copy.one.pitch = `${copy.one.pitch.slice(0, copy.one.pitch.length - 1)}${octave}`;
     copy.two.pitch = `${copy.two.pitch.slice(0, copy.two.pitch.length - 1)}${octave}`;
     copy.three.pitch = `${copy.three.pitch.slice(0, copy.three.pitch.length - 1)}${octave}`;
     setDroneData(copy);
-  }, [octave, setDroneData]);
+  }, [octave]);
 
   useEffect(() => {
     const business = () => {
