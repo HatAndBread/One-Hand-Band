@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, useCallback } from 'react';
 import { Context } from '../../App';
 import { Route } from 'react-router-dom';
 import SettingsLink from './SettingsLink';
@@ -9,11 +9,26 @@ import Drone from './Drone';
 import Noise from './Noise';
 import Percussion from './Percussion';
 import Skronk from './Skronk';
+import handleEffects from '../../MusicLogic/handleEffects';
+import handleSettings from '../../MusicLogic/handleSettings';
 
 export default function InstrumentTemplate({ instrument }) {
   const setMusicData = useContext(Context).setMusicData;
+  const [finalData, setFinalData] = useState(null);
   const setMyInstrument = useContext(Context).setMyInstrument;
+  const socketId = useContext(Context).socketId;
   const [effects, setEffects] = useState({});
+  const [settings, setSettings] = useState({});
+  const clone = useCallback(
+    (obj) => {
+      const copy = JSON.parse(JSON.stringify(obj));
+      copy.socketId = socketId;
+      copy.instrument = instrument;
+      return copy;
+    },
+    [socketId, instrument]
+  );
+
   const preventer = (e) => {
     e.preventDefault();
   };
@@ -24,20 +39,31 @@ export default function InstrumentTemplate({ instrument }) {
     };
   }, [setMyInstrument, instrument]);
   useEffect(() => {
-    console.log(effects);
-  }, [effects]);
+    handleEffects(clone(effects));
+  }, [effects, clone]);
+  useEffect(() => {
+    handleSettings(clone(settings));
+  }, [settings, clone]);
+
+  useEffect(() => {
+    if (finalData) {
+      const copy = clone(finalData);
+      setMusicData(copy);
+      setFinalData(null);
+    }
+  }, [finalData, setMusicData, clone]);
   return (
     <div onContextMenu={preventer}>
       <SettingsLink forInstrument={instrument} />
       <Route path={`/instrument/${instrument}/settings`}>
-        <Settings instrument={instrument} setEffects={setEffects} />
+        <Settings instrument={instrument} setEffects={setEffects} setSettings={setSettings} />
       </Route>
-      {instrument === 'drone' && <Drone setMusicData={setMusicData} effects={effects} />}
-      {instrument === 'theremin' && <Theremin setMusicData={setMusicData} effects={effects} />}
-      {instrument === 'keyboard' && <Keyboard setMusicData={setMusicData} effects={effects} />}
-      {instrument === 'noise' && <Noise setMusicData={setMusicData} effects={effects} />}
-      {instrument === 'percussion' && <Percussion setMusicData={setMusicData} effects={effects} />}
-      {instrument === 'skronk' && <Skronk setMusicData={setMusicData} effects={effects} />}
+      {instrument === 'drone' && <Drone setFinalData={setFinalData} />}
+      {instrument === 'theremin' && <Theremin setFinalData={setFinalData} />}
+      {instrument === 'keyboard' && <Keyboard setFinalData={setFinalData} />}
+      {instrument === 'noise' && <Noise setFinalData={setFinalData} />}
+      {instrument === 'percussion' && <Percussion setFinalData={setFinalData} />}
+      {instrument === 'skronk' && <Skronk setFinalData={setFinalData} />}
     </div>
   );
 }

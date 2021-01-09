@@ -6,21 +6,18 @@ import WaveChooser from './Drone/WaveChooser';
 import Chords from './Drone/Chords';
 import '../../Styles/Components/Drone.css';
 
-export default function Drone({ setMusicData, effects }) {
+export default function Drone({ setFinalData }) {
   const [droneData, setDroneData] = useState({
     one: { wave: 'sine', volume: '0.5', pitch: 'C3', playing: false },
     two: { wave: 'sine', volume: '0.5', pitch: 'C3', playing: false },
-    three: { wave: 'sine', volume: '0.5', pitch: 'C3', playing: false },
-    effects: effects,
-    settings: {},
-    instrument: 'drone'
+    three: { wave: 'sine', volume: '0.5', pitch: 'C3', playing: false }
   });
   const [showChords, setShowChords] = useState(false);
   const [chordChange, setChordChange] = useState(false);
   const [chordButtText, setChordButtText] = useState('Chords');
   useEffect(() => {
-    setMusicData(droneData);
-  }, [droneData]);
+    setFinalData(droneData);
+  }, [droneData, setFinalData]);
   const chordsClick = () => {
     if (showChords) {
       setShowChords(false);

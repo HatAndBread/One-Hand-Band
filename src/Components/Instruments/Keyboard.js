@@ -1,13 +1,11 @@
-import { useState, useEffect, createContext, useContext } from 'react';
-import { Context } from '../../App';
+import { useState, useEffect, createContext } from 'react';
 import '../../Styles/Components/Keyboard.css';
 import KeyboardKeys from './Keyboard/KeyboardKeys';
 import OctaveSetter from './Keyboard/OctaveSetter';
 
 export const KeyboardContext = createContext();
 
-export default function Keyboard({ setMusicData, effects }) {
-  const socketId = useContext(Context).socketId;
+export default function Keyboard({ setFinalData }) {
   const [windowSize, setWindowSize] = useState({ width: window.innerWidth, height: window.innerHeight });
   const [touches, setTouches] = useState({ x: null, y: null });
   const [pointerDown, setPointerDown] = useState(false);
@@ -45,14 +43,11 @@ export default function Keyboard({ setMusicData, effects }) {
 
   useEffect(() => {
     if (pointerDown) {
-      setMusicData({ instrument: 'keyboard', data: currentNote, type: 'play', socketId: socketId });
+      setFinalData({ data: currentNote, type: 'play' });
     } else {
-      setMusicData({ instrument: 'keyboard', data: 'stop', type: 'stop', socketId: socketId });
+      setFinalData({ data: 'stop', type: 'stop' });
     }
-  }, [setMusicData, currentNote, pointerDown, socketId]);
-  useEffect(() => {
-    console.log(effects);
-  }, [effects]);
+  }, [setFinalData, currentNote, pointerDown]);
 
   return (
     <KeyboardContext.Provider value={{ pointerDown, setTouches, touches, setCurrentNote, currentNote, mainOctave }}>

@@ -1,7 +1,6 @@
 import { useEffect, useContext } from 'react';
 import { Link, Route } from 'react-router-dom';
 import { Context } from '../App';
-import Noise from '../Components/Instruments/Noise';
 import playMusic from '../MusicLogic/playMusic';
 import socket from '../clientSocketHandler';
 import InstrumentTemplate from '../Components/Instruments/InstrumentTemplate';
@@ -48,7 +47,7 @@ export default function Instrument() {
         <Link to="/instrument/theremin">Theremin</Link>
         <Link to="/instrument/percussion">Percussion</Link>
         <Link to="/instrument/keyboard">Keyboard</Link>
-        <Route path="/instrument/noise" component={Noise}>
+        <Route path="/instrument/noise">
           <InstrumentTemplate instrument={'noise'} />
         </Route>
         <Route path="/instrument/drone">
