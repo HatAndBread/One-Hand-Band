@@ -1,5 +1,6 @@
 import * as Tone from 'tone';
 import defaultEnvelopeSettings from '../Components/Settings/DefaultEnvelopeSettings';
+import EffectsObject from '../Components/Effects/EffectsObject';
 
 class Keyboard {
   constructor() {
@@ -12,7 +13,9 @@ class Keyboard {
     this.vibrato = new Tone.Vibrato(3, 1).connect(this.pitchShifter);
     this.envelope = new Tone.AmplitudeEnvelope(defaultEnvelopeSettings).connect(this.vibrato);
     this.keyboard = new Tone.Oscillator().connect(this.envelope).start();
+    this.setEffects(EffectsObject());
   }
+
   setEffects(effects) {
     console.log('SUXCESS', effects);
     Object.keys(effects).forEach((effect) => {
