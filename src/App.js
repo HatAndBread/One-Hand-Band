@@ -10,6 +10,8 @@ import Instrument from './Pages/Instrument';
 import socket from './clientSocketHandler';
 import Nav from './Components/Nav/Nav';
 import playMusic from './MusicLogic/playMusic';
+import defaultEnvelopeSettings from './Components/Settings/DefaultEnvelopeSettings';
+import effectsObject from './Components/Effects/EffectsObject';
 
 export const Context = createContext();
 
@@ -21,6 +23,22 @@ function App() {
   const [myInstrument, setMyInstrument] = useState(undefined);
   const [users, setUsers] = useState([]);
   const [host, setHost] = useState(false);
+  const [globalInstrumentSettings, setGlobalInstrumentSettings] = useState({
+    keyboard: { envelope: defaultEnvelopeSettings, volume: 0.5 },
+    drone: { envelope: defaultEnvelopeSettings, volume: 0.5 },
+    theremin: { envelope: defaultEnvelopeSettings, volume: 0.5 },
+    noise: { volume: 0.5 },
+    skronk: { volume: 0.5 },
+    percussion: { volume: 0.5 }
+  });
+  const [globalEffectsSettings, setGlobalEffectsSettings] = useState({
+    keyboard: effectsObject(),
+    drone: effectsObject(),
+    theremin: effectsObject(),
+    noise: effectsObject(),
+    skronk: effectsObject(),
+    percussion: effectsObject()
+  });
 
   useEffect(() => {
     console.log('Username has been set to ' + userName);
@@ -33,17 +51,13 @@ function App() {
     setUserName(params.userName);
   };
   useEffect(() => {
-    const handleNewMember = (session) => {
-      setUsers(session);
-    };
     const handleInstrumentChange = (session) => {
       setUsers(session);
     };
-    socket.on('newMember', handleNewMember);
+    socket.on('newMember', handleInstrumentChange);
     socket.on('instrumentChange', handleInstrumentChange);
     console.info(users);
     return () => {
-      socket.removeAllListeners('newMember', handleNewMember);
       socket.removeAllListeners('instrumentChange', handleInstrumentChange);
     };
   }, [users]);
@@ -85,7 +99,11 @@ function App() {
         users,
         setUsers,
         host,
-        setHost
+        setHost,
+        globalInstrumentSettings,
+        setGlobalInstrumentSettings,
+        globalEffectsSettings,
+        setGlobalEffectsSettings
       }}
     >
       <Router>

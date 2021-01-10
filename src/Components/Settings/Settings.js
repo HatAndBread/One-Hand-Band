@@ -1,42 +1,31 @@
-import { useState, useEffect } from 'react';
+import { useContext } from 'react';
+import { Context } from '../../App';
 import Effects from '../Effects/Effects';
 import AttackSustainDecayRelease from './AttackSustainDecayRelease';
+import handleSettings from '../../MusicLogic/handleSettings';
 
-const settingsObj = {
-  envelope: { attack: 0, sustain: 0, decay: 0, release: 0 },
-  volume: 0
-};
-export default function Settings({ instrument, setEffects, setSettings }) {
-  const [envelope, setEnvelope] = useState(settingsObj.envelope);
-  const [basicSettings, setBasicSettings] = useState(settingsObj);
+export default function Settings({ instrument }) {
+  const setSettings = useContext(Context).setGlobalInstrumentSettings;
+  const globalInstrumentSettings = useContext(Context).globalInstrumentSettings;
+  const socketId = useContext(Context).socketId;
 
-  const handleEffectsChange = (effects) => {
-    effects.instrument = instrument;
-    setEffects(effects);
-  };
-  useEffect(() => {
-    const copy = JSON.parse(JSON.stringify(settingsObj));
-    copy.envelope = envelope;
-    setBasicSettings(copy);
-  }, [envelope]);
-  useEffect(() => {
-    setSettings(basicSettings);
-  }, [basicSettings, setSettings]);
-  const handleSettingsChange = (e) => {
-    const copy = JSON.parse(JSON.stringify(settingsObj));
-    copy[e.target.name] = e.target.value;
+  const handleChange = (e) => {
+    const copy = JSON.parse(JSON.stringify(globalInstrumentSettings));
+    copy[instrument].volume = e.target.value;
     setSettings(copy);
+    handleSettings(copy[instrument], socketId, instrument);
   };
+
   const getKnobs = () => {
     switch (instrument) {
       case 'drone':
-        return <AttackSustainDecayRelease setEnvelope={setEnvelope} envelope={envelope} />;
+        return <AttackSustainDecayRelease instrument={instrument} />;
       case 'keyboard':
-        return <AttackSustainDecayRelease setEnvelope={setEnvelope} envelope={envelope} />;
+        return <AttackSustainDecayRelease instrument={instrument} />;
       case 'noise':
         return;
       case 'theremin':
-        return <AttackSustainDecayRelease setEnvelope={setEnvelope} envelope={envelope} />;
+        return <AttackSustainDecayRelease instrument={instrument} />;
       case 'percussion':
         return;
       case 'skronk':
@@ -58,11 +47,11 @@ export default function Settings({ instrument, setEffects, setSettings }) {
           min="0"
           max="1"
           step="0.05"
-          defaultValue="0.5"
-          onChange={handleSettingsChange}
+          defaultValue={globalInstrumentSettings[instrument].volume}
+          onChange={handleChange}
         />
       </label>
-      <Effects handleEffectsChange={handleEffectsChange} />
+      <Effects instrument={instrument} />
     </div>
   );
 }

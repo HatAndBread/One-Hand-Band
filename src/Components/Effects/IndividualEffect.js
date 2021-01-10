@@ -1,27 +1,33 @@
 import { useContext, useState } from 'react';
 import { EffectsContext } from './Effects';
+import handleEffects from '../../MusicLogic/handleEffects';
 
 const onStyle = { backgroundColor: 'green', color: 'snow' };
 const offStyle = { backgroundColor: 'snow', color: 'black' };
 
-export default function IndividualEffect({ type, params }) {
+export default function IndividualEffect({ type, params, instrument }) {
   const effectsContext = useContext(EffectsContext);
-  const [buttStyle, setButtStyle] = useState(offStyle);
+  const [buttStyle, setButtStyle] = useState(effectsContext.effects[type].on ? onStyle : offStyle);
   const onOffButtClick = () => {
     const clone = effectsContext.getClone();
     if (buttStyle === offStyle) {
-      clone[type].on = true;
+      clone[instrument][type].on = true;
+      effectsContext.setEffects(clone);
+      handleEffects(clone, effectsContext.socketId, instrument);
       setButtStyle(onStyle);
     } else {
-      clone[type].on = false;
+      clone[instrument][type].on = false;
+      effectsContext.setEffects(clone);
+      handleEffects(clone, effectsContext.socketId, instrument);
       setButtStyle(offStyle);
     }
     effectsContext.setEffects(clone);
   };
   const handleChange = (e) => {
     const clone = effectsContext.getClone();
-    clone[type][e.target.dataset.type].level = e.target.value;
+    clone[instrument][type][e.target.dataset.type].level = e.target.value;
     effectsContext.setEffects(clone);
+    handleEffects(clone, effectsContext.socketId, instrument);
   };
   return (
     <div>

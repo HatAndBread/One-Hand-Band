@@ -1,13 +1,21 @@
 import * as Tone from 'tone';
 import instrumentBank from './instrumentBank';
+import SoundSet from './SoundSet';
+
+const userIsUnique = (user) => {
+  for (let i = 0; i < instrumentBank.length; i++) {
+    if (user.socketId === instrumentBank[i].socketId) {
+      return false;
+    }
+  }
+  return true;
+};
 
 export default function handleUserUpdate(users) {
-  instrumentBank.forEach((instrument) => instrument.instrument.disconnect());
-  instrumentBank.forEach((instrument) => instrument.instrument.dispose());
-  instrumentBank.splice(0, instrumentBank.length);
   users.forEach((user) => {
-    console.log(user);
-    instrumentBank.push({ user: user.socketId, instrument: new Tone.Synth().toDestination() });
+    if (userIsUnique(user)) {
+      instrumentBank.push(new SoundSet(user.socketId, '', '', ''));
+    }
   });
   console.log('INSTRUMENT BANK');
   console.log(instrumentBank);

@@ -9,16 +9,12 @@ import Drone from './Drone';
 import Noise from './Noise';
 import Percussion from './Percussion';
 import Skronk from './Skronk';
-import handleEffects from '../../MusicLogic/handleEffects';
-import handleSettings from '../../MusicLogic/handleSettings';
 
 export default function InstrumentTemplate({ instrument }) {
   const setMusicData = useContext(Context).setMusicData;
   const [finalData, setFinalData] = useState(null);
   const setMyInstrument = useContext(Context).setMyInstrument;
   const socketId = useContext(Context).socketId;
-  const [effects, setEffects] = useState({});
-  const [settings, setSettings] = useState({});
   const clone = useCallback(
     (obj) => {
       const copy = JSON.parse(JSON.stringify(obj));
@@ -38,12 +34,6 @@ export default function InstrumentTemplate({ instrument }) {
       setMyInstrument(null);
     };
   }, [setMyInstrument, instrument]);
-  useEffect(() => {
-    handleEffects(clone(effects));
-  }, [effects, clone]);
-  useEffect(() => {
-    handleSettings(clone(settings));
-  }, [settings, clone]);
 
   useEffect(() => {
     if (finalData) {
@@ -56,7 +46,7 @@ export default function InstrumentTemplate({ instrument }) {
     <div onContextMenu={preventer}>
       <SettingsLink forInstrument={instrument} />
       <Route path={`/instrument/${instrument}/settings`}>
-        <Settings instrument={instrument} setEffects={setEffects} setSettings={setSettings} />
+        <Settings instrument={instrument} />
       </Route>
       {instrument === 'drone' && <Drone setFinalData={setFinalData} />}
       {instrument === 'theremin' && <Theremin setFinalData={setFinalData} />}

@@ -1,7 +1,5 @@
 import * as Tone from 'tone';
-import { getMyInstrument } from './instrumentBank';
-
-const synth = new Tone.Synth().toDestination();
+import { getSoundSet } from './instrumentBank';
 
 export default function handleKeyboard(data) {
   switch (data.type) {
@@ -17,17 +15,18 @@ export default function handleKeyboard(data) {
 }
 
 const playNote = (data) => {
-  const note = data.data.note + data.data.octave;
-  const instrument = getMyInstrument(data.socketId);
-  if (instrument) {
-    instrument.triggerAttack(note, Tone.now());
+  const note = Tone.Frequency(data.data.note + data.data.octave).toFrequency();
+  const soundSet = getSoundSet(data.socketId);
+  if (soundSet) {
+    soundSet.keyboard.keyboard.frequency.value = note;
+    soundSet.keyboard.play();
   }
 };
 
 const stopNote = (data) => {
   console.log('stopping note!');
-  const instrument = getMyInstrument(data.socketId);
-  if (instrument) {
-    instrument.triggerRelease(Tone.now());
+  const soundSet = getSoundSet(data.socketId);
+  if (soundSet) {
+    soundSet.keyboard.stop();
   }
 };

@@ -1,24 +1,25 @@
-import { useState, useEffect, createContext } from 'react';
+import { createContext, useContext } from 'react';
+import { Context } from '../../App';
 import IndividualEffect from './IndividualEffect';
-import EffectsObject from './EffectsObject';
 
 export const EffectsContext = createContext();
 
-export default function Effects({ handleEffectsChange }) {
-  const [effects, setEffects] = useState(EffectsObject());
+export default function Effects({ instrument }) {
+  const socketId = useContext(Context).socketId;
+  const globalEffects = useContext(Context).globalEffectsSettings;
+  const effects = globalEffects[instrument];
+  const setEffects = useContext(Context).setGlobalEffectsSettings;
   const getClone = () => {
-    return JSON.parse(JSON.stringify(effects));
+    return JSON.parse(JSON.stringify(globalEffects));
   };
-  useEffect(() => {
-    handleEffectsChange(effects);
-  }, [effects, handleEffectsChange]);
+
   return (
-    <EffectsContext.Provider value={{ getClone, setEffects }}>
-      <IndividualEffect type={'distortion'} params={effects.distortion} />
-      <IndividualEffect type={'delay'} params={effects.delay} />
-      <IndividualEffect type={'pulverizer'} params={effects.pulverizer} />
-      <IndividualEffect type={'vibrato'} params={effects.vibrato} />
-      <IndividualEffect type={'pitchShifter'} params={effects.pitchShifter} />
+    <EffectsContext.Provider value={{ getClone, setEffects, effects, socketId }}>
+      <IndividualEffect type={'distortion'} params={effects.distortion} instrument={instrument} />
+      <IndividualEffect type={'delay'} params={effects.delay} instrument={instrument} />
+      <IndividualEffect type={'pulverizer'} params={effects.pulverizer} instrument={instrument} />
+      <IndividualEffect type={'vibrato'} params={effects.vibrato} instrument={instrument} />
+      <IndividualEffect type={'pitchShifter'} params={effects.pitchShifter} instrument={instrument} />
     </EffectsContext.Provider>
   );
 }

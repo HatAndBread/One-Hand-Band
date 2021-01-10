@@ -3,11 +3,11 @@ export default function EffectsObject() {
     vibrato: {
       wet: { level: 0, min: 0, max: 1, step: 0.05 },
       depth: { level: 0, min: 0, max: 1, step: 0.05 },
-      freq: { level: 0, min: 0, max: 1, step: 0.05 },
+      freq: { level: 0, min: 0, max: 20, step: 0.05 },
       on: false
     },
     pulverizer: {
-      level: { level: 0, min: 0, max: 1, step: 0.05 },
+      level: { level: 16, min: 1, max: 16, step: 1 },
       on: false
     },
     distortion: {
