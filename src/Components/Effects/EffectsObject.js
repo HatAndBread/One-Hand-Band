@@ -12,7 +12,7 @@ export default function EffectsObject() {
     },
     distortion: {
       wet: { level: 0, min: 0, max: 1, step: 0.05 },
-      level: { level: 0, min: 0, max: 1, step: 0.05 },
+      level: { level: 0.05, min: 0.1, max: 3, step: 0.05 },
       on: false
     },
     delay: {
@@ -23,7 +23,7 @@ export default function EffectsObject() {
     },
     pitchShifter: {
       wet: { level: 0, min: 0, max: 1, step: 0.05 },
-      shift: { level: 0, min: -1, max: 1, step: 0.05 },
+      shift: { level: 0, min: -36, max: 36, step: 1 },
       on: false
     }
   };
