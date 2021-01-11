@@ -3,6 +3,7 @@ import { Context } from '../../App';
 import Effects from '../Effects/Effects';
 import AttackSustainDecayRelease from './AttackSustainDecayRelease';
 import handleSettings from '../../MusicLogic/handleSettings';
+import SettingsWaves from './SettingsWaves';
 
 export default function Settings({ instrument }) {
   const setSettings = useContext(Context).setGlobalInstrumentSettings;
@@ -22,7 +23,25 @@ export default function Settings({ instrument }) {
       case 'drone':
         return <AttackSustainDecayRelease instrument={instrument} />;
       case 'keyboard':
-        return <AttackSustainDecayRelease instrument={instrument} />;
+        return (
+          <div>
+            <AttackSustainDecayRelease instrument={instrument} />
+            <label htmlFor="rampTo">
+              Ramp to note:
+              <input
+                type="range"
+                id="rampTo"
+                name="rampTo"
+                min="0"
+                max="0.5"
+                step="0.01"
+                defaultValue={globalInstrumentSettings[instrument].rampTo}
+                onChange={handleChange}
+              />
+            </label>
+            <SettingsWaves instrument={instrument} />
+          </div>
+        );
       case 'noise':
         return;
       case 'theremin':
@@ -52,21 +71,6 @@ export default function Settings({ instrument }) {
           onChange={handleChange}
         />
       </label>
-      {instrument === 'keyboard' && (
-        <label htmlFor="rampTo">
-          Ramp to note:
-          <input
-            type="range"
-            id="rampTo"
-            name="rampTo"
-            min="0"
-            max="0.5"
-            step="0.01"
-            defaultValue={globalInstrumentSettings[instrument].rampTo}
-            onChange={handleChange}
-          />
-        </label>
-      )}
       <Effects instrument={instrument} />
     </div>
   );

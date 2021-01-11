@@ -24,7 +24,7 @@ function App() {
   const [users, setUsers] = useState([]);
   const [host, setHost] = useState(false);
   const [globalInstrumentSettings, setGlobalInstrumentSettings] = useState({
-    keyboard: { envelope: defaultEnvelopeSettings, volume: 0.5, rampTo: 0 },
+    keyboard: { envelope: defaultEnvelopeSettings, volume: 0.5, rampTo: 0, wave: 'sine' },
     drone: { envelope: defaultEnvelopeSettings, volume: 0.5 },
     theremin: { envelope: defaultEnvelopeSettings, volume: 0.5 },
     noise: { volume: 0.5 },
@@ -38,6 +38,11 @@ function App() {
     noise: effectsObject(),
     skronk: effectsObject(),
     percussion: effectsObject()
+  });
+  const [droneData, setDroneData] = useState({
+    one: { wave: 'sine', volume: '-4', pitch: 'C3', playing: false },
+    two: { wave: 'sine', volume: '-4', pitch: 'C3', playing: false },
+    three: { wave: 'sine', volume: '-4', pitch: 'C3', playing: false }
   });
 
   useEffect(() => {
@@ -103,7 +108,9 @@ function App() {
         globalInstrumentSettings,
         setGlobalInstrumentSettings,
         globalEffectsSettings,
-        setGlobalEffectsSettings
+        setGlobalEffectsSettings,
+        droneData,
+        setDroneData
       }}
     >
       <Router>

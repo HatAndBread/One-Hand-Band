@@ -2,10 +2,8 @@ import Keyboard from './Keyboard';
 import Drone from './Drone';
 
 class SoundSet {
-  constructor(socketId, effects, settings) {
+  constructor(socketId) {
     this.socketId = socketId;
-    this.effects = effects;
-    this.settings = settings;
     this.keyboard = new Keyboard();
     this.drone = new Drone();
   }
@@ -48,10 +46,11 @@ class SoundSet {
           s.envelopeThree.release = settings.envelope.release;
         }
       }
-      console.log(settings.rampTo);
       this[instrument].gain.gain.value = settings.volume;
       if (instrument === 'keyboard') {
+        console.log('FROGS', settings.wave);
         this[instrument].rampTo = settings.rampTo;
+        this[instrument].oscillator.type = settings.wave;
       }
     }
   }

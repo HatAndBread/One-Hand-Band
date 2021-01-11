@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import { Context } from '../../App';
 import DroneFader from './Drone/DroneFader';
 import VolumeFader from './Drone/VolumeFader';
 import StartButton from './Drone/StartButton';
@@ -7,11 +8,9 @@ import Chords from './Drone/Chords';
 import '../../Styles/Components/Drone.css';
 
 export default function Drone({ setFinalData }) {
-  const [droneData, setDroneData] = useState({
-    one: { wave: 'sine', volume: '0.5', pitch: 'C3', playing: false },
-    two: { wave: 'sine', volume: '0.5', pitch: 'C3', playing: false },
-    three: { wave: 'sine', volume: '0.5', pitch: 'C3', playing: false }
-  });
+  const droneData = useContext(Context).droneData;
+  const setDroneData = useContext(Context).setDroneData;
+
   const [showChords, setShowChords] = useState(false);
   const [chordChange, setChordChange] = useState(false);
   const [chordButtText, setChordButtText] = useState('Chords');

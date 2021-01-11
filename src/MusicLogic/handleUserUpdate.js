@@ -14,7 +14,7 @@ const userIsUnique = (user) => {
 export default function handleUserUpdate(users) {
   users.forEach((user) => {
     if (userIsUnique(user)) {
-      instrumentBank.push(new SoundSet(user.socketId, '', '', ''));
+      instrumentBank.push(new SoundSet(user.socketId));
     }
   });
   console.log('INSTRUMENT BANK');
