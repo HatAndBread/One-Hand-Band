@@ -27,9 +27,30 @@ export default function Drone({ setFinalData }) {
     }
   };
 
+  const all = (e) => {
+    const copy = JSON.parse(JSON.stringify(droneData));
+    console.log(copy);
+    if (e.target.value === 'start') {
+      copy.one.playing = true;
+      copy.two.playing = true;
+      copy.three.playing = true;
+    } else {
+      copy.one.playing = false;
+      copy.two.playing = false;
+      copy.three.playing = false;
+    }
+    setDroneData(copy);
+  };
+
   return (
     <div>
       <button onClick={chordsClick}>{chordButtText}</button>
+      <button onClick={all} value="start">
+        Start All
+      </button>
+      <button onClick={all} value="stop">
+        Stop All
+      </button>
       {showChords && (
         <Chords
           droneData={droneData}

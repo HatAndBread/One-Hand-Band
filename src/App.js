@@ -45,6 +45,13 @@ function App() {
     three: { wave: 'sine', volume: '-4', pitch: 'C3', playing: false }
   });
 
+  const getGlobalSettings = () => {
+    return JSON.parse(JSON.stringify(globalInstrumentSettings));
+  };
+  const getGlobalEffects = () => {
+    return JSON.parse(JSON.stringify(globalEffectsSettings));
+  };
+
   useEffect(() => {
     console.log('Username has been set to ' + userName);
     console.log('Socket Id was set to: ' + socketId);
@@ -110,7 +117,9 @@ function App() {
         globalEffectsSettings,
         setGlobalEffectsSettings,
         droneData,
-        setDroneData
+        setDroneData,
+        getGlobalEffects,
+        getGlobalSettings
       }}
     >
       <Router>
