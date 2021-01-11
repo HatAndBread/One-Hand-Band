@@ -1,4 +1,5 @@
 import Keyboard from './Keyboard';
+import Drone from './Drone';
 
 class SoundSet {
   constructor(socketId, effects, settings) {
@@ -6,6 +7,7 @@ class SoundSet {
     this.effects = effects;
     this.settings = settings;
     this.keyboard = new Keyboard();
+    this.drone = new Drone();
   }
 
   setEffects(instrument, effects) {
@@ -20,14 +22,37 @@ class SoundSet {
   setSettings(instrument, settings) {
     const s = this[instrument];
     if (s) {
-      if (s.envelope && settings.envelope) {
-        s.envelope.attack = settings.envelope.attack;
-        s.envelope.decay = settings.envelope.decay;
-        s.envelope.sustain = settings.envelope.sustain;
-        s.envelope.release = settings.envelope.release;
+      if (settings.envelope) {
+        if (s.envelope) {
+          s.envelope.attack = settings.envelope.attack;
+          s.envelope.decay = settings.envelope.decay;
+          s.envelope.sustain = settings.envelope.sustain;
+          s.envelope.release = settings.envelope.release;
+        }
+        if (s.envelopeOne) {
+          s.envelopeOne.attack = settings.envelope.attack;
+          s.envelopeOne.decay = settings.envelope.decay;
+          s.envelopeOne.sustain = settings.envelope.sustain;
+          s.envelopeOne.release = settings.envelope.release;
+        }
+        if (s.envelopeTwo) {
+          s.envelopeTwo.attack = settings.envelope.attack;
+          s.envelopeTwo.decay = settings.envelope.decay;
+          s.envelopeTwo.sustain = settings.envelope.sustain;
+          s.envelopeTwo.release = settings.envelope.release;
+        }
+        if (s.envelopeThree) {
+          s.envelopeThree.attack = settings.envelope.attack;
+          s.envelopeThree.decay = settings.envelope.decay;
+          s.envelopeThree.sustain = settings.envelope.sustain;
+          s.envelopeThree.release = settings.envelope.release;
+        }
       }
-      console.log(settings.volume);
+      console.log(settings.rampTo);
       this[instrument].gain.gain.value = settings.volume;
+      if (instrument === 'keyboard') {
+        this[instrument].rampTo = settings.rampTo;
+      }
     }
   }
 }

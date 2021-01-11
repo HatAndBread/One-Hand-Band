@@ -39,7 +39,7 @@ export default function AttackSustainDecayRelease({ instrument }) {
           defaultValue={settings.envelope.sustain}
           min="0"
           max="1"
-          step="0.1"
+          step="0.01"
         />
       </label>
       <label htmlFor={'decay'}>

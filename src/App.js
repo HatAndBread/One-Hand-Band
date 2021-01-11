@@ -24,7 +24,7 @@ function App() {
   const [users, setUsers] = useState([]);
   const [host, setHost] = useState(false);
   const [globalInstrumentSettings, setGlobalInstrumentSettings] = useState({
-    keyboard: { envelope: defaultEnvelopeSettings, volume: 0.5 },
+    keyboard: { envelope: defaultEnvelopeSettings, volume: 0.5, rampTo: 0 },
     drone: { envelope: defaultEnvelopeSettings, volume: 0.5 },
     theremin: { envelope: defaultEnvelopeSettings, volume: 0.5 },
     noise: { volume: 0.5 },

@@ -2,8 +2,8 @@ export default function EffectsObject() {
   return {
     vibrato: {
       wet: { level: 0.5, min: 0, max: 1, step: 0.05 },
-      depth: { level: 0, min: 0, max: 1, step: 0.05 },
-      freq: { level: 0, min: 0, max: 20, step: 0.05 },
+      depth: { level: 0.2, min: 0, max: 1, step: 0.05 },
+      freq: { level: 0.4, min: 0, max: 20, step: 0.05 },
       on: false
     },
     pulverizer: {

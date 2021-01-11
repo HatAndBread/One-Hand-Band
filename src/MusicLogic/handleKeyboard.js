@@ -18,7 +18,7 @@ const playNote = (data) => {
   const note = Tone.Frequency(data.data.note + data.data.octave).toFrequency();
   const soundSet = getSoundSet(data.socketId);
   if (soundSet) {
-    soundSet.keyboard.keyboard.frequency.value = note;
+    soundSet.keyboard.keyboard.frequency.rampTo(note, soundSet.keyboard.rampTo);
     soundSet.keyboard.play();
   }
 };

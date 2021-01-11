@@ -49,6 +49,7 @@ export default function IndividualEffect({ type, params, instrument }) {
                   step={entry[1].step}
                   onChange={handleChange}
                 />
+                {entry[0] === 'shift' && entry[1].level}
               </label>
             );
           }
