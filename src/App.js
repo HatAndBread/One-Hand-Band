@@ -73,6 +73,7 @@ function App() {
     console.info(users);
     return () => {
       socket.removeAllListeners('instrumentChange', handleInstrumentChange);
+      socket.removeAllListeners('newMember', handleInstrumentChange);
     };
   }, [users]);
 

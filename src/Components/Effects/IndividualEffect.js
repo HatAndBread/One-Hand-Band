@@ -1,5 +1,4 @@
 import { useContext, useState } from 'react';
-import { EffectsContext } from './Effects';
 import { Context } from '../../App';
 import handleEffects from '../../MusicLogic/handleEffects';
 
@@ -8,28 +7,31 @@ const offStyle = { backgroundColor: 'snow', color: 'black' };
 
 export default function IndividualEffect({ type, params, instrument }) {
   const sessionPin = useContext(Context).sessionPin;
-  const effectsContext = useContext(EffectsContext);
-  const [buttStyle, setButtStyle] = useState(effectsContext.effects[type].on ? onStyle : offStyle);
+  const getGlobalEffects = useContext(Context).getGlobalEffects;
+  const socketId = useContext(Context).socketId;
+  const effects = useContext(Context).globalEffectsSettings[instrument];
+  const setEffects = useContext(Context).setGlobalEffectsSettings;
+  const [buttStyle, setButtStyle] = useState(effects[type].on ? onStyle : offStyle);
   const onOffButtClick = () => {
-    const clone = effectsContext.getClone();
+    const clone = getGlobalEffects();
     if (buttStyle === offStyle) {
       clone[instrument][type].on = true;
-      effectsContext.setEffects(clone);
-      handleEffects(clone, effectsContext.socketId, instrument, sessionPin);
+      setEffects(clone);
+      handleEffects(clone, socketId, instrument, sessionPin);
       setButtStyle(onStyle);
     } else {
       clone[instrument][type].on = false;
-      effectsContext.setEffects(clone);
-      handleEffects(clone, effectsContext.socketId, instrument, sessionPin);
+      setEffects(clone);
+      handleEffects(clone, socketId, instrument, sessionPin);
       setButtStyle(offStyle);
     }
-    effectsContext.setEffects(clone);
+    setEffects(clone);
   };
   const handleChange = (e) => {
-    const clone = effectsContext.getClone();
+    const clone = getGlobalEffects();
     clone[instrument][type][e.target.dataset.type].level = e.target.value;
-    effectsContext.setEffects(clone);
-    handleEffects(clone, effectsContext.socketId, instrument, sessionPin);
+    setEffects(clone);
+    handleEffects(clone, socketId, instrument, sessionPin);
   };
   return (
     <div>
