@@ -5,13 +5,14 @@ import handleSettings from '../../MusicLogic/handleSettings';
 export default function AttackSustainDecayRelease({ instrument }) {
   const settings = useContext(Context).globalInstrumentSettings[instrument];
   const setSettings = useContext(Context).setGlobalInstrumentSettings;
+  const sessionPin = useContext(Context).sessionPin;
   const globalInstrumentSettings = useContext(Context).globalInstrumentSettings;
   const socketId = useContext(Context).socketId;
   const handleChange = (e) => {
     const copy = JSON.parse(JSON.stringify(globalInstrumentSettings));
     copy[instrument].envelope[e.target.name] = e.target.value;
     setSettings(copy);
-    handleSettings(copy[instrument], socketId, instrument);
+    handleSettings(copy[instrument], socketId, instrument, sessionPin);
   };
   useEffect(() => {
     console.log(settings);

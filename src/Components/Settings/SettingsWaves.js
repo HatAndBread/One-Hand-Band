@@ -5,13 +5,14 @@ import handleSettings from '../../MusicLogic/handleSettings';
 export default function SettingsWaves({ instrument }) {
   const settings = useContext(Context).globalInstrumentSettings;
   const setSettings = useContext(Context).setGlobalInstrumentSettings;
+  const sessionPin = useContext(Context).sessionPin;
   const socketId = useContext(Context).socketId;
   const handleChange = (e) => {
     const copy = JSON.parse(JSON.stringify(settings));
     copy[instrument].wave = e.target.value;
     setSettings(copy);
     console.log(copy);
-    handleSettings(copy[instrument], socketId, instrument);
+    handleSettings(copy[instrument], socketId, instrument, sessionPin);
   };
   return (
     <div>

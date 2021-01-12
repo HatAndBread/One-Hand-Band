@@ -8,6 +8,7 @@ import SettingsWaves from './SettingsWaves';
 export default function Settings({ instrument }) {
   const setSettings = useContext(Context).setGlobalInstrumentSettings;
   const globalInstrumentSettings = useContext(Context).globalInstrumentSettings;
+  const sessionPin = useContext(Context).sessionPin;
   const socketId = useContext(Context).socketId;
 
   const handleChange = (e) => {
@@ -15,7 +16,7 @@ export default function Settings({ instrument }) {
     console.log(e.target.name);
     copy[instrument][e.target.name] = e.target.value;
     setSettings(copy);
-    handleSettings(copy[instrument], socketId, instrument);
+    handleSettings(copy[instrument], socketId, instrument, sessionPin);
   };
 
   const getKnobs = () => {

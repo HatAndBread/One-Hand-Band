@@ -6,12 +6,14 @@ import Home from './Pages/Home';
 import About from './Pages/About';
 import Host from './Pages/Host';
 import Join from './Pages/Join';
-import Instrument from './Pages/Instrument';
+import Instrument from './Pages/Instruments';
 import socket from './clientSocketHandler';
 import Nav from './Components/Nav/Nav';
 import playMusic from './MusicLogic/playMusic';
 import defaultEnvelopeSettings from './Components/Settings/DefaultEnvelopeSettings';
 import effectsObject from './Components/Effects/EffectsObject';
+import handleSettings from './MusicLogic/handleSettings';
+import handleEffects from './MusicLogic/handleEffects';
 
 export const Context = createContext();
 
@@ -94,6 +96,55 @@ function App() {
       };
     }
   }, [myInstrument, sessionPin]);
+
+  useEffect(() => {
+    playMusic({ data: 'userUpdate', users: users.users });
+  }, [users]);
+
+  useEffect(() => {
+    const handleSocketMusic = (musicData, user) => {
+      console.log(musicData);
+      console.log(user);
+      playMusic(musicData);
+    };
+    socket.on('musicData', handleSocketMusic);
+    return () => {
+      socket.removeAllListeners('musicData', handleSocketMusic);
+    };
+  });
+
+  useEffect(() => {
+    const handleSettingsChange = (settings, socketId, instrument, sessionPin) => {
+      console.log('SETTINGS received from ANOTHER user');
+      handleSettings(settings, socketId, instrument, sessionPin, true);
+    };
+    socket.on('settingsChange', handleSettingsChange);
+    return () => socket.removeAllListeners('settingsChange', handleSettingsChange);
+  });
+
+  useEffect(() => {
+    const handleEffectsChange = (effects, socketId, instrument, sessionPin) => {
+      console.log('EFFECTS received from ANOTHER user');
+      handleEffects(effects, socketId, instrument, sessionPin, true);
+    };
+    socket.on('effectsChange', handleEffectsChange);
+    return () => socket.removeAllListeners('settingsChange', handleEffectsChange);
+  });
+
+  useEffect(() => {
+    if (sessionPin) {
+      if (musicData) {
+        socket.emit('musicData', musicData, sessionPin, userName);
+        setMusicData(null);
+      }
+    } else {
+      if (musicData) {
+        playMusic(musicData);
+        setMusicData(null);
+      }
+    }
+  }, [musicData, sessionPin, userName]);
+
   return (
     <Context.Provider
       value={{

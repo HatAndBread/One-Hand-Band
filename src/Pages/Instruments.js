@@ -1,42 +1,7 @@
-import { useEffect, useContext } from 'react';
 import { Link, Route } from 'react-router-dom';
-import { Context } from '../App';
-import playMusic from '../MusicLogic/playMusic';
-import socket from '../clientSocketHandler';
 import InstrumentTemplate from '../Components/Instruments/InstrumentTemplate';
 
-export default function Instrument() {
-  const context = useContext(Context);
-  const handleSocketMusic = (musicData, user) => {
-    console.log(musicData);
-    console.log(user);
-    playMusic(musicData);
-  };
-  useEffect(() => {
-    socket.on('musicData', handleSocketMusic);
-    return () => {
-      socket.removeAllListeners('musicData', handleSocketMusic);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (context.sessionPin) {
-      if (context.musicData) {
-        socket.emit('musicData', context.musicData, context.sessionPin, context.userName);
-        context.setMusicData(null);
-      }
-    } else {
-      if (context.musicData) {
-        playMusic(context.musicData);
-        context.setMusicData(null);
-      }
-    }
-  }, [context]);
-
-  useEffect(() => {
-    playMusic({ data: 'userUpdate', users: context.users.users });
-  }, [context.users]);
-
+export default function Instruments() {
   return (
     <div>
       <div>

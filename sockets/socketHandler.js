@@ -63,4 +63,14 @@ io.on('connection', (socket) => {
       }
     );
   });
+  socket.on('settingsChange', (settings, socketId, instrument, sessionPin) => {
+    console.log('SETTINGS CHANGE!');
+    console.log(settings, socketId, instrument, sessionPin);
+    socket.to(sessionPin).emit('settingsChange', settings, socketId, instrument, sessionPin);
+  });
+  socket.on('effectsChange', (effects, socketId, instrument, sessionPin) => {
+    console.log('effects CHANGE!');
+    console.log(effects, socketId, instrument, sessionPin);
+    socket.to(sessionPin).emit('effectsChange', effects, socketId, instrument, sessionPin);
+  });
 });

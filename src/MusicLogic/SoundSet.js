@@ -48,7 +48,6 @@ class SoundSet {
       }
       this[instrument].gain.gain.value = settings.volume;
       if (instrument === 'keyboard') {
-        console.log('FROGS', settings.wave);
         this[instrument].rampTo = settings.rampTo;
         this[instrument].oscillator.type = settings.wave;
       }
