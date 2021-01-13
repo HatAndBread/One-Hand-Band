@@ -1,1 +1,3 @@
-export default function handlePercussion(data) {}
+export default function handlePercussion(data) {
+  console.log(data);
+}

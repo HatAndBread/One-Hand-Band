@@ -1,0 +1,29 @@
+.percussion-container {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+}
+
+.percussion-row {
+  display: flex;
+  width: 100vw;
+  height: 35vh;
+}
+.individual-percussion-container {
+  background-color: pink;
+  margin: 16px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.percussion-container input[type='range'] {
+  width: 100%;
+}
+
+.hit-pad {
+  height: 100%;
+  width: 100%;
+  background-color: aqua;
+}

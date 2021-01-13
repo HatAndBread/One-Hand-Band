@@ -12,6 +12,7 @@ import Nav from './Components/Nav/Nav';
 import playMusic from './MusicLogic/playMusic';
 import defaultEnvelopeSettings from './Components/Settings/DefaultEnvelopeSettings';
 import effectsObject from './Components/Effects/EffectsObject';
+import percussionObj from './Components/Instruments/Percussion/percussionObj';
 import handleSettings from './MusicLogic/handleSettings';
 import handleEffects from './MusicLogic/handleEffects';
 
@@ -46,6 +47,7 @@ function App() {
     two: { wave: 'sine', volume: '-4', pitch: 'C3', playing: false },
     three: { wave: 'sine', volume: '-4', pitch: 'C3', playing: false }
   });
+  const [percussionData, setPercussionData] = useState(percussionObj);
 
   const getGlobalSettings = () => {
     return JSON.parse(JSON.stringify(globalInstrumentSettings));
@@ -171,7 +173,9 @@ function App() {
         droneData,
         setDroneData,
         getGlobalEffects,
-        getGlobalSettings
+        getGlobalSettings,
+        percussionData,
+        setPercussionData
       }}
     >
       <Router>

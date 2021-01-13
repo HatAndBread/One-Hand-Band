@@ -1,1 +1,3 @@
-export default function handleSkronk(data) {}
+export default function handleSkronk(data) {
+  console.log(data);
+}
