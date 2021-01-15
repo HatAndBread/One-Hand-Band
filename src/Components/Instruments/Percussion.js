@@ -1,6 +1,7 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Context } from '../../App';
 import IndividualPercussion from './Percussion/IndividualPercussion';
+import RhythmMachine from './Percussion/RhythmMachine';
 
 export const percussionTypes = [
   'snare',
@@ -28,6 +29,7 @@ Object.freeze(percussionTypes);
 export default function Percussion({ setFinalData }) {
   const percussionData = useContext(Context).percussionData;
   const setMyInstrument = useContext(Context).setMyInstrument;
+  const [rhythmMachineExposed, setRhythmMachineExposed] = useState(false);
   useEffect(() => {
     setMyInstrument('percussion');
     return () => {
@@ -37,8 +39,15 @@ export default function Percussion({ setFinalData }) {
   useEffect(() => {
     console.log(percussionData);
   }, [percussionData]);
+  const rhythmMachineClick = () => {
+    rhythmMachineExposed ? setRhythmMachineExposed(false) : setRhythmMachineExposed(true);
+  };
   return (
     <div className="percussion-container">
+      <button className="rhythm-machine-btn" onClick={rhythmMachineClick}>
+        {rhythmMachineExposed ? 'Hide rhythm machine' : 'Rhythm Machine'}
+      </button>
+      {rhythmMachineExposed && <RhythmMachine percussionData={percussionData} />}
       <div className="percussion-row">
         <IndividualPercussion number="one" defaultDrum={percussionData.one.drum} setFinalData={setFinalData} />
         <IndividualPercussion number="two" defaultDrum={percussionData.two.drum} setFinalData={setFinalData} />

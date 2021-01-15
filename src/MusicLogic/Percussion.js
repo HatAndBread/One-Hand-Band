@@ -1,7 +1,6 @@
 import Instrument from './Instrument';
 
 import * as Tone from 'tone';
-import { percussionTypes } from '../Components/Instruments/Percussion';
 import snare from '../assets/snare.mp3';
 import kick from '../assets/kick.mp3';
 import ride from '../assets/ride.mp3';
@@ -44,10 +43,17 @@ class Percussion extends Instrument {
     this.kantilan = new Tone.Player(kantilan).connect(this.vibrato);
     this.kempur = new Tone.Player(kempur).connect(this.vibrato);
     this.rebana = new Tone.Player(rebana).connect(this.vibrato);
+    this.loop = null;
   }
   play(drum, sampleRate) {
     this[drum].playbackRate = sampleRate;
     this[drum].start();
+  }
+  setLoop(loop) {
+    if (this.loop) {
+      this.loop.dispose();
+    }
+    this.loop = new Tone.Loop(loop);
   }
 }
 

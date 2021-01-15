@@ -4,6 +4,10 @@
   width: 100vw;
 }
 
+.rhythm-machine-btn {
+  width: fit-content;
+}
+
 .percussion-row {
   display: flex;
   width: 100vw;

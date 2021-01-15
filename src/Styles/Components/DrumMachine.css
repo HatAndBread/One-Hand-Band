@@ -1,0 +1,22 @@
+.drum-machine {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.butt-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.machine-butt {
+  background-color: black;
+  width: 16px;
+  height: 16px;
+  margin: 1px;
+}
+
+.machine-divider {
+  background-color: pink;
+  min-width: 16px;
+}

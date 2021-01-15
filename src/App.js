@@ -55,6 +55,8 @@ function App() {
   const getGlobalEffects = () => {
     return JSON.parse(JSON.stringify(globalEffectsSettings));
   };
+  const [bpm, setBpm] = useState('120');
+  const [timeSignature, setTimeSignature] = useState('4');
 
   useEffect(() => {
     console.log('Username has been set to ' + userName);
@@ -175,7 +177,11 @@ function App() {
         getGlobalEffects,
         getGlobalSettings,
         percussionData,
-        setPercussionData
+        setPercussionData,
+        bpm,
+        setBpm,
+        timeSignature,
+        setTimeSignature
       }}
     >
       <Router>
