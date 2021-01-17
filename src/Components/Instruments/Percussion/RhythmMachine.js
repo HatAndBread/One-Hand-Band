@@ -2,22 +2,24 @@ import { useState, useEffect, useContext } from 'react';
 import { Context } from '../../../App';
 import '../../../Styles/Components/DrumMachine.css';
 
-export default function RhythmMachine({ percussionData }) {
+export default function RhythmMachine({ percussionData, setFinalData }) {
   const bpm = useContext(Context).bpm;
   const setBpm = useContext(Context).setBpm;
+  const socketId = useContext(Context).socketId;
   const timeSignature = useContext(Context).timeSignature;
   const setTimeSignature = useContext(Context).setTimeSignature;
+  const loopData = useContext(Context).loopData;
+  const loopObject = useContext(Context).loopObject;
+  const setLoopData = useContext(Context).setLoopData;
   const [buttColumns, setButtColumns] = useState(null);
-  const [loopData, setLoopData] = useState({
-    one: { drum: percussionData.one, times: new Array(timeSignature * 4) },
-    two: { drum: percussionData.one, times: new Array(timeSignature * 4) },
-    three: { drum: percussionData.one, times: new Array(timeSignature * 4) },
-    four: { drum: percussionData.one, times: new Array(timeSignature * 4) }
-  });
+  const [tsChanged, setTsChanged] = useState(false);
+
   const timeSignatureChange = (e) => {
     setTimeSignature(e.target.value);
     console.log(timeSignature);
+    setTsChanged(true);
   };
+
   const bpmChange = (e) => {
     setBpm(e.target.value);
     console.log(bpm);
@@ -46,6 +48,7 @@ export default function RhythmMachine({ percussionData }) {
               data-beat={i}
               data-number={'one'}
               onClick={handleClick}
+              style={loopData.one.times[i] ? { backgroundColor: 'red' } : { backgroundColor: 'green' }}
             ></div>
             <div
               id="drum-two-machine"
@@ -54,6 +57,7 @@ export default function RhythmMachine({ percussionData }) {
               data-beat={i}
               data-number={'two'}
               onClick={handleClick}
+              style={loopData.two.times[i] ? { backgroundColor: 'red' } : { backgroundColor: 'green' }}
             ></div>
             <div
               id="drum-three-machine"
@@ -62,6 +66,7 @@ export default function RhythmMachine({ percussionData }) {
               data-beat={i}
               data-number={'three'}
               onClick={handleClick}
+              style={loopData.three.times[i] ? { backgroundColor: 'red' } : { backgroundColor: 'green' }}
             ></div>
             <div
               id="drum-four-machine"
@@ -70,6 +75,7 @@ export default function RhythmMachine({ percussionData }) {
               data-beat={i}
               data-number={'four'}
               onClick={handleClick}
+              style={loopData.four.times[i] ? { backgroundColor: 'red' } : { backgroundColor: 'green' }}
             ></div>
           </div>
         );
@@ -80,10 +86,27 @@ export default function RhythmMachine({ percussionData }) {
       return arr;
     };
     setButtColumns(getOnOffButts);
-  }, [timeSignature, percussionData, loopData]);
+  }, [timeSignature, percussionData, loopData, setLoopData]);
   useEffect(() => {
-    console.log(loopData);
-  }, [loopData]);
+    setFinalData({
+      type: 'percussion',
+      drum: 'rhythmMachine',
+      loop: loopData,
+      socketId: socketId,
+      timeSignature: timeSignature,
+      bpm: bpm
+    });
+  }, [loopData, setFinalData, socketId, timeSignature, bpm]);
+  const clear = () => {
+    setLoopData(loopObject);
+  };
+  useEffect(() => {
+    if (tsChanged) {
+      setLoopData(loopObject);
+      setTsChanged(false);
+    }
+  }, [timeSignature, tsChanged, loopObject, setLoopData]);
+
   return (
     <div>
       <label htmlFor="time-sig-select"></label>
@@ -96,6 +119,7 @@ export default function RhythmMachine({ percussionData }) {
       <label htmlFor="bpm-range">bpm</label>
       <input type="range" min="50" max="200" step="1" name="bpm-range" onChange={bpmChange} defaultValue={bpm} />
       <div className="drum-machine">{buttColumns}</div>
+      <button onClick={clear}>Clear</button>
     </div>
   );
 }

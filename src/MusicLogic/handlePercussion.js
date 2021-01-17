@@ -4,7 +4,11 @@ export default function handlePercussion(data) {
   console.log(data);
   const soundSet = getSoundSet(data.socketId);
   if (soundSet) {
-    soundSet.percussion.play(data.drum, data.sampleRate);
-    console.log(soundSet, data.drum);
+    if (data.drum === 'rhythmMachine') {
+      soundSet.percussion.setLoop(data);
+    } else {
+      soundSet.percussion.play(data.drum, data.sampleRate);
+      console.log(soundSet, data.drum);
+    }
   }
 }

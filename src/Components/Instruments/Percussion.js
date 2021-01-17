@@ -47,7 +47,7 @@ export default function Percussion({ setFinalData }) {
       <button className="rhythm-machine-btn" onClick={rhythmMachineClick}>
         {rhythmMachineExposed ? 'Hide rhythm machine' : 'Rhythm Machine'}
       </button>
-      {rhythmMachineExposed && <RhythmMachine percussionData={percussionData} />}
+      {rhythmMachineExposed && <RhythmMachine percussionData={percussionData} setFinalData={setFinalData} />}
       <div className="percussion-row">
         <IndividualPercussion number="one" defaultDrum={percussionData.one.drum} setFinalData={setFinalData} />
         <IndividualPercussion number="two" defaultDrum={percussionData.two.drum} setFinalData={setFinalData} />

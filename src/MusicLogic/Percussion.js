@@ -43,18 +43,82 @@ class Percussion extends Instrument {
     this.kantilan = new Tone.Player(kantilan).connect(this.vibrato);
     this.kempur = new Tone.Player(kempur).connect(this.vibrato);
     this.rebana = new Tone.Player(rebana).connect(this.vibrato);
-    this.loop = null;
+    this.loops = [];
+    this.beat = 0;
   }
   play(drum, sampleRate) {
     this[drum].playbackRate = sampleRate;
     this[drum].start();
   }
-  setLoop(loop) {
-    if (this.loop) {
-      this.loop.dispose();
+  createLoops() {}
+  removeOldLoops() {
+    if (this.loops.length) {
+      this.loops.forEach((loop) => {
+        loop.stop(0);
+        loop.cancel();
+        loop.dispose();
+      });
     }
-    this.loop = new Tone.Loop(loop);
+    this.loops.splice(0, this.loops.length);
+  }
+  getNoteLength(number, timeSignature) {
+    switch (timeSignature / number) {
+      case Infinity:
+        return 0;
+      case 1:
+        return '16n';
+      case 2:
+        return '8n';
+      default:
+        return timeSignature / number;
+    }
+  }
+  containsNewPlaybackRate(loop) {
+    console.log(this[loop.one.drum.drum].playbackRate, loop.one.drum.sampleRate);
+    if (this[loop.one.drum.drum].playbackRate !== loop.one.drum.sampleRate) return true;
+    if (this[loop.two.drum.drum].playbackRate !== loop.two.drum.sampleRate) return true;
+    if (this[loop.three.drum.drum].playbackRate !== loop.three.drum.sampleRate) return true;
+    if (this[loop.four.drum.drum].playbackRate !== loop.four.drum.sampleRate) return true;
+    return false;
+  }
+  setLoop(data) {
+    Tone.Transport.bpm.value = parseInt(data.bpm, 10);
+    Tone.Transport.timeSignature = parseInt(data.timeSignature, 10);
+    if (this.containsNewPlaybackRate(data.loop)) {
+      this[data.loop.one.drum.drum].playbackRate = data.loop.one.drum.sampleRate;
+      this[data.loop.two.drum.drum].playbackRate = data.loop.two.drum.sampleRate;
+      this[data.loop.three.drum.drum].playbackRate = data.loop.three.drum.sampleRate;
+      this[data.loop.four.drum.drum].playbackRate = data.loop.four.drum.sampleRate;
+    } else if (isStopped(data.loop)) {
+      Tone.Transport.stop();
+      this.beat = 0;
+    } else {
+      this.removeOldLoops();
+      console.log(data.loop);
+      this.loops.push(
+        new Tone.Loop((time) => {
+          data.loop.one.times[this.beat] && this[data.loop.one.drum.drum].start(time);
+          data.loop.two.times[this.beat] && this[data.loop.two.drum.drum].start(time);
+          data.loop.three.times[this.beat] && this[data.loop.three.drum.drum].start(time);
+          data.loop.four.times[this.beat] && this[data.loop.four.drum.drum].start(time);
+          this.beat += 1;
+          if (this.beat >= Tone.Transport.timeSignature * 4) {
+            this.beat = 0;
+          }
+        }, '16n').start(0)
+      );
+      Tone.Transport.start();
+    }
   }
 }
+
+const isStopped = (loop) => {
+  for (let i = 0; i < Object.entries(loop).length; i++) {
+    if (Object.entries(loop)[i][1].times.includes(1)) {
+      return false;
+    }
+  }
+  return true;
+};
 
 export default Percussion;

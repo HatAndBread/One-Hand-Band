@@ -149,6 +149,13 @@ function App() {
       }
     }
   }, [musicData, sessionPin, userName]);
+  const loopObject = {
+    one: { drum: percussionData.one, times: new Array(timeSignature * 4) },
+    two: { drum: percussionData.two, times: new Array(timeSignature * 4) },
+    three: { drum: percussionData.three, times: new Array(timeSignature * 4) },
+    four: { drum: percussionData.four, times: new Array(timeSignature * 4) }
+  };
+  const [loopData, setLoopData] = useState(loopObject);
 
   return (
     <Context.Provider
@@ -181,7 +188,10 @@ function App() {
         bpm,
         setBpm,
         timeSignature,
-        setTimeSignature
+        setTimeSignature,
+        loopData,
+        setLoopData,
+        loopObject
       }}
     >
       <Router>
