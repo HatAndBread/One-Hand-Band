@@ -77,6 +77,24 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
               onClick={handleClick}
               style={loopData.four.times[i] ? { backgroundColor: 'red' } : { backgroundColor: 'green' }}
             ></div>
+            <div
+              id="drum-five-machine"
+              className="machine-butt"
+              data-drum-type={percussionData.five.drum}
+              data-beat={i}
+              data-number={'five'}
+              onClick={handleClick}
+              style={loopData.five.times[i] ? { backgroundColor: 'red' } : { backgroundColor: 'green' }}
+            ></div>
+            <div
+              id="drum-six-machine"
+              className="machine-butt"
+              data-drum-type={percussionData.six.drum}
+              data-beat={i}
+              data-number={'six'}
+              onClick={handleClick}
+              style={loopData.six.times[i] ? { backgroundColor: 'red' } : { backgroundColor: 'green' }}
+            ></div>
           </div>
         );
         if ((i + 1) % 4 === 0) {

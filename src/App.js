@@ -153,7 +153,9 @@ function App() {
     one: { drum: percussionData.one, times: new Array(timeSignature * 4) },
     two: { drum: percussionData.two, times: new Array(timeSignature * 4) },
     three: { drum: percussionData.three, times: new Array(timeSignature * 4) },
-    four: { drum: percussionData.four, times: new Array(timeSignature * 4) }
+    four: { drum: percussionData.four, times: new Array(timeSignature * 4) },
+    five: { drum: percussionData.five, times: new Array(timeSignature * 4) },
+    six: { drum: percussionData.six, times: new Array(timeSignature * 4) }
   };
   const [loopData, setLoopData] = useState(loopObject);
 

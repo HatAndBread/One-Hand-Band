@@ -20,6 +20,8 @@ import jegog from '../assets/jegog.mp3';
 import kantilan from '../assets/kantilan.mp3';
 import kempur from '../assets/kempur.mp3';
 import rebana from '../assets/rebana.mp3';
+import ruler from '../assets/ruler.mp3';
+import spring from '../assets/spring.mp3';
 
 class Percussion extends Instrument {
   constructor() {
@@ -43,6 +45,8 @@ class Percussion extends Instrument {
     this.kantilan = new Tone.Player(kantilan).connect(this.vibrato);
     this.kempur = new Tone.Player(kempur).connect(this.vibrato);
     this.rebana = new Tone.Player(rebana).connect(this.vibrato);
+    this.spring = new Tone.Player(spring).connect(this.vibrato);
+    this.ruler = new Tone.Player(ruler).connect(this.vibrato);
     this.loops = [];
     this.beat = 0;
   }
@@ -73,32 +77,46 @@ class Percussion extends Instrument {
         return timeSignature / number;
     }
   }
+  playbackRateHasChanged(data) {
+    if (this[data.loop.one.drum.drum].playbackRate !== data.loop.one.drum.sampleRate) return true;
+    if (this[data.loop.two.drum.drum].playbackRate !== data.loop.two.drum.sampleRate) return true;
+    if (this[data.loop.three.drum.drum].playbackRate !== data.loop.three.drum.sampleRate) return true;
+    if (this[data.loop.four.drum.drum].playbackRate !== data.loop.four.drum.sampleRate) return true;
+    if (this[data.loop.five.drum.drum].playbackRate !== data.loop.five.drum.sampleRate) return true;
+    if (this[data.loop.six.drum.drum].playbackRate !== data.loop.six.drum.sampleRate) return true;
+    return false;
+  }
   setLoop(data) {
     Tone.Transport.bpm.value = parseInt(data.bpm, 10);
     Tone.Transport.timeSignature = parseInt(data.timeSignature, 10);
+    if (this.playbackRateHasChanged(data)) {
+      this[data.loop.one.drum.drum].playbackRate = data.loop.one.drum.sampleRate;
+      this[data.loop.two.drum.drum].playbackRate = data.loop.two.drum.sampleRate;
+      this[data.loop.three.drum.drum].playbackRate = data.loop.three.drum.sampleRate;
+      this[data.loop.four.drum.drum].playbackRate = data.loop.four.drum.sampleRate;
+      this[data.loop.five.drum.drum].playbackRate = data.loop.five.drum.sampleRate;
+      this[data.loop.six.drum.drum].playbackRate = data.loop.six.drum.sampleRate;
+    }
 
-    this[data.loop.one.drum.drum].playbackRate = data.loop.one.drum.sampleRate;
-    this[data.loop.two.drum.drum].playbackRate = data.loop.two.drum.sampleRate;
-    this[data.loop.three.drum.drum].playbackRate = data.loop.three.drum.sampleRate;
-    this[data.loop.four.drum.drum].playbackRate = data.loop.four.drum.sampleRate;
     if (isStopped(data.loop)) {
       console.log('ITs stopped');
       Tone.Transport.stop();
       this.beat = 0;
     } else {
       this.removeOldLoops();
-      console.log(data.loop);
       const loop = new Tone.Loop((time) => {
-        data.loop.one.times[this.beat] && this[data.loop.one.drum.drum].start(time);
-        data.loop.two.times[this.beat] && this[data.loop.two.drum.drum].start(time);
-        data.loop.three.times[this.beat] && this[data.loop.three.drum.drum].start(time);
-        data.loop.four.times[this.beat] && this[data.loop.four.drum.drum].start(time);
+        data.loop.one.times[this.beat] && this.play(data.loop.one.drum.drum, data.loop.one.drum.sampleRate);
+        data.loop.two.times[this.beat] && this.play(data.loop.two.drum.drum, data.loop.two.drum.sampleRate);
+        data.loop.three.times[this.beat] && this.play(data.loop.three.drum.drum, data.loop.three.drum.sampleRate);
+        data.loop.four.times[this.beat] && this.play(data.loop.four.drum.drum, data.loop.four.drum.sampleRate);
+        data.loop.five.times[this.beat] && this.play(data.loop.five.drum.drum, data.loop.five.drum.sampleRate);
+        data.loop.six.times[this.beat] && this.play(data.loop.six.drum.drum, data.loop.six.drum.sampleRate);
+
         this.beat += 1;
         if (this.beat >= Tone.Transport.timeSignature * 4) {
           this.beat = 0;
         }
       }, '16n').start(0);
-      console.log('HUMANIZE', loop.humanize);
       loop.humanize = true;
       this.loops.push(loop);
       Tone.Transport.start();

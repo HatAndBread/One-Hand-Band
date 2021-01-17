@@ -3,7 +3,7 @@ import '../../../Styles/Components/Percussion.css';
 import { percussionTypes } from '../Percussion';
 import { Context } from '../../../App';
 
-export default function IndividualPercussion({ defaultDrum, number, setFinalData }) {
+export default function IndividualPercussion({ defaultDrum, number, setFinalData, sampleRate }) {
   const [drum, setDrum] = useState(defaultDrum);
   const percussionData = useContext(Context).percussionData;
   const setPercussionData = useContext(Context).setPercussionData;
@@ -45,7 +45,7 @@ export default function IndividualPercussion({ defaultDrum, number, setFinalData
           return <option key={type}>{type}</option>;
         })}
       </select>
-      <input type="range" onChange={sampleRateChange} min="0.1" max="3" step="0.01" defaultValue={1}></input>
+      <input type="range" onChange={sampleRateChange} min="0.1" max="3" step="0.01" defaultValue={sampleRate}></input>
       <div className="hit-pad" onClick={handleDrumHit}></div>
     </div>
   );
