@@ -73,40 +73,34 @@ class Percussion extends Instrument {
         return timeSignature / number;
     }
   }
-  containsNewPlaybackRate(loop) {
-    console.log(this[loop.one.drum.drum].playbackRate, loop.one.drum.sampleRate);
-    if (this[loop.one.drum.drum].playbackRate !== loop.one.drum.sampleRate) return true;
-    if (this[loop.two.drum.drum].playbackRate !== loop.two.drum.sampleRate) return true;
-    if (this[loop.three.drum.drum].playbackRate !== loop.three.drum.sampleRate) return true;
-    if (this[loop.four.drum.drum].playbackRate !== loop.four.drum.sampleRate) return true;
-    return false;
-  }
   setLoop(data) {
     Tone.Transport.bpm.value = parseInt(data.bpm, 10);
     Tone.Transport.timeSignature = parseInt(data.timeSignature, 10);
-    if (this.containsNewPlaybackRate(data.loop)) {
-      this[data.loop.one.drum.drum].playbackRate = data.loop.one.drum.sampleRate;
-      this[data.loop.two.drum.drum].playbackRate = data.loop.two.drum.sampleRate;
-      this[data.loop.three.drum.drum].playbackRate = data.loop.three.drum.sampleRate;
-      this[data.loop.four.drum.drum].playbackRate = data.loop.four.drum.sampleRate;
-    } else if (isStopped(data.loop)) {
+
+    this[data.loop.one.drum.drum].playbackRate = data.loop.one.drum.sampleRate;
+    this[data.loop.two.drum.drum].playbackRate = data.loop.two.drum.sampleRate;
+    this[data.loop.three.drum.drum].playbackRate = data.loop.three.drum.sampleRate;
+    this[data.loop.four.drum.drum].playbackRate = data.loop.four.drum.sampleRate;
+    if (isStopped(data.loop)) {
+      console.log('ITs stopped');
       Tone.Transport.stop();
       this.beat = 0;
     } else {
       this.removeOldLoops();
       console.log(data.loop);
-      this.loops.push(
-        new Tone.Loop((time) => {
-          data.loop.one.times[this.beat] && this[data.loop.one.drum.drum].start(time);
-          data.loop.two.times[this.beat] && this[data.loop.two.drum.drum].start(time);
-          data.loop.three.times[this.beat] && this[data.loop.three.drum.drum].start(time);
-          data.loop.four.times[this.beat] && this[data.loop.four.drum.drum].start(time);
-          this.beat += 1;
-          if (this.beat >= Tone.Transport.timeSignature * 4) {
-            this.beat = 0;
-          }
-        }, '16n').start(0)
-      );
+      const loop = new Tone.Loop((time) => {
+        data.loop.one.times[this.beat] && this[data.loop.one.drum.drum].start(time);
+        data.loop.two.times[this.beat] && this[data.loop.two.drum.drum].start(time);
+        data.loop.three.times[this.beat] && this[data.loop.three.drum.drum].start(time);
+        data.loop.four.times[this.beat] && this[data.loop.four.drum.drum].start(time);
+        this.beat += 1;
+        if (this.beat >= Tone.Transport.timeSignature * 4) {
+          this.beat = 0;
+        }
+      }, '16n').start(0);
+      console.log('HUMANIZE', loop.humanize);
+      loop.humanize = true;
+      this.loops.push(loop);
       Tone.Transport.start();
     }
   }
