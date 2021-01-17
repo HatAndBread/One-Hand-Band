@@ -49,12 +49,12 @@ class Percussion extends Instrument {
     this.ruler = new Tone.Player(ruler).connect(this.vibrato);
     this.loops = [];
     this.beat = 0;
+    this.drumsNums = ['one', 'two', 'three', 'four', 'five', 'six'];
   }
   play(drum, sampleRate) {
     this[drum].playbackRate = sampleRate;
     this[drum].start();
   }
-  createLoops() {}
   removeOldLoops() {
     if (this.loops.length) {
       this.loops.forEach((loop) => {
@@ -77,49 +77,50 @@ class Percussion extends Instrument {
         return timeSignature / number;
     }
   }
+  setAllSampleRates(data) {
+    this.drumsNums.forEach((num) => {
+      this[data.loop[num].drum.drum].playbackRate = data.loop[num].drum.sampleRate;
+    });
+  }
   playbackRateHasChanged(data) {
-    if (this[data.loop.one.drum.drum].playbackRate !== data.loop.one.drum.sampleRate) return true;
-    if (this[data.loop.two.drum.drum].playbackRate !== data.loop.two.drum.sampleRate) return true;
-    if (this[data.loop.three.drum.drum].playbackRate !== data.loop.three.drum.sampleRate) return true;
-    if (this[data.loop.four.drum.drum].playbackRate !== data.loop.four.drum.sampleRate) return true;
-    if (this[data.loop.five.drum.drum].playbackRate !== data.loop.five.drum.sampleRate) return true;
-    if (this[data.loop.six.drum.drum].playbackRate !== data.loop.six.drum.sampleRate) return true;
+    for (let i = 0; i < this.drumsNums.length; i++) {
+      if (this[data.loop[this.drumsNums[i]].drum.drum].playbackRate !== data.loop[this.drumsNums[i]].drum.sampleRate)
+        return true;
+    }
     return false;
   }
-  setLoop(data) {
-    Tone.Transport.bpm.value = parseInt(data.bpm, 10);
-    Tone.Transport.timeSignature = parseInt(data.timeSignature, 10);
-    if (this.playbackRateHasChanged(data)) {
-      this[data.loop.one.drum.drum].playbackRate = data.loop.one.drum.sampleRate;
-      this[data.loop.two.drum.drum].playbackRate = data.loop.two.drum.sampleRate;
-      this[data.loop.three.drum.drum].playbackRate = data.loop.three.drum.sampleRate;
-      this[data.loop.four.drum.drum].playbackRate = data.loop.four.drum.sampleRate;
-      this[data.loop.five.drum.drum].playbackRate = data.loop.five.drum.sampleRate;
-      this[data.loop.six.drum.drum].playbackRate = data.loop.six.drum.sampleRate;
+  updateBpmAndTimeSignature(data) {
+    if (Tone.Transport.bpm.value !== parseInt(data.bpm, 10)) {
+      Tone.Transport.bpm.value = parseInt(data.bpm, 10);
     }
-
+    if (Tone.Transport.timeSignature !== parseInt(data.timeSignature, 10)) {
+      Tone.Transport.timeSignature = parseInt(data.timeSignature, 10);
+    }
+  }
+  setLoop(data) {
+    this.updateBpmAndTimeSignature(data);
+    if (this.playbackRateHasChanged(data)) {
+      this.drumsNums.forEach((num) => {
+        this[data.loop[num].drum.drum].playbackRate = data.loop[num].drum.sampleRate;
+      });
+    }
     if (isStopped(data.loop)) {
-      console.log('ITs stopped');
       Tone.Transport.stop();
       this.beat = 0;
     } else {
       this.removeOldLoops();
       const loop = new Tone.Loop((time) => {
-        data.loop.one.times[this.beat] && this.play(data.loop.one.drum.drum, data.loop.one.drum.sampleRate);
-        data.loop.two.times[this.beat] && this.play(data.loop.two.drum.drum, data.loop.two.drum.sampleRate);
-        data.loop.three.times[this.beat] && this.play(data.loop.three.drum.drum, data.loop.three.drum.sampleRate);
-        data.loop.four.times[this.beat] && this.play(data.loop.four.drum.drum, data.loop.four.drum.sampleRate);
-        data.loop.five.times[this.beat] && this.play(data.loop.five.drum.drum, data.loop.five.drum.sampleRate);
-        data.loop.six.times[this.beat] && this.play(data.loop.six.drum.drum, data.loop.six.drum.sampleRate);
-
+        this.setAllSampleRates(data);
+        this.drumsNums.forEach((num) => {
+          data.loop[num].times[this.beat] && this[data.loop[num].drum.drum].start(time);
+        });
         this.beat += 1;
         if (this.beat >= Tone.Transport.timeSignature * 4) {
           this.beat = 0;
         }
       }, '16n').start(0);
-      loop.humanize = true;
       this.loops.push(loop);
-      Tone.Transport.start();
+      Tone.Transport.state === 'stopped' && Tone.Transport.start();
     }
   }
 }
