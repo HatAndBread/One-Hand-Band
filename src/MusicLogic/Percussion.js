@@ -47,35 +47,13 @@ class Percussion extends Instrument {
     this.rebana = new Tone.Player(rebana).connect(this.vibrato);
     this.spring = new Tone.Player(spring).connect(this.vibrato);
     this.ruler = new Tone.Player(ruler).connect(this.vibrato);
-    this.loops = [];
+    this.loop = new Tone.Loop((time) => {}, '16n').start(0);
     this.beat = 0;
     this.drumsNums = ['one', 'two', 'three', 'four', 'five', 'six'];
   }
   play(drum, sampleRate) {
     this[drum].playbackRate = sampleRate;
     this[drum].start();
-  }
-  removeOldLoops() {
-    if (this.loops.length) {
-      this.loops.forEach((loop) => {
-        loop.stop(0);
-        loop.cancel();
-        loop.dispose();
-      });
-    }
-    this.loops.splice(0, this.loops.length);
-  }
-  getNoteLength(number, timeSignature) {
-    switch (timeSignature / number) {
-      case Infinity:
-        return 0;
-      case 1:
-        return '16n';
-      case 2:
-        return '8n';
-      default:
-        return timeSignature / number;
-    }
   }
   setAllSampleRates(data) {
     this.drumsNums.forEach((num) => {
@@ -108,8 +86,7 @@ class Percussion extends Instrument {
       Tone.Transport.stop();
       this.beat = 0;
     } else {
-      this.removeOldLoops();
-      const loop = new Tone.Loop((time) => {
+      const callback = (time) => {
         this.setAllSampleRates(data);
         this.drumsNums.forEach((num) => {
           data.loop[num].times[this.beat] && this[data.loop[num].drum.drum].start(time);
@@ -118,8 +95,8 @@ class Percussion extends Instrument {
         if (this.beat >= Tone.Transport.timeSignature * 4) {
           this.beat = 0;
         }
-      }, '16n').start(0);
-      this.loops.push(loop);
+      };
+      this.loop.callback = callback;
       Tone.Transport.state === 'stopped' && Tone.Transport.start();
     }
   }
