@@ -8,7 +8,6 @@ export default function Instruments() {
         <div>Select your instrument</div>
         <Link to="/instrument/noise">Noise</Link>
         <Link to="/instrument/drone">Drone</Link>
-        <Link to="/instrument/skronk">Skronk</Link>
         <Link to="/instrument/percussion">Percussion</Link>
         <Link to="/instrument/keyboard">Keyboard</Link>
         <Route path="/instrument/noise">
@@ -22,9 +21,6 @@ export default function Instruments() {
         </Route>
         <Route path="/instrument/keyboard">
           <InstrumentTemplate instrument={'keyboard'} />
-        </Route>
-        <Route path="/instrument/skronk">
-          <InstrumentTemplate instrument={'skronk'} />
         </Route>
       </div>
     </div>

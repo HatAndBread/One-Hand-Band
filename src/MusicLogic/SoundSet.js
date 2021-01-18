@@ -1,6 +1,7 @@
 import Keyboard from './Keyboard';
 import Drone from './Drone';
 import Percussion from './Percussion';
+import Noise from './Noise';
 
 class SoundSet {
   constructor(socketId) {
@@ -8,6 +9,7 @@ class SoundSet {
     this.keyboard = new Keyboard();
     this.drone = new Drone();
     this.percussion = new Percussion();
+    this.noise = new Noise();
   }
 
   setEffects(instrument, effects) {

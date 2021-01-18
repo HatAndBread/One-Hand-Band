@@ -1,0 +1,20 @@
+.noise-container {
+  width: 100vw;
+  height: 70vh;
+  background-color: pink;
+  touch-action: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.noise-row {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+}
+
+.noise-area-container {
+  background-color: grey;
+  margin: 8px;
+  flex-grow: 1;
+}
