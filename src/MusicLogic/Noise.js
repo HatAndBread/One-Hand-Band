@@ -15,6 +15,13 @@ import radioBuzz from '../assets/radioBuzz.mp3';
 import recordPlayerGlitch from '../assets/recordPlayerGlitch.mp3';
 import saxSqueek from '../assets/saxSqueek.mp3';
 import trumpetHiss from '../assets/trumpethiss.mp3';
+import saxSkronk from '../assets/saxSkronk.mp3';
+import saxSkronk2 from '../assets/saxSkronk2.mp3';
+import saxSkronk3 from '../assets/saxSkronk3.mp3';
+import saxSkronk4 from '../assets/saxSkronk4.mp3';
+import saxSkronk5 from '../assets/saxSkronk5.mp3';
+import saxSkronk6 from '../assets/saxSkronk6.mp3';
+import saxSkronk7 from '../assets/saxSkronk7.mp3';
 
 class Noise extends Instrument {
   constructor() {
@@ -34,7 +41,25 @@ class Noise extends Instrument {
     this.recordPlayerGlitch = new Tone.Player(recordPlayerGlitch).connect(this.vibrato);
     this.saxSqueek = new Tone.Player(saxSqueek).connect(this.vibrato);
     this.trumpetHiss = new Tone.Player(trumpetHiss).connect(this.vibrato);
+    this.saxSkronk = new Tone.Player(saxSkronk).connect(this.vibrato);
+    this.saxSkronk2 = new Tone.Player(saxSkronk2).connect(this.vibrato);
+    this.saxSkronk3 = new Tone.Player(saxSkronk3).connect(this.vibrato);
+    this.saxSkronk4 = new Tone.Player(saxSkronk4).connect(this.vibrato);
+    this.saxSkronk5 = new Tone.Player(saxSkronk5).connect(this.vibrato);
+    this.saxSkronk6 = new Tone.Player(saxSkronk6).connect(this.vibrato);
+    this.saxSkronk7 = new Tone.Player(saxSkronk7).connect(this.vibrato);
+    this.pink = new Tone.Noise('pink').connect(this.vibrato);
+    this.white = new Tone.Noise('white').connect(this.vibrato);
+    this.brown = new Tone.Noise('brown').connect(this.vibrato);
+    this.oscillatorGain = new Tone.Gain(0.3).connect(this.vibrato);
+    this.oscillatorPulverizer = new Tone.BitCrusher(1).connect(this.oscillatorGain);
+    this.sine = new Tone.AmplitudeEnvelope().connect(this.oscillatorPulverizer);
+    this.oscillator = new Tone.Oscillator().connect(this.sine).start();
+    this.oscillator2 = new Tone.Oscillator().connect(this.sine).start();
+    this.oscillator3 = new Tone.Oscillator().connect(this.sine).start();
+    this.oscillator4 = new Tone.Oscillator().connect(this.sine).start();
     this.nowPlaying = null;
+    this.animationFrame = false;
     this.types = {
       ambientNoise: [
         'amRadioNoise',
@@ -42,7 +67,11 @@ class Noise extends Instrument {
         'digitalNoise',
         'heavyStatic',
         'radioBuzz',
-        'recordPlayerGlitch'
+        'recordPlayerGlitch',
+        'pink',
+        'brown',
+        'white',
+        'trumpetHiss'
       ],
       feedback: [
         'feedback',
@@ -53,7 +82,17 @@ class Noise extends Instrument {
         'guitarNoise4',
         'micFeedback'
       ],
-      skronk: ['saxSqueek', 'trumpetHiss']
+      skronk: [
+        'saxSqueek',
+        'saxSkronk',
+        'saxSkronk2',
+        'saxSkronk3',
+        'saxSkronk4',
+        'saxSkronk5',
+        'saxSkronk6',
+        'saxSkronk7'
+      ],
+      oscillators: ['sine']
     };
     this.initialize();
   }
@@ -63,6 +102,9 @@ class Noise extends Instrument {
       if (this[key] instanceof Tone.Player) {
         this[key].loop = true;
       }
+      if (this[key] instanceof Tone.Oscillator) {
+        this[key].volume.value = -6;
+      }
     });
   }
 
@@ -70,18 +112,49 @@ class Noise extends Instrument {
     const which = camelCase(data.which);
     const ranNum = Math.floor(Math.random() * this.types[which].length);
     this.nowPlaying = this.types[which][ranNum];
-    this[this.nowPlaying].start(0);
+    if (this[this.nowPlaying].start) {
+      this[this.nowPlaying].start(0, Math.floor(Math.random() * 10));
+    } else {
+      this[this.nowPlaying].triggerAttack(Tone.now());
+      const updateLoop = () => {
+        let ranNum = Math.floor(Math.random() * 5);
+        const minus = this.oscillator4.frequency.value - 100;
+        const decider = Math.floor(Math.random() * 2);
+        let increaseNum;
+        if (decider && minus > 0) {
+          increaseNum = Math.random() * -10;
+        } else {
+          increaseNum = Math.random() * 10;
+        }
+        if (!ranNum) {
+          this.oscillator4.frequency.value += increaseNum;
+        }
+        this.animationFrame && window.requestAnimationFrame(updateLoop);
+      };
+      this.animationFrame = true;
+      updateLoop();
+    }
   }
   stop(data) {
-    this[this.nowPlaying].stop(0);
+    this[this.nowPlaying].stop ? this[this.nowPlaying].stop(0) : this[this.nowPlaying].triggerRelease(Tone.now());
     this.nowPlaying = null;
+    this.animationFrame = false;
   }
   play(data) {
-    console.log(data);
     if (data.x <= 0.001) {
       data.x = 0.00101;
     }
-    this[this.nowPlaying].playbackRate = data.x * 0.005;
+    if (data.y <= 0.001) {
+      data.y = 0.00101;
+    }
+    if (this[this.nowPlaying] && this[this.nowPlaying].playbackRate) {
+      this[this.nowPlaying].playbackRate = data.x * 0.005;
+    } else {
+      this.oscillator.frequency.value = data.x * 10;
+      this.oscillator2.frequency.value = data.y * 5 + Math.random() * 10;
+      this.oscillator3.frequency.value = ((data.y / 2) * data.x) / 2;
+      this.oscillator4.frequency.value = Math.random() * data.x;
+    }
   }
 }
 

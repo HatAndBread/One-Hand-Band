@@ -18,7 +18,6 @@ class Drone extends Instrument {
     const drone = this[`drone${number}`];
     if (!drone.playing) {
       drone.playing = true;
-      console.log('HIII', drone.playing);
       this[`envelope${number}`].triggerAttack(Tone.now());
     }
   }
