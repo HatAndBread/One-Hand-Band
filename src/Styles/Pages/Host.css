@@ -1,0 +1,8 @@
+.pin-display {
+  width: 100vw;
+  height: 60vh;
+  font-size: 20vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

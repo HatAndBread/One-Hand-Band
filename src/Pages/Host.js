@@ -1,10 +1,19 @@
 import { useState, useEffect, useContext } from 'react';
 import { Context } from '../App';
+import Instruments from './Instruments';
 import socket from '../clientSocketHandler';
+import '../Styles/Pages/Host.css';
 
 export default function Host() {
   const context = useContext(Context);
   const [pinText, setPinText] = useState('');
+  const [pinSet, setPinSet] = useState(false);
+  useEffect(() => {
+    if (!pinSet) {
+      socket.emit('getPin');
+      setPinSet(true);
+    }
+  }, [pinSet]);
   useEffect(() => {
     socket.on('getPin', (data, session) => {
       console.log(data);
@@ -19,13 +28,13 @@ export default function Host() {
     };
   }, [context]);
 
-  const generatePin = () => {
-    socket.emit('getPin');
-  };
   return (
     <div>
-      <div className="pin-display">{pinText}</div>
-      <button onClick={generatePin}>Generate Pin</button>
+      {pinSet && <Instruments />}
+      {!pinSet && <div>'Fetching pin... Please wait✨'</div>}
+      <div className="pin-display">
+        <div>{pinText}</div>
+      </div>
     </div>
   );
 }

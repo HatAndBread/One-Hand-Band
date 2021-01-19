@@ -1,0 +1,15 @@
+.home-container {
+  display: flex;
+  position: fixed;
+  top: 40px;
+  justify-content: center;
+  width: 100vw;
+  height: calc(100vh - 40px);
+}
+
+.home-button-container {
+  display: flex;
+  height: 64vh;
+  flex-direction: column;
+  justify-content: space-around;
+}

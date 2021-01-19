@@ -1,0 +1,9 @@
+.instrument-links {
+  width: 100vw;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.instrument-links a {
+  font-size: 40px;
+}

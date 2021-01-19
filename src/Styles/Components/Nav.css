@@ -1,0 +1,23 @@
+.home-btn {
+  background-color: #9d8df1;
+  text-align: center;
+  color: snow;
+  padding: 16px 8px 16px 8px;
+  border-radius: 6px;
+}
+
+nav ul {
+  display: flex;
+  justify-content: space-around;
+  list-style: none;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+}
+
+nav {
+  background-color: #9d8df1;
+  display: flex;
+  align-items: center;
+  height: 40px;
+}

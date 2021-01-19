@@ -28,6 +28,7 @@ export default function InstrumentTemplate({ instrument }) {
   const preventer = (e) => {
     e.preventDefault();
   };
+
   useEffect(() => {
     setMyInstrument({ instrument });
     return () => {
