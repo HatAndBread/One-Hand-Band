@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-const onStyle = { backgroundColor: 'green ', color: 'snow' };
-const offStyle = { backgroundColor: 'white ', color: 'black' };
+const onStyle = { backgroundColor: '#9d8df1' };
+const offStyle = { backgroundColor: '#41463d' };
 
 export default function OctaveButton({ value, octave, setOctave, setChordUpdated }) {
   const [style, setStyle] = useState(offStyle);
