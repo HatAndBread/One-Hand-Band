@@ -15,6 +15,7 @@ a {
 button {
   background-color: #9d8df1;
   color: snow;
+  border-radius: 6px;
 }
 
 .link-btn {

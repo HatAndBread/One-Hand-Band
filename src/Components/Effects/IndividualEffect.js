@@ -1,9 +1,10 @@
 import { useContext, useState } from 'react';
 import { Context } from '../../App';
 import handleEffects from '../../MusicLogic/handleEffects';
+import '../../Styles/Components/Effects.css';
 
-const onStyle = { backgroundColor: 'green', color: 'snow' };
-const offStyle = { backgroundColor: 'snow', color: 'black' };
+const onStyle = { backgroundColor: '#9d8df1', color: 'snow' };
+const offStyle = { backgroundColor: '#41463d', color: 'snow' };
 
 export default function IndividualEffect({ type, params, instrument }) {
   const sessionPin = useContext(Context).sessionPin;
@@ -34,7 +35,7 @@ export default function IndividualEffect({ type, params, instrument }) {
     handleEffects(clone, socketId, instrument, sessionPin);
   };
   return (
-    <div>
+    <div className="individual-effect">
       <button onClick={onOffButtClick} style={buttStyle}>
         {type}
       </button>
@@ -42,8 +43,7 @@ export default function IndividualEffect({ type, params, instrument }) {
         {Object.entries(params).map((entry) => {
           if (entry[0] !== 'on') {
             return (
-              <label key={entry[0]}>
-                {entry[0][0].toUpperCase() + entry[0].substring(1, entry[0].length) + ': '}
+              <div key={entry[0]}>
                 <input
                   data-type={entry[0]}
                   type="range"
@@ -53,8 +53,9 @@ export default function IndividualEffect({ type, params, instrument }) {
                   step={entry[1].step}
                   onChange={handleChange}
                 />
+                <label>{entry[0][0].toUpperCase() + entry[0].substring(1, entry[0].length) + ': '}</label>
                 {entry[0] === 'shift' && entry[1].level}
-              </label>
+              </div>
             );
           }
           return undefined;

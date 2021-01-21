@@ -1,0 +1,14 @@
+.individual-effect {
+  display: flex;
+  flex-direction: column;
+  border-width: 4px;
+  max-width: 200px;
+  border-style: ridge;
+  border-radius: 6px;
+}
+.effects-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow: scroll;
+}

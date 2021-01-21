@@ -28,8 +28,7 @@ export default function Settings({ instrument }) {
         return (
           <div>
             <AttackSustainDecayRelease instrument={instrument} />
-            <label htmlFor="rampTo">
-              Ramp to note:
+            <div style={{ display: 'flex' }}>
               <input
                 type="range"
                 id="rampTo"
@@ -40,8 +39,8 @@ export default function Settings({ instrument }) {
                 defaultValue={globalInstrumentSettings[instrument].rampTo}
                 onChange={handleChange}
               />
-            </label>
-            <SettingsWaves instrument={instrument} />
+              <label htmlFor="rampTo">Ramp</label>
+            </div>
           </div>
         );
       case 'noise':
@@ -58,21 +57,24 @@ export default function Settings({ instrument }) {
   };
 
   return (
-    <div>
-      {getKnobs()}
-      <label htmlFor="volume">
-        Volume:
-        <input
-          type="range"
-          id="volume"
-          name="volume"
-          min="0"
-          max="1"
-          step="0.05"
-          defaultValue={globalInstrumentSettings[instrument].volume}
-          onChange={handleChange}
-        />
-      </label>
+    <div className="settings-container">
+      <div className="main-settings-container">
+        <div style={{ display: 'flex' }}>
+          <input
+            type="range"
+            id="volume"
+            name="volume"
+            min="0"
+            max="1"
+            step="0.05"
+            defaultValue={globalInstrumentSettings[instrument].volume}
+            onChange={handleChange}
+          />
+          <label htmlFor="volume">Volume</label>
+        </div>
+        {getKnobs()}
+      </div>
+      {instrument === 'keyboard' && <SettingsWaves instrument={instrument} />}
       <Effects instrument={instrument} />
     </div>
   );

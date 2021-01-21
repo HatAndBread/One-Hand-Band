@@ -1,3 +1,10 @@
+.settings-container {
+  display: flex;
+}
+.main-settings-container {
+  display: flex;
+  flex-direction: column;
+}
 .settings-link-container {
   display: flex;
   justify-content: center;
@@ -10,4 +17,9 @@
   font-size: 22px;
   display: flex;
   width: fit-content;
+}
+
+.wave-selector {
+  display: flex;
+  flex-direction: column;
 }

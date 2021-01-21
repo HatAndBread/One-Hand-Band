@@ -19,9 +19,8 @@ export default function AttackSustainDecayRelease({ instrument }) {
     console.log(settings);
   }, [settings]);
   return (
-    <div>
-      <label htmlFor={'attack'}>
-        Attack:
+    <div className="envelope">
+      <div style={{ display: 'flex' }}>
         <input
           type="range"
           name="attack"
@@ -31,9 +30,9 @@ export default function AttackSustainDecayRelease({ instrument }) {
           max="1"
           step="0.01"
         />
-      </label>
-      <label htmlFor={'sustain'}>
-        Sustain:
+        <label htmlFor={'attack'}>Attack</label>
+      </div>
+      <div style={{ display: 'flex' }}>
         <input
           type="range"
           name="sustain"
@@ -43,9 +42,9 @@ export default function AttackSustainDecayRelease({ instrument }) {
           max="1"
           step="0.01"
         />
-      </label>
-      <label htmlFor={'decay'}>
-        Decay:
+        <label htmlFor={'sustain'}>Sustain</label>
+      </div>
+      <div style={{ display: 'flex' }}>
         <input
           type="range"
           name="decay"
@@ -55,9 +54,9 @@ export default function AttackSustainDecayRelease({ instrument }) {
           max="1"
           step="0.1"
         />
-      </label>
-      <label htmlFor={'release'}>
-        Release:
+        <label htmlFor={'decay'}>Decay</label>
+      </div>
+      <div style={{ display: 'flex' }}>
         <input
           type="range"
           name="release"
@@ -67,7 +66,8 @@ export default function AttackSustainDecayRelease({ instrument }) {
           max="1"
           step="0.1"
         />
-      </label>
+        <label htmlFor={'release'}>Release</label>
+      </div>
     </div>
   );
 }

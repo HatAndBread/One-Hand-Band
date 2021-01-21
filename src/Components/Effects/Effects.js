@@ -5,7 +5,7 @@ import IndividualEffect from './IndividualEffect';
 export default function Effects({ instrument }) {
   const effects = useContext(Context).globalEffectsSettings[instrument];
   return (
-    <div>
+    <div className="effects-container">
       <IndividualEffect type={'distortion'} params={effects.distortion} instrument={instrument} />
       <IndividualEffect type={'delay'} params={effects.delay} instrument={instrument} />
       <IndividualEffect type={'pulverizer'} params={effects.pulverizer} instrument={instrument} />
