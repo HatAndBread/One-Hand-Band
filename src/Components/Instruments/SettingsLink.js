@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+import '.././../Styles/Components/Settings.css';
 
 export default function SettingsLink({ forInstrument }) {
   const path = useLocation().pathname;
@@ -6,7 +7,9 @@ export default function SettingsLink({ forInstrument }) {
   return (
     <div>
       {path === `/instrument/${forInstrument}` ? (
-        <Link to={`/instrument/${forInstrument}/settings`}>{capitalized} settings</Link>
+        <Link to={`/instrument/${forInstrument}/settings`} className="settings-link">
+          🎛
+        </Link>
       ) : (
         <Link to={`/instrument/${forInstrument}`}>Hide settings</Link>
       )}

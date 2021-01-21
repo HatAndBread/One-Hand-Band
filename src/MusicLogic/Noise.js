@@ -22,6 +22,13 @@ import saxSkronk4 from '../assets/saxSkronk4.mp3';
 import saxSkronk5 from '../assets/saxSkronk5.mp3';
 import saxSkronk6 from '../assets/saxSkronk6.mp3';
 import saxSkronk7 from '../assets/saxSkronk7.mp3';
+import saxSkronk8 from '../assets/saxSkronk8.mp3';
+import saxSkronk9 from '../assets/saxSkronk9.mp3';
+import saxSkronk10 from '../assets/saxSkronk10.mp3';
+import saxSkronk11 from '../assets/saxSkronk11.mp3';
+import saxSkronk12 from '../assets/saxSkronk12.mp3';
+import saxSkronk13 from '../assets/saxSkronk13.mp3';
+import saxSkronk14 from '../assets/saxSkronk14.mp3';
 
 class Noise extends Instrument {
   constructor() {
@@ -48,6 +55,13 @@ class Noise extends Instrument {
     this.saxSkronk5 = new Tone.Player(saxSkronk5).connect(this.vibrato);
     this.saxSkronk6 = new Tone.Player(saxSkronk6).connect(this.vibrato);
     this.saxSkronk7 = new Tone.Player(saxSkronk7).connect(this.vibrato);
+    this.saxSkronk8 = new Tone.Player(saxSkronk8).connect(this.vibrato);
+    this.saxSkronk9 = new Tone.Player(saxSkronk9).connect(this.vibrato);
+    this.saxSkronk10 = new Tone.Player(saxSkronk10).connect(this.vibrato);
+    this.saxSkronk11 = new Tone.Player(saxSkronk11).connect(this.vibrato);
+    this.saxSkronk12 = new Tone.Player(saxSkronk12).connect(this.vibrato);
+    this.saxSkronk13 = new Tone.Player(saxSkronk13).connect(this.vibrato);
+    this.saxSkronk14 = new Tone.Player(saxSkronk14).connect(this.vibrato);
     this.pink = new Tone.Noise('pink').connect(this.vibrato);
     this.white = new Tone.Noise('white').connect(this.vibrato);
     this.brown = new Tone.Noise('brown').connect(this.vibrato);

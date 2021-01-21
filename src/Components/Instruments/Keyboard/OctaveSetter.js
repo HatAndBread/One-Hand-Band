@@ -3,11 +3,11 @@ import '../../../Styles/Components/Keyboard.css';
 
 export default function OctaveSetter({ octave, setOctave }) {
   const [colors, setColors] = useState([
-    { backgroundColor: 'white' },
-    { backgroundColor: 'white' },
-    { backgroundColor: 'red' },
-    { backgroundColor: 'white' },
-    { backgroundColor: 'white' }
+    { backgroundColor: '#41463d' },
+    { backgroundColor: '#41463d' },
+    { backgroundColor: '#9d8df1' },
+    { backgroundColor: '#41463d' },
+    { backgroundColor: '#41463d' }
   ]);
 
   const handleClick = (e) => {
@@ -15,8 +15,8 @@ export default function OctaveSetter({ octave, setOctave }) {
     const newColors = [];
     for (let i = 0; i < colors.length; i++) {
       i === parseInt(e.target.value, 10)
-        ? newColors.push({ backgroundColor: 'red' })
-        : newColors.push({ backgroundColor: 'white' });
+        ? newColors.push({ backgroundColor: '#9d8df1' })
+        : newColors.push({ backgroundColor: '#41463d' });
     }
     setColors(newColors);
   };
