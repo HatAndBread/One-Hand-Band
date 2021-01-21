@@ -8,11 +8,19 @@ export default function SettingsLink({ forInstrument }) {
   return (
     <div className="settings-link-container">
       {path === `/instrument/${forInstrument}` ? (
-        <div>
-          <Link to={`${forInstrument}/settings`} className="settings-link">
-            🎛
-          </Link>
-          <Link to={`${forInstrument}/effects`}>Effects</Link>
+        <div className="link-container">
+          <div>
+            <Link to={`${forInstrument}/settings`} className="settings-link">
+              🎚
+            </Link>
+            <label>Settings</label>
+          </div>
+          <div>
+            <Link to={`${forInstrument}/effects`} className="settings-link">
+              🎛
+            </Link>
+            <label>Effects</label>
+          </div>
         </div>
       ) : (
         <Link to={`/instrument/${forInstrument}`} className="hide-settings-btn link-btn">

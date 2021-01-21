@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState, useCallback } from 'react';
 import { Context } from '../../App';
-import { Route, Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import SettingsLink from './SettingsLink';
 import Settings from '../Settings/Settings';
 import Effects from '../Effects/Effects';
