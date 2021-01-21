@@ -1,10 +1,10 @@
 import { useContext } from 'react';
 import { Context } from '../../App';
-import Effects from '../Effects/Effects';
 import AttackSustainDecayRelease from './AttackSustainDecayRelease';
 import handleSettings from '../../MusicLogic/handleSettings';
 import SettingsWaves from './SettingsWaves';
 import '../../Styles/Components/Settings.css';
+import Effects from '../Effects/Effects';
 
 export default function Settings({ instrument }) {
   const setSettings = useContext(Context).setGlobalInstrumentSettings;

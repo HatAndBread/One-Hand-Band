@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState, useCallback } from 'react';
 import { Context } from '../../App';
-import { Route } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import SettingsLink from './SettingsLink';
 import Settings from '../Settings/Settings';
+import Effects from '../Effects/Effects';
 import Theremin from './Theremin';
 import Keyboard from './Keyboard';
 import Drone from './Drone';
@@ -48,6 +49,9 @@ export default function InstrumentTemplate({ instrument }) {
       <SettingsLink forInstrument={instrument} />
       <Route path={`/instrument/${instrument}/settings`}>
         <Settings instrument={instrument} />
+      </Route>
+      <Route path={`/instrument/${instrument}/effects`}>
+        <Effects instrument={instrument} />
       </Route>
       {instrument === 'drone' && <Drone setFinalData={setFinalData} />}
       {instrument === 'theremin' && <Theremin setFinalData={setFinalData} />}

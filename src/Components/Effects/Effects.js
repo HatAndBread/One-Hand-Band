@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { Context } from '../../App';
 import IndividualEffect from './IndividualEffect';
+import '../../Styles/Components/Effects.css';
 
 export default function Effects({ instrument }) {
   const effects = useContext(Context).globalEffectsSettings[instrument];
