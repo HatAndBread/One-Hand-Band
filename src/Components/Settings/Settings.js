@@ -75,7 +75,6 @@ export default function Settings({ instrument }) {
         {getKnobs()}
       </div>
       {instrument === 'keyboard' && <SettingsWaves instrument={instrument} />}
-      <Effects instrument={instrument} />
     </div>
   );
 }

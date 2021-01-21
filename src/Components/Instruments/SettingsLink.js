@@ -12,14 +12,14 @@ export default function SettingsLink({ forInstrument }) {
           <div>
             <Link to={`${forInstrument}/settings`} className="settings-link">
               🎚
+              <label style={{ fontSize: '16px' }}>Settings</label>
             </Link>
-            <label>Settings</label>
           </div>
           <div>
             <Link to={`${forInstrument}/effects`} className="settings-link">
               🎛
+              <label style={{ fontSize: '16px' }}>Effects</label>
             </Link>
-            <label>Effects</label>
           </div>
         </div>
       ) : (
