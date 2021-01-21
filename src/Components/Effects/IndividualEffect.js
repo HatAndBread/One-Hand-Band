@@ -3,8 +3,14 @@ import { Context } from '../../App';
 import handleEffects from '../../MusicLogic/handleEffects';
 import '../../Styles/Components/Effects.css';
 
-const onStyle = { backgroundColor: '#9d8df1', color: 'snow' };
-const offStyle = { backgroundColor: '#41463d', color: 'snow' };
+const onStyle = {
+  backgroundColor: '#9d8df1',
+  color: 'snow'
+};
+const offStyle = {
+  backgroundColor: 'gray',
+  color: 'snow'
+};
 
 export default function IndividualEffect({ type, params, instrument }) {
   const sessionPin = useContext(Context).sessionPin;

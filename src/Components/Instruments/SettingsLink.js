@@ -24,7 +24,7 @@ export default function SettingsLink({ forInstrument }) {
         </div>
       ) : (
         <Link to={`/instrument/${forInstrument}`} className="hide-settings-btn link-btn">
-          Hide {forInstrument} settings
+          Back ⏪
         </Link>
       )}
     </div>
