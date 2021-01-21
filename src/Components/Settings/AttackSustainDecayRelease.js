@@ -1,6 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { Context } from '../../App';
 import handleSettings from '../../MusicLogic/handleSettings';
+import '../../Styles/Components/Settings.css';
 
 export default function AttackSustainDecayRelease({ instrument }) {
   const settings = useContext(Context).globalInstrumentSettings[instrument];

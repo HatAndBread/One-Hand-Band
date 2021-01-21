@@ -1,5 +1,13 @@
-.settings-link {
-  font-size: 40px;
+.settings-link-container {
   display: flex;
   justify-content: center;
+}
+.settings-link {
+  font-size: 40px;
+  width: fit-content;
+}
+.hide-settings-btn {
+  font-size: 22px;
+  display: flex;
+  width: fit-content;
 }

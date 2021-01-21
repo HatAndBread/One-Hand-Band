@@ -4,6 +4,7 @@ import Effects from '../Effects/Effects';
 import AttackSustainDecayRelease from './AttackSustainDecayRelease';
 import handleSettings from '../../MusicLogic/handleSettings';
 import SettingsWaves from './SettingsWaves';
+import '../../Styles/Components/Settings.css';
 
 export default function Settings({ instrument }) {
   const setSettings = useContext(Context).setGlobalInstrumentSettings;
