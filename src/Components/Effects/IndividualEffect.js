@@ -45,28 +45,26 @@ export default function IndividualEffect({ type, params, instrument }) {
       <button onClick={onOffButtClick} style={buttStyle}>
         {type}
       </button>
-      <ul>
-        {Object.entries(params).map((entry) => {
-          if (entry[0] !== 'on') {
-            return (
-              <div key={entry[0]}>
-                <input
-                  data-type={entry[0]}
-                  type="range"
-                  defaultValue={entry[1].level}
-                  min={entry[1].min}
-                  max={entry[1].max}
-                  step={entry[1].step}
-                  onChange={handleChange}
-                />
-                <label>{entry[0][0].toUpperCase() + entry[0].substring(1, entry[0].length) + ': '}</label>
-                {entry[0] === 'shift' && entry[1].level}
-              </div>
-            );
-          }
-          return undefined;
-        })}
-      </ul>
+      {Object.entries(params).map((entry) => {
+        if (entry[0] !== 'on') {
+          return (
+            <div key={entry[0]}>
+              <input
+                data-type={entry[0]}
+                type="range"
+                defaultValue={entry[1].level}
+                min={entry[1].min}
+                max={entry[1].max}
+                step={entry[1].step}
+                onChange={handleChange}
+              />
+              <label>{entry[0][0].toUpperCase() + entry[0].substring(1, entry[0].length) + ': '}</label>
+              {entry[0] === 'shift' && entry[1].level}
+            </div>
+          );
+        }
+        return undefined;
+      })}
     </div>
   );
 }

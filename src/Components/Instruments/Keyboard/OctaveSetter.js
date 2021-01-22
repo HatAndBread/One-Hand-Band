@@ -3,11 +3,12 @@ import '../../../Styles/Components/Keyboard.css';
 
 export default function OctaveSetter({ octave, setOctave }) {
   const [colors, setColors] = useState([
-    { backgroundColor: '#41463d' },
-    { backgroundColor: '#41463d' },
-    { backgroundColor: '#9d8df1' },
-    { backgroundColor: '#41463d' },
-    { backgroundColor: '#41463d' }
+    { backgroundColor: 'gray', borderRadius: '0px' },
+    { backgroundColor: 'gray', borderRadius: '0px' },
+    { backgroundColor: '#9d8df1', borderRadius: '0px' },
+    { backgroundColor: 'gray', borderRadius: '0px' },
+    { backgroundColor: 'gray', borderRadius: '0px' },
+    { backgroundColor: 'gray', borderRadius: '0px' }
   ]);
 
   const handleClick = (e) => {
@@ -15,14 +16,14 @@ export default function OctaveSetter({ octave, setOctave }) {
     const newColors = [];
     for (let i = 0; i < colors.length; i++) {
       i === parseInt(e.target.value, 10)
-        ? newColors.push({ backgroundColor: '#9d8df1' })
-        : newColors.push({ backgroundColor: '#41463d' });
+        ? newColors.push({ backgroundColor: '#9d8df1', borderRadius: '0px' })
+        : newColors.push({ backgroundColor: 'gray', borderRadius: '0px' });
     }
     setColors(newColors);
   };
   const buttons = [];
-  const text = ['Very low', 'Low', 'Medium', 'High', 'Very high'];
-  for (let i = 0; i < 5; i++) {
+  const text = ['Very low', 'Low', 'Medium', 'High', 'Very high', '🙉'];
+  for (let i = 0; i < 6; i++) {
     buttons.push(
       <button style={colors[i]} value={i} key={i} onClick={handleClick}>
         {text[i]}
