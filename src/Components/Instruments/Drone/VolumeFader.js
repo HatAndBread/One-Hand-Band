@@ -1,3 +1,5 @@
+import '../../../Styles/Components/Drone.css';
+
 export default function VolumeFader({ number, droneData, setDroneData }) {
   const handleChange = (e) => {
     const copy = JSON.parse(JSON.stringify(droneData));
@@ -5,9 +7,9 @@ export default function VolumeFader({ number, droneData, setDroneData }) {
     setDroneData(copy);
   };
   return (
-    <div>
+    <div className="volume-fader">
       <label htmlFor="volume-fader" min="0" max="100">
-        Volume
+        Vol.
       </label>
       <input
         type="range"

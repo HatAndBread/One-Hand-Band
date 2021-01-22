@@ -1,17 +1,38 @@
+.drones-container {
+  display: flex;
+}
+
 .single-drone-container {
   display: flex;
   flex-direction: column;
-  background-color: pink;
   justify-content: center;
   align-items: center;
   width: 100vw;
-  margin: 20px 0px 20px 0px;
+  border-radius: 4px;
+  border-style: groove;
+}
+
+.drone-top-btns {
+  display: flex;
+}
+.drone-top-btns button {
+  flex-grow: 1;
+  padding: 4px 0px 4px 0px;
+  background-color: gray;
 }
 
 .pitch-fader {
   display: flex;
   justify-content: center;
   width: 100%;
+}
+.volume-fader {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.volume-fader input {
+  width: 70%;
 }
 
 .pitch-fader input {
@@ -44,4 +65,10 @@
 
 .octave-button-container button {
   flex-grow: 1;
+}
+
+@media (orientation: portrait) {
+  .drones-container {
+    flex-direction: column;
+  }
 }

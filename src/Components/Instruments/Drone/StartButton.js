@@ -20,6 +20,7 @@ export default function StartButton({ number, droneData, setDroneData }) {
     setDroneData(copy);
   };
   useEffect(() => {
+    setText(droneData[number].playing ? 'Stop' : 'Start');
     droneData[number].playing ? setButtStyle(onStyle) : setButtStyle(offStyle);
   }, [droneData, number]);
   return (

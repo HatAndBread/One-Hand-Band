@@ -14,13 +14,13 @@ export default function SettingsLink({ forInstrument }) {
             <div>
               <Link to={`/instrument/${forInstrument}/settings`} className="settings-link">
                 🎚
-                <label style={{ fontSize: '16px' }}>{capitalized} Settings</label>
+                <label style={{ fontSize: '11px' }}>{capitalized} Settings</label>
               </Link>
             </div>
             <div>
               <Link to={`/instrument/${forInstrument}/effects`} className="settings-link">
                 🎛
-                <label style={{ fontSize: '16px' }}>{capitalized} Effects</label>
+                <label style={{ fontSize: '11px' }}>{capitalized} Effects</label>
               </Link>
             </div>
           </div>
@@ -31,13 +31,13 @@ export default function SettingsLink({ forInstrument }) {
           <div>
             <Link to={`/instrument/${forInstrument}`} className="settings-link">
               🎚
-              <label style={{ fontSize: '16px' }}>{capitalized} Settings</label>
+              <label style={{ fontSize: '11px' }}>{capitalized} Settings</label>
             </Link>
           </div>
           <div>
             <Link to={`/instrument/${forInstrument}/effects`} className="settings-link">
               🎛
-              <label style={{ fontSize: '16px' }}>{capitalized} Effects</label>
+              <label style={{ fontSize: '11px' }}>{capitalized} Effects</label>
             </Link>
           </div>
         </div>
@@ -47,13 +47,13 @@ export default function SettingsLink({ forInstrument }) {
           <div>
             <Link to={`/instrument/${forInstrument}/settings`} className="settings-link">
               🎚
-              <label style={{ fontSize: '16px' }}>{capitalized} Settings</label>
+              <label style={{ fontSize: '11px' }}>{capitalized} Settings</label>
             </Link>
           </div>
           <div>
             <Link to={`/instrument/${forInstrument}`} className="settings-link">
               🎛
-              <label style={{ fontSize: '16px' }}>{capitalized} Effects</label>
+              <label style={{ fontSize: '11px' }}>{capitalized} Effects</label>
             </Link>
           </div>
         </div>
