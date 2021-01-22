@@ -22,9 +22,10 @@
     flex-direction: column;
     justify-content: left;
     border-width: 4px;
-    max-width: 200px;
+    width: 100%;
     border-style: ridge;
     border-radius: 6px;
+    margin: 8px;
   }
   .effects-container {
     display: flex;

@@ -1,11 +1,11 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { Context } from '../../App';
 import AttackSustainDecayRelease from './AttackSustainDecayRelease';
 import handleSettings from '../../MusicLogic/handleSettings';
 import SettingsWaves from './SettingsWaves';
 import '../../Styles/Components/Settings.css';
 
-export default function Settings({ instrument }) {
+export default function Settings({ instrument, setSettingsOpen }) {
   const setSettings = useContext(Context).setGlobalInstrumentSettings;
   const globalInstrumentSettings = useContext(Context).globalInstrumentSettings;
   const sessionPin = useContext(Context).sessionPin;
@@ -18,6 +18,12 @@ export default function Settings({ instrument }) {
     setSettings(copy);
     handleSettings(copy[instrument], socketId, instrument, sessionPin);
   };
+  useEffect(() => {
+    setSettingsOpen(true);
+    return () => {
+      setSettingsOpen(false);
+    };
+  }, [setSettingsOpen]);
 
   const getKnobs = () => {
     switch (instrument) {

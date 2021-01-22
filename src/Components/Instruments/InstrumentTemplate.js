@@ -16,6 +16,7 @@ export default function InstrumentTemplate({ instrument }) {
   const [finalData, setFinalData] = useState(null);
   const setMyInstrument = useContext(Context).setMyInstrument;
   const socketId = useContext(Context).socketId;
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const clone = useCallback(
     (obj) => {
       const copy = JSON.parse(JSON.stringify(obj));
@@ -48,17 +49,17 @@ export default function InstrumentTemplate({ instrument }) {
     <div onContextMenu={preventer}>
       <SettingsLink forInstrument={instrument} />
       <Route path={`/instrument/${instrument}/settings`}>
-        <Settings instrument={instrument} />
+        <Settings instrument={instrument} setSettingsOpen={setSettingsOpen} />
       </Route>
       <Route path={`/instrument/${instrument}/effects`}>
-        <Effects instrument={instrument} />
+        <Effects instrument={instrument} setSettingsOpen={setSettingsOpen} />
       </Route>
-      {instrument === 'drone' && <Drone setFinalData={setFinalData} />}
-      {instrument === 'theremin' && <Theremin setFinalData={setFinalData} />}
-      {instrument === 'keyboard' && <Keyboard setFinalData={setFinalData} />}
-      {instrument === 'noise' && <Noise setFinalData={setFinalData} />}
-      {instrument === 'percussion' && <Percussion setFinalData={setFinalData} />}
-      {instrument === 'skronk' && <Skronk setFinalData={setFinalData} />}
+      {!settingsOpen && instrument === 'drone' && <Drone setFinalData={setFinalData} />}
+      {!settingsOpen && instrument === 'theremin' && <Theremin setFinalData={setFinalData} />}
+      {!settingsOpen && instrument === 'keyboard' && <Keyboard setFinalData={setFinalData} />}
+      {!settingsOpen && instrument === 'noise' && <Noise setFinalData={setFinalData} />}
+      {!settingsOpen && instrument === 'percussion' && <Percussion setFinalData={setFinalData} />}
+      {!settingsOpen && instrument === 'skronk' && <Skronk setFinalData={setFinalData} />}
     </div>
   );
 }
