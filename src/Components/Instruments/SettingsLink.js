@@ -8,35 +8,52 @@ export default function SettingsLink({ forInstrument }) {
 
   return (
     <div>
-      {path === `/instrument/${forInstrument}` ? (
+      {path === `/instrument/${forInstrument}` && (
         <div className="settings-link-container">
           <div className="link-container">
             <div>
               <Link to={`/instrument/${forInstrument}/settings`} className="settings-link">
                 🎚
-                <label style={{ fontSize: '16px' }}>Settings</label>
+                <label style={{ fontSize: '16px' }}>{capitalized} Settings</label>
               </Link>
             </div>
             <div>
               <Link to={`/instrument/${forInstrument}/effects`} className="settings-link">
                 🎛
-                <label style={{ fontSize: '16px' }}>Effects</label>
+                <label style={{ fontSize: '16px' }}>{capitalized} Effects</label>
               </Link>
             </div>
           </div>
         </div>
-      ) : (
+      )}
+      {path === `/instrument/${forInstrument}/settings` && (
         <div className="link-container">
           <div>
             <Link to={`/instrument/${forInstrument}`} className="settings-link">
               🎚
-              <label style={{ fontSize: '16px' }}>Settings</label>
+              <label style={{ fontSize: '16px' }}>{capitalized} Settings</label>
+            </Link>
+          </div>
+          <div>
+            <Link to={`/instrument/${forInstrument}/effects`} className="settings-link">
+              🎛
+              <label style={{ fontSize: '16px' }}>{capitalized} Effects</label>
+            </Link>
+          </div>
+        </div>
+      )}
+      {path === `/instrument/${forInstrument}/effects` && (
+        <div className="link-container">
+          <div>
+            <Link to={`/instrument/${forInstrument}/settings`} className="settings-link">
+              🎚
+              <label style={{ fontSize: '16px' }}>{capitalized} Settings</label>
             </Link>
           </div>
           <div>
             <Link to={`/instrument/${forInstrument}`} className="settings-link">
               🎛
-              <label style={{ fontSize: '16px' }}>Effects</label>
+              <label style={{ fontSize: '16px' }}>{capitalized} Effects</label>
             </Link>
           </div>
         </div>

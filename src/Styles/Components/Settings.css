@@ -1,9 +1,17 @@
 .settings-container {
   display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 16px;
 }
 .main-settings-container {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  border-style: ridge;
+  border-radius: 6px;
+  width: fit-content;
+  height: 100%;
 }
 .settings-link-container {
   display: flex;
@@ -19,13 +27,26 @@
 }
 
 .wave-selector {
+  justify-content: left;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  border-style: ridge;
+  border-radius: 6px;
+  width: fit-content !important;
+}
+.wave-selector div {
+  align-self: baseline;
 }
 
 .link-container {
   display: flex;
   width: 100vw;
   justify-content: space-around;
+}
+
+@media (orientation: portrait) {
+  .settings-container {
+    flex-direction: column;
+    align-items: center;
+  }
 }

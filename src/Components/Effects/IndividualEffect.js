@@ -58,8 +58,8 @@ export default function IndividualEffect({ type, params, instrument }) {
                 step={entry[1].step}
                 onChange={handleChange}
               />
-              <label>{entry[0][0].toUpperCase() + entry[0].substring(1, entry[0].length) + ': '}</label>
-              {entry[0] === 'shift' && entry[1].level}
+              <label>{entry[0][0].toUpperCase() + entry[0].substring(1, entry[0].length) + ''}</label>
+              {entry[0] === 'shift: ' && entry[1].level}
             </div>
           );
         }
