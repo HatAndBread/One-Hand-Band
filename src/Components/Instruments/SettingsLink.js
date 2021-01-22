@@ -3,7 +3,6 @@ import '.././../Styles/Components/Settings.css';
 
 export default function SettingsLink({ forInstrument }) {
   const path = useLocation().pathname;
-  console.log(path);
   const capitalized = `${forInstrument[0].toUpperCase()}${forInstrument.substring(1, forInstrument.length)}`;
 
   return (

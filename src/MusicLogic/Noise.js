@@ -117,7 +117,7 @@ class Noise extends Instrument {
         this[key].loop = true;
       }
       if (this[key] instanceof Tone.Oscillator) {
-        this[key].volume.value = -6;
+        this[key].volume.value = -3;
       }
     });
   }

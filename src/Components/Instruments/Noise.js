@@ -33,7 +33,6 @@ export default function Noise({ setFinalData }) {
 
   return (
     <div className="noise-container">
-      <div>This is the noise instrument!</div>
       <div className="noise-row">
         <NoiseArea name={'Feedback'} />
         <NoiseArea name={'Skronk'} />

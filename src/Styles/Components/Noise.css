@@ -1,7 +1,6 @@
 .noise-container {
   width: 100vw;
-  height: 70vh;
-  background-color: pink;
+  height: 60vh;
   touch-action: none;
   display: flex;
   flex-direction: column;
@@ -14,7 +13,21 @@
 }
 
 .noise-area-container {
+  user-select: none;
   background-color: grey;
-  margin: 8px;
+  display: flex;
+  justify-content: center;
+  margin: 4px;
   flex-grow: 1;
+  border-radius: 6px;
+}
+
+.noise-label {
+  position: absolute;
+}
+
+@media (orientation: portrait) {
+  .noise-container {
+    height: 75vh;
+  }
 }
