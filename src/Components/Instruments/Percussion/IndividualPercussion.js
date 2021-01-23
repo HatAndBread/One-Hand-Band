@@ -27,7 +27,6 @@ export default function IndividualPercussion({ defaultDrum, number, setFinalData
     loopCopy[number].drum.drum = e.target.value;
     copy[number].drum = e.target.value;
     setPercussionData(copy);
-    setLoopData(loopCopy);
     setDrum(e.target.value);
   };
   const sampleRateChange = (e) => {
@@ -36,7 +35,6 @@ export default function IndividualPercussion({ defaultDrum, number, setFinalData
     loopCopy[number].drum.sampleRate = e.target.value;
     copy[number].sampleRate = e.target.value;
     setPercussionData(copy);
-    setLoopData(loopCopy);
   };
   return (
     <div className="individual-percussion-container">

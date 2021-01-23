@@ -45,56 +45,51 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
       console.log(copy);
       setLoopData(copy);
     };
+
     const getDrumSelectors = (i) => {
       return (
         <div key={i} className="butt-column">
           <div className="drum-rate-input">
-            <select defaultValue={percussionObj.one.drum} onChange={handleChange} data-number={'one'}>
+            <select defaultValue={loopData.one.drum.drum} onChange={handleChange} data-number={'one'}>
               {percussionTypes.map((type) => {
                 return <option key={type}>{type}</option>;
               })}
             </select>
-            <input type="range" />
           </div>
           <div className="drum-rate-input">
-            <select defaultValue={percussionObj.two.drum} onChange={handleChange} data-number={'two'}>
+            <select defaultValue={loopData.two.drum.drum} onChange={handleChange} data-number={'two'}>
               {percussionTypes.map((type) => {
                 return <option key={type}>{type}</option>;
               })}
             </select>
-            <input type="range" />
           </div>
           <div className="drum-rate-input">
-            <select defaultValue={percussionObj.three.drum} onChange={handleChange} data-number={'three'}>
+            <select defaultValue={loopData.three.drum.drum} onChange={handleChange} data-number={'three'}>
               {percussionTypes.map((type) => {
                 return <option key={type}>{type}</option>;
               })}
             </select>
-            <input type="range" />
           </div>
           <div className="drum-rate-input">
-            <select defaultValue={percussionObj.four.drum} onChange={handleChange} data-number={'four'}>
+            <select defaultValue={loopData.four.drum.drum} onChange={handleChange} data-number={'four'}>
               {percussionTypes.map((type) => {
                 return <option key={type}>{type}</option>;
               })}
             </select>
-            <input type="range" />
           </div>
           <div className="drum-rate-input">
-            <select defaultValue={percussionObj.five.drum} onChange={handleChange} data-number={'five'}>
+            <select defaultValue={loopData.five.drum.drum} onChange={handleChange} data-number={'five'}>
               {percussionTypes.map((type) => {
                 return <option key={type}>{type}</option>;
               })}
             </select>
-            <input type="range" />
           </div>
           <div className="drum-rate-input">
-            <select defaultValue={percussionObj.six.drum} onChange={handleChange} data-number={'six'}>
+            <select defaultValue={loopData.six.drum.drum} onChange={handleChange} data-number={'six'}>
               {percussionTypes.map((type) => {
                 return <option key={type}>{type}</option>;
               })}
             </select>
-            <input type="range" />
           </div>
         </div>
       );
