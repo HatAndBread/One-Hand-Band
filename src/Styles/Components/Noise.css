@@ -1,6 +1,6 @@
 .noise-container {
   width: 100vw;
-  height: 60vh;
+  height: 55vh;
   touch-action: none;
   display: flex;
   flex-direction: column;

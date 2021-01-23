@@ -1,5 +1,7 @@
 .drones-container {
   display: flex;
+  margin: 8px;
+  justify-content: center;
 }
 
 .single-drone-container {
@@ -7,7 +9,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100vw;
   border-radius: 4px;
   border-style: groove;
 }
@@ -32,11 +33,11 @@
   width: 100%;
 }
 .volume-fader input {
-  width: 70%;
+  width: 65%;
 }
 
 .pitch-fader input {
-  width: 72%;
+  width: 67%;
 }
 
 .pitch-fader .pitch-label {

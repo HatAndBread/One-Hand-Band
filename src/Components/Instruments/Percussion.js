@@ -46,9 +46,11 @@ export default function Percussion({ setFinalData }) {
   };
   return (
     <div className="percussion-container">
-      <button className="rhythm-machine-btn" onClick={rhythmMachineClick}>
-        {rhythmMachineExposed ? 'Hide rhythm machine' : 'Rhythm Machine'}
-      </button>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <button className="rhythm-machine-btn" onClick={rhythmMachineClick}>
+          {rhythmMachineExposed ? 'Hide rhythm machine' : 'Rhythm Machine'}
+        </button>
+      </div>
       {rhythmMachineExposed && <RhythmMachine percussionData={percussionData} setFinalData={setFinalData} />}
       <div className="percussion-row">
         <IndividualPercussion

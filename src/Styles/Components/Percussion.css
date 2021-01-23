@@ -4,6 +4,10 @@
   width: 100vw;
 }
 
+select {
+  border-radius: 8px;
+}
+
 .rhythm-machine-btn {
   width: fit-content;
 }
@@ -14,12 +18,13 @@
   height: 35vh;
 }
 .individual-percussion-container {
-  background-color: pink;
+  background-color: gray;
   margin: 16px;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-radius: 8px;
 }
 
 .percussion-container input[type='range'] {
@@ -29,5 +34,6 @@
 .hit-pad {
   height: 100%;
   width: 100%;
-  background-color: aqua;
+  background-color: #9d8df1;
+  border-radius: 8px;
 }
