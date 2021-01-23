@@ -8,12 +8,22 @@
 .butt-column {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
+}
+
+.butt-column input {
+  max-width: 100px;
+}
+
+.drum-rate-input {
+  display: flex;
+  flex-direction: column;
 }
 
 .machine-butt {
-  width: 16px;
-  height: 16px;
   margin: 1px;
+  flex-grow: 1;
+  border-radius: 4px;
 }
 
 .machine-divider {

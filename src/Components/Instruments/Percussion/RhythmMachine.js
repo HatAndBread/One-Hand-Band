@@ -1,5 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { Context } from '../../../App';
+import { percussionTypes } from '../Percussion';
+import percussionObj from './percussionObj';
 import '../../../Styles/Components/DrumMachine.css';
 
 export default function RhythmMachine({ percussionData, setFinalData }) {
@@ -35,69 +37,135 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
       console.log(e.target.dataset.drumType, e.target.dataset.beat);
       setLoopData(copy);
     };
+
+    const handleChange = (e) => {
+      const copy = JSON.parse(JSON.stringify(loopData));
+      const num = e.target.dataset.number;
+      copy[num].drum.drum = e.target.value;
+      console.log(copy);
+      setLoopData(copy);
+    };
+    const getDrumSelectors = (i) => {
+      return (
+        <div key={i} className="butt-column">
+          <div className="drum-rate-input">
+            <select defaultValue={percussionObj.one.drum} onChange={handleChange} data-number={'one'}>
+              {percussionTypes.map((type) => {
+                return <option key={type}>{type}</option>;
+              })}
+            </select>
+            <input type="range" />
+          </div>
+          <div className="drum-rate-input">
+            <select defaultValue={percussionObj.two.drum} onChange={handleChange} data-number={'two'}>
+              {percussionTypes.map((type) => {
+                return <option key={type}>{type}</option>;
+              })}
+            </select>
+            <input type="range" />
+          </div>
+          <div className="drum-rate-input">
+            <select defaultValue={percussionObj.three.drum} onChange={handleChange} data-number={'three'}>
+              {percussionTypes.map((type) => {
+                return <option key={type}>{type}</option>;
+              })}
+            </select>
+            <input type="range" />
+          </div>
+          <div className="drum-rate-input">
+            <select defaultValue={percussionObj.four.drum} onChange={handleChange} data-number={'four'}>
+              {percussionTypes.map((type) => {
+                return <option key={type}>{type}</option>;
+              })}
+            </select>
+            <input type="range" />
+          </div>
+          <div className="drum-rate-input">
+            <select defaultValue={percussionObj.five.drum} onChange={handleChange} data-number={'five'}>
+              {percussionTypes.map((type) => {
+                return <option key={type}>{type}</option>;
+              })}
+            </select>
+            <input type="range" />
+          </div>
+          <div className="drum-rate-input">
+            <select defaultValue={percussionObj.six.drum} onChange={handleChange} data-number={'six'}>
+              {percussionTypes.map((type) => {
+                return <option key={type}>{type}</option>;
+              })}
+            </select>
+            <input type="range" />
+          </div>
+        </div>
+      );
+    };
     const getOnOffButts = () => {
       const arr = [];
       const ts = parseInt(timeSignature);
-      for (let i = 0; i < ts * 4; i++) {
-        arr.push(
-          <div key={i} className="butt-column">
-            <div
-              id="drum-one-machine"
-              className="machine-butt"
-              data-drum-type={percussionData.one.drum}
-              data-beat={i}
-              data-number={'one'}
-              onClick={handleClick}
-              style={loopData.one.times[i] ? { backgroundColor: 'red' } : { backgroundColor: 'green' }}
-            ></div>
-            <div
-              id="drum-two-machine"
-              className="machine-butt"
-              data-drum-type={percussionData.two.drum}
-              data-beat={i}
-              data-number={'two'}
-              onClick={handleClick}
-              style={loopData.two.times[i] ? { backgroundColor: 'red' } : { backgroundColor: 'green' }}
-            ></div>
-            <div
-              id="drum-three-machine"
-              className="machine-butt"
-              data-drum-type={percussionData.three.drum}
-              data-beat={i}
-              data-number={'three'}
-              onClick={handleClick}
-              style={loopData.three.times[i] ? { backgroundColor: 'red' } : { backgroundColor: 'green' }}
-            ></div>
-            <div
-              id="drum-four-machine"
-              className="machine-butt"
-              data-drum-type={percussionData.four.drum}
-              data-beat={i}
-              data-number={'four'}
-              onClick={handleClick}
-              style={loopData.four.times[i] ? { backgroundColor: 'red' } : { backgroundColor: 'green' }}
-            ></div>
-            <div
-              id="drum-five-machine"
-              className="machine-butt"
-              data-drum-type={percussionData.five.drum}
-              data-beat={i}
-              data-number={'five'}
-              onClick={handleClick}
-              style={loopData.five.times[i] ? { backgroundColor: 'red' } : { backgroundColor: 'green' }}
-            ></div>
-            <div
-              id="drum-six-machine"
-              className="machine-butt"
-              data-drum-type={percussionData.six.drum}
-              data-beat={i}
-              data-number={'six'}
-              onClick={handleClick}
-              style={loopData.six.times[i] ? { backgroundColor: 'red' } : { backgroundColor: 'green' }}
-            ></div>
-          </div>
-        );
-        if ((i + 1) % 4 === 0) {
+      for (let i = 0; i < ts * 4 + 1; i++) {
+        if (!i) {
+          arr.push(getDrumSelectors(i));
+        } else {
+          arr.push(
+            <div key={i} className="butt-column">
+              <div
+                id="drum-one-machine"
+                className="machine-butt"
+                data-drum-type={loopData.one.drum}
+                data-beat={i - 1}
+                data-number={'one'}
+                onClick={handleClick}
+                style={loopData.one.times[i - 1] ? { backgroundColor: 'red' } : { backgroundColor: 'gray' }}
+              ></div>
+              <div
+                id="drum-two-machine"
+                className="machine-butt"
+                data-drum-type={loopData.two.drum}
+                data-beat={i - 1}
+                data-number={'two'}
+                onClick={handleClick}
+                style={loopData.two.times[i - 1] ? { backgroundColor: 'red' } : { backgroundColor: 'gray' }}
+              ></div>
+              <div
+                id="drum-three-machine"
+                className="machine-butt"
+                data-drum-type={loopData.three.drum}
+                data-beat={i - 1}
+                data-number={'three'}
+                onClick={handleClick}
+                style={loopData.three.times[i - 1] ? { backgroundColor: 'red' } : { backgroundColor: 'gray' }}
+              ></div>
+              <div
+                id="drum-four-machine"
+                className="machine-butt"
+                data-drum-type={loopData.four.drum}
+                data-beat={i - 1}
+                data-number={'four'}
+                onClick={handleClick}
+                style={loopData.four.times[i - 1] ? { backgroundColor: 'red' } : { backgroundColor: 'gray' }}
+              ></div>
+              <div
+                id="drum-five-machine"
+                className="machine-butt"
+                data-drum-type={loopData.five.drum}
+                data-beat={i - 1}
+                data-number={'five'}
+                onClick={handleClick}
+                style={loopData.five.times[i - 1] ? { backgroundColor: 'red' } : { backgroundColor: 'gray' }}
+              ></div>
+              <div
+                id="drum-six-machine"
+                className="machine-butt"
+                data-drum-type={loopData.six.drum}
+                data-beat={i - 1}
+                data-number={'six'}
+                onClick={handleClick}
+                style={loopData.six.times[i - 1] ? { backgroundColor: 'red' } : { backgroundColor: 'gray' }}
+              ></div>
+            </div>
+          );
+        }
+        if (i % 4 === 0) {
           arr.push(<div key={Math.random()} className="machine-divider"></div>);
         }
       }
