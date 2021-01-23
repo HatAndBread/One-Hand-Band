@@ -55,11 +55,6 @@ class Percussion extends Instrument {
     this[drum].playbackRate = sampleRate;
     this[drum].start();
   }
-  setAllSampleRates(data) {
-    this.drumsNums.forEach((num) => {
-      this[data.loop[num].drum.drum].playbackRate = data.loop[num].drum.sampleRate;
-    });
-  }
   playbackRateHasChanged(data) {
     for (let i = 0; i < this.drumsNums.length; i++) {
       if (this[data.loop[this.drumsNums[i]].drum.drum].playbackRate !== data.loop[this.drumsNums[i]].drum.sampleRate)
@@ -87,9 +82,11 @@ class Percussion extends Instrument {
       this.beat = 0;
     } else {
       const callback = (time) => {
-        this.setAllSampleRates(data);
         this.drumsNums.forEach((num) => {
-          data.loop[num].times[this.beat] && this[data.loop[num].drum.drum].start(time);
+          if (data.loop[num].times[this.beat]) {
+            this[data.loop[num].drum.drum].playbackRate = data.loop[num].drum.sampleRate;
+            this[data.loop[num].drum.drum].start(time);
+          }
         });
         this.beat += 1;
         if (this.beat >= Tone.Transport.timeSignature * 4) {

@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { Context } from '../../../App';
 import { percussionTypes } from '../Percussion';
 import percussionObj from './percussionObj';
+import RhythmMachineDrumSelect from './RhythmMachineDrumSelect';
 import '../../../Styles/Components/DrumMachine.css';
 
 export default function RhythmMachine({ percussionData, setFinalData }) {
@@ -38,59 +39,15 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
       setLoopData(copy);
     };
 
-    const handleChange = (e) => {
-      const copy = JSON.parse(JSON.stringify(loopData));
-      const num = e.target.dataset.number;
-      copy[num].drum.drum = e.target.value;
-      console.log(copy);
-      setLoopData(copy);
-    };
-
     const getDrumSelectors = (i) => {
       return (
         <div key={i} className="butt-column">
-          <div className="drum-rate-input">
-            <select defaultValue={loopData.one.drum.drum} onChange={handleChange} data-number={'one'}>
-              {percussionTypes.map((type) => {
-                return <option key={type}>{type}</option>;
-              })}
-            </select>
-          </div>
-          <div className="drum-rate-input">
-            <select defaultValue={loopData.two.drum.drum} onChange={handleChange} data-number={'two'}>
-              {percussionTypes.map((type) => {
-                return <option key={type}>{type}</option>;
-              })}
-            </select>
-          </div>
-          <div className="drum-rate-input">
-            <select defaultValue={loopData.three.drum.drum} onChange={handleChange} data-number={'three'}>
-              {percussionTypes.map((type) => {
-                return <option key={type}>{type}</option>;
-              })}
-            </select>
-          </div>
-          <div className="drum-rate-input">
-            <select defaultValue={loopData.four.drum.drum} onChange={handleChange} data-number={'four'}>
-              {percussionTypes.map((type) => {
-                return <option key={type}>{type}</option>;
-              })}
-            </select>
-          </div>
-          <div className="drum-rate-input">
-            <select defaultValue={loopData.five.drum.drum} onChange={handleChange} data-number={'five'}>
-              {percussionTypes.map((type) => {
-                return <option key={type}>{type}</option>;
-              })}
-            </select>
-          </div>
-          <div className="drum-rate-input">
-            <select defaultValue={loopData.six.drum.drum} onChange={handleChange} data-number={'six'}>
-              {percussionTypes.map((type) => {
-                return <option key={type}>{type}</option>;
-              })}
-            </select>
-          </div>
+          <RhythmMachineDrumSelect number={'one'} />
+          <RhythmMachineDrumSelect number={'two'} />
+          <RhythmMachineDrumSelect number={'three'} />
+          <RhythmMachineDrumSelect number={'four'} />
+          <RhythmMachineDrumSelect number={'five'} />
+          <RhythmMachineDrumSelect number={'six'} />
         </div>
       );
     };
