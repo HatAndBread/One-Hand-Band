@@ -48,6 +48,7 @@ function App() {
     three: { wave: 'sine', volume: '-4', pitch: 'C3', playing: false }
   });
   const [percussionData, setPercussionData] = useState(percussionObj);
+  const [keyboardInfinity, setKeyboardInfinity] = useState(false);
 
   const getGlobalSettings = () => {
     return JSON.parse(JSON.stringify(globalInstrumentSettings));
@@ -193,7 +194,9 @@ function App() {
         setTimeSignature,
         loopData,
         setLoopData,
-        loopObject
+        loopObject,
+        keyboardInfinity,
+        setKeyboardInfinity
       }}
     >
       <Router>
