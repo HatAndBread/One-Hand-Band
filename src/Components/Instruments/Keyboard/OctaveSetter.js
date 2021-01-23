@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 import { Context } from '../../../App';
 import '../../../Styles/Components/Keyboard.css';
 
-export default function OctaveSetter({ octave, setOctave }) {
+export default function OctaveSetter({ setPointerDown, setOctave }) {
   const keyboardInfinity = useContext(Context).keyboardInfinity;
   const setKeyboardInfinity = useContext(Context).setKeyboardInfinity;
   const [infinityStyle, setInfinityStyle] = useState({ backgroundColor: 'gray', borderRadius: '0px' });
@@ -28,6 +28,7 @@ export default function OctaveSetter({ octave, setOctave }) {
   const handleInifinityClick = () => {
     if (keyboardInfinity) {
       setKeyboardInfinity(false);
+      setPointerDown(false);
       setInfinityStyle({ backgroundColor: 'gray', borderRadius: '0px' });
     } else {
       setKeyboardInfinity(true);

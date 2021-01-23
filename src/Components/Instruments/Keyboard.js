@@ -1,4 +1,5 @@
-import { useState, useEffect, createContext } from 'react';
+import { useState, useEffect, useContext, createContext } from 'react';
+import { Context } from '../../App';
 import '../../Styles/Components/Keyboard.css';
 import KeyboardKeys from './Keyboard/KeyboardKeys';
 import OctaveSetter from './Keyboard/OctaveSetter';
@@ -6,14 +7,16 @@ import OctaveSetter from './Keyboard/OctaveSetter';
 export const KeyboardContext = createContext();
 
 export default function Keyboard({ setFinalData }) {
+  const keyboardInfinity = useContext(Context).keyboardInfinity;
   const [windowSize, setWindowSize] = useState({ width: window.innerWidth, height: window.innerHeight });
   const [touches, setTouches] = useState({ x: null, y: null });
   const [pointerDown, setPointerDown] = useState(false);
   const [currentNote, setCurrentNote] = useState({ note: null, octave: 1 });
   const [mainOctave, setMainOctave] = useState(2);
+  console.log('KEYBOARD INFINITY', keyboardInfinity);
   useEffect(() => {
     const handleTouchMove = (e) => setTouches({ x: e.touches[0].clientX, y: e.touches[0].clientY });
-    const handlePointerUp = (e) => setPointerDown(false);
+    const handlePointerUp = (e) => !keyboardInfinity && setPointerDown(false);
     const updateWindowSize = () => setWindowSize({ width: window.innerWidth, height: window.innerHeight });
     const handlePointerMove = (e) => setTouches({ x: e.x, y: e.y });
     const handlePointerDown = (e) => {
@@ -39,7 +42,7 @@ export default function Keyboard({ setFinalData }) {
       window.removeEventListener('touchstart', handlePointerDown);
       window.removeEventListener('touchend', handlePointerUp);
     };
-  }, []);
+  }, [keyboardInfinity]);
 
   useEffect(() => {
     if (pointerDown) {
@@ -51,7 +54,7 @@ export default function Keyboard({ setFinalData }) {
 
   return (
     <KeyboardContext.Provider value={{ pointerDown, setTouches, touches, setCurrentNote, currentNote, mainOctave }}>
-      <OctaveSetter octave={mainOctave} setOctave={setMainOctave}></OctaveSetter>
+      <OctaveSetter setPointerDown={setPointerDown} setOctave={setMainOctave}></OctaveSetter>
       <div style={{ display: 'flex' }}>
         <KeyboardKeys
           windowWidth={windowSize.width}
