@@ -12,10 +12,12 @@ export default function Hamburger() {
     }
   };
   return (
-    <div onClick={hamburgerClick}>
-      <div className="slice"></div>
-      <div className="slice"></div>
-      <div className="slice"></div>
+    <div>
+      <div className="hamburger" onClick={hamburgerClick}>
+        <div className="slice"></div>
+        <div className="slice"></div>
+        <div className="slice"></div>
+      </div>
     </div>
   );
 }

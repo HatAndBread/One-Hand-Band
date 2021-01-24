@@ -24,6 +24,11 @@ nav {
   padding: 4px 8px 4px 8px;
 }
 
+.hamburger {
+  cursor: pointer;
+  pointer-events: initial;
+}
+
 .slice {
   background-color: #d8d1f9;
   width: 24px;

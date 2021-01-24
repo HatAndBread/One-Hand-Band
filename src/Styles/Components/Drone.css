@@ -11,6 +11,7 @@
   align-items: center;
   border-radius: 4px;
   border-style: groove;
+  padding: 8px;
 }
 
 .drone-top-btns {
