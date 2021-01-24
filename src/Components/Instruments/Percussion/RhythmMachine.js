@@ -67,7 +67,7 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
                 data-beat={i - 1}
                 data-number={'one'}
                 onClick={handleClick}
-                style={loopData.one.times[i - 1] ? { backgroundColor: 'red' } : { backgroundColor: 'gray' }}
+                style={loopData.one.times[i - 1] ? { backgroundColor: '#9d8df1' } : { backgroundColor: 'gray' }}
               ></div>
               <div
                 id="drum-two-machine"
@@ -76,7 +76,7 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
                 data-beat={i - 1}
                 data-number={'two'}
                 onClick={handleClick}
-                style={loopData.two.times[i - 1] ? { backgroundColor: 'red' } : { backgroundColor: 'gray' }}
+                style={loopData.two.times[i - 1] ? { backgroundColor: '#9d8df1' } : { backgroundColor: 'gray' }}
               ></div>
               <div
                 id="drum-three-machine"
@@ -85,7 +85,7 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
                 data-beat={i - 1}
                 data-number={'three'}
                 onClick={handleClick}
-                style={loopData.three.times[i - 1] ? { backgroundColor: 'red' } : { backgroundColor: 'gray' }}
+                style={loopData.three.times[i - 1] ? { backgroundColor: '#9d8df1' } : { backgroundColor: 'gray' }}
               ></div>
               <div
                 id="drum-four-machine"
@@ -94,7 +94,7 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
                 data-beat={i - 1}
                 data-number={'four'}
                 onClick={handleClick}
-                style={loopData.four.times[i - 1] ? { backgroundColor: 'red' } : { backgroundColor: 'gray' }}
+                style={loopData.four.times[i - 1] ? { backgroundColor: '#9d8df1' } : { backgroundColor: 'gray' }}
               ></div>
               <div
                 id="drum-five-machine"
@@ -103,7 +103,7 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
                 data-beat={i - 1}
                 data-number={'five'}
                 onClick={handleClick}
-                style={loopData.five.times[i - 1] ? { backgroundColor: 'red' } : { backgroundColor: 'gray' }}
+                style={loopData.five.times[i - 1] ? { backgroundColor: '#9d8df1' } : { backgroundColor: 'gray' }}
               ></div>
               <div
                 id="drum-six-machine"
@@ -112,7 +112,7 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
                 data-beat={i - 1}
                 data-number={'six'}
                 onClick={handleClick}
-                style={loopData.six.times[i - 1] ? { backgroundColor: 'red' } : { backgroundColor: 'gray' }}
+                style={loopData.six.times[i - 1] ? { backgroundColor: '#9d8df1' } : { backgroundColor: 'gray' }}
               ></div>
             </div>
           );
@@ -147,17 +147,29 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
 
   return (
     <div>
-      <label htmlFor="time-sig-select"></label>
-      <select name="time-sig-select" onChange={timeSignatureChange} defaultValue={timeSignature}>
-        <option value="3">3/4</option>
-        <option value="4">4/4</option>
-        <option value="5">5/4</option>
-        <option value="7">7/4</option>
-      </select>
-      <label htmlFor="bpm-range">bpm</label>
-      <input type="range" min="50" max="200" step="1" name="bpm-range" onChange={bpmChange} defaultValue={bpm} />
       <div className="drum-machine">{buttColumns}</div>
-      <button onClick={clear}>Clear</button>
+      <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+        <button onClick={clear}>Clear</button>
+        <select name="time-sig-select" onChange={timeSignatureChange} defaultValue={timeSignature}>
+          <option value="3">3/4</option>
+          <option value="4">4/4</option>
+          <option value="5">5/4</option>
+          <option value="7">7/4</option>
+        </select>
+        <label style={{ display: 'flex' }}>
+          BPM:
+          <input
+            className="ts-fader"
+            type="range"
+            min="50"
+            max="200"
+            step="1"
+            name="bpm-range"
+            onChange={bpmChange}
+            defaultValue={bpm}
+          />
+        </label>
+      </div>
     </div>
   );
 }

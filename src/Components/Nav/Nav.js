@@ -7,10 +7,9 @@ export default function Nav(props) {
       <nav>
         <ul>
           <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/about">About</Link>
+            <Link to="/" style={{ fontSize: '22px' }}>
+              🎼
+            </Link>
           </li>
           <li>Room: {props.sessionPin ? props.sessionPin : 'Not joined'}</li>
           {props.userName && <li>User name: {props.userName}</li>}

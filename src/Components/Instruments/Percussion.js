@@ -52,46 +52,50 @@ export default function Percussion({ setFinalData }) {
         </button>
       </div>
       {rhythmMachineExposed && <RhythmMachine percussionData={percussionData} setFinalData={setFinalData} />}
-      <div className="percussion-row">
-        <IndividualPercussion
-          number="one"
-          defaultDrum={percussionData.one.drum}
-          setFinalData={setFinalData}
-          sampleRate={percussionData.one.sampleRate}
-        />
-        <IndividualPercussion
-          number="two"
-          defaultDrum={percussionData.two.drum}
-          setFinalData={setFinalData}
-          sampleRate={percussionData.two.sampleRate}
-        />
-        <IndividualPercussion
-          number="three"
-          defaultDrum={percussionData.three.drum}
-          setFinalData={setFinalData}
-          sampleRate={percussionData.three.sampleRate}
-        />
-      </div>
-      <div className="percussion-row">
-        <IndividualPercussion
-          number="four"
-          defaultDrum={percussionData.four.drum}
-          setFinalData={setFinalData}
-          sampleRate={percussionData.four.sampleRate}
-        />
-        <IndividualPercussion
-          number="five"
-          defaultDrum={percussionData.five.drum}
-          setFinalData={setFinalData}
-          sampleRate={percussionData.five.sampleRate}
-        />
-        <IndividualPercussion
-          number="six"
-          defaultDrum={percussionData.six.drum}
-          setFinalData={setFinalData}
-          sampleRate={percussionData.six.sampleRate}
-        />
-      </div>
+      {!rhythmMachineExposed && (
+        <div>
+          <div className="percussion-row">
+            <IndividualPercussion
+              number="one"
+              defaultDrum={percussionData.one.drum}
+              setFinalData={setFinalData}
+              sampleRate={percussionData.one.sampleRate}
+            />
+            <IndividualPercussion
+              number="two"
+              defaultDrum={percussionData.two.drum}
+              setFinalData={setFinalData}
+              sampleRate={percussionData.two.sampleRate}
+            />
+            <IndividualPercussion
+              number="three"
+              defaultDrum={percussionData.three.drum}
+              setFinalData={setFinalData}
+              sampleRate={percussionData.three.sampleRate}
+            />
+          </div>
+          <div className="percussion-row">
+            <IndividualPercussion
+              number="four"
+              defaultDrum={percussionData.four.drum}
+              setFinalData={setFinalData}
+              sampleRate={percussionData.four.sampleRate}
+            />
+            <IndividualPercussion
+              number="five"
+              defaultDrum={percussionData.five.drum}
+              setFinalData={setFinalData}
+              sampleRate={percussionData.five.sampleRate}
+            />
+            <IndividualPercussion
+              number="six"
+              defaultDrum={percussionData.six.drum}
+              setFinalData={setFinalData}
+              sampleRate={percussionData.six.sampleRate}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

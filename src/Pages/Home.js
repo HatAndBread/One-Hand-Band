@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
 import '../Styles/Pages/Home.css';
+import { useContext } from 'react';
+import { Context } from '../App';
 
 export default function Home() {
+  const loggedIn = useContext(Context).sessionPin;
   return (
     <div className="home-container">
       <div className="home-button-container">
@@ -12,7 +15,7 @@ export default function Home() {
           Join a room
         </Link>
         <Link to="/instrument" className="home-btn">
-          Play solo
+          {loggedIn ? 'Instrument' : 'Play solo'}
         </Link>
       </div>
     </div>
