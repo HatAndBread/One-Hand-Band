@@ -1,10 +1,27 @@
 .home-container {
   display: flex;
-  position: fixed;
-  top: 40px;
+
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
   width: 100vw;
-  height: calc(100vh - 40px);
+  height: 100vh;
+  background-image: linear-gradient(315deg, rgba(127, 90, 131, 0.6), rgba(13, 50, 77, 0.5)),
+    url('../../assets/hero.jpg');
+  background-size: cover;
+  background-position-x: center;
+}
+
+h1 {
+  font-family: 'Hachi Maru Pop', cursive;
+}
+
+.home-btn {
+  background-color: #6249e9;
+  text-align: center;
+  color: snow;
+  padding: 16px 8px 16px 8px;
+  border-radius: 6px;
 }
 
 .home-button-container {
@@ -12,4 +29,8 @@
   height: 64vh;
   flex-direction: column;
   justify-content: space-around;
+}
+
+.home-content {
+  margin: 16px;
 }

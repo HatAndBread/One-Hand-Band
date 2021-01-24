@@ -13,7 +13,6 @@ export default function Keyboard({ setFinalData }) {
   const [pointerDown, setPointerDown] = useState(false);
   const [currentNote, setCurrentNote] = useState({ note: null, octave: 1 });
   const [mainOctave, setMainOctave] = useState(2);
-  console.log('KEYBOARD INFINITY', keyboardInfinity);
   useEffect(() => {
     const handleTouchMove = (e) => setTouches({ x: e.touches[0].clientX, y: e.touches[0].clientY });
     const handlePointerUp = (e) => !keyboardInfinity && setPointerDown(false);

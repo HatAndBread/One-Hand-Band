@@ -1,23 +1,54 @@
-.home-btn {
-  background-color: #9d8df1;
-  text-align: center;
-  color: snow;
-  padding: 16px 8px 16px 8px;
-  border-radius: 6px;
-}
-
 nav ul {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   list-style: none;
   width: 100vw;
-  margin: 0;
+  margin: 8px;
   padding: 0;
 }
 
 nav {
-  background-color: #9d8df1;
+  position: fixed;
+  top: 8px;
+  width: 100vw;
   display: flex;
   align-items: center;
-  height: 40px;
+  pointer-events: none;
+}
+
+.home-link {
+  pointer-events: initial;
+  border-radius: 50%;
+  font-size: 24px;
+  background-color: #d8d1f9;
+  padding: 4px 8px 4px 8px;
+}
+
+.slice {
+  background-color: #d8d1f9;
+  width: 24px;
+  height: 3px;
+  margin: 6px;
+  pointer-events: initial;
+}
+
+.dropdown-menu {
+  position: fixed;
+  background-color: #9d8df1;
+  width: 100vw;
+  height: 100vh;
+  display: fixed;
+  z-index: 100;
+  top: -100vh;
+  transition: ease-in-out 0.3s;
+}
+
+@media (orientation: portrait) {
+  nav {
+    position: relative;
+    height: 60px;
+    width: 100vw;
+    top: 0px;
+    background-color: #9d8df1;
+  }
 }

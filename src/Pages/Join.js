@@ -48,8 +48,7 @@ export default function Join() {
     };
   });
   return (
-    <div>
-      <div>This is the join page</div>
+    <div className="keypad-container">
       <Keypad enteredPin={enteredPin} keyUp={keyUp} />
       {context.sessionPin && <Redirect to="/instrument"></Redirect>}
     </div>

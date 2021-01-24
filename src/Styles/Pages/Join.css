@@ -1,3 +1,9 @@
+.keypad-container {
+  display: flex;
+  justify-content: center;
+  margin: 8px;
+}
+
 caption {
   font-size: 28px;
   height: 40px;
@@ -11,6 +17,10 @@ caption {
   border-collapse: collapse;
 }
 
+caption {
+  background-color: #6249e9;
+}
+
 td {
   cursor: pointer;
   width: 70px;
@@ -19,8 +29,10 @@ td {
   font-size: 42px;
   transition: 0.4s;
   user-select: none;
+  background-color: gray;
+  border-style: ridge;
 }
 
 td:hover {
-  background-color: pink;
+  background-color: #9d8df1;
 }

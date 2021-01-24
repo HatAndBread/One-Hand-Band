@@ -2,6 +2,7 @@ import './App.css';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
 import { createContext } from 'react';
 import { useEffect, useState } from 'react';
+import DropDownMenu from './Components/Nav/DropDownMenu';
 import Home from './Pages/Home';
 import About from './Pages/About';
 import Host from './Pages/Host';
@@ -26,6 +27,7 @@ function App() {
   const [myInstrument, setMyInstrument] = useState(undefined);
   const [users, setUsers] = useState([]);
   const [host, setHost] = useState(false);
+  const [dropDownOut, setDropDownOut] = useState(false);
   const [globalInstrumentSettings, setGlobalInstrumentSettings] = useState({
     keyboard: { envelope: defaultEnvelopeSettings, volume: 0.5, rampTo: 0, wave: 'sine' },
     drone: { envelope: defaultEnvelopeSettings, volume: 0.5 },
@@ -196,12 +198,15 @@ function App() {
         setLoopData,
         loopObject,
         keyboardInfinity,
-        setKeyboardInfinity
+        setKeyboardInfinity,
+        dropDownOut,
+        setDropDownOut
       }}
     >
       <Router>
         <div className="App">
-          <Nav sessionPin={sessionPin} sessionId={socketId} userName={userName}></Nav>
+          <DropDownMenu sessionPin={sessionPin} sessionId={socketId} userName={userName} />
+          <Nav></Nav>
           <Route path="/" exact component={Home}></Route>
           <Route path="/about" component={About}></Route>
           <Route path="/host" component={Host}></Route>
