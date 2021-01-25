@@ -36,3 +36,20 @@ h1 {
 .home-content {
   margin: 16px;
 }
+
+footer {
+  background-color: #9d8df1;
+  padding: 16px;
+  text-align: center;
+}
+
+footer a {
+  color: snow;
+  text-decoration: underline;
+}
+
+footer .link-icons {
+  font-size: 42px;
+  justify-content: space-evenly;
+  display: flex;
+}

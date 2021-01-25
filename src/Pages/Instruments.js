@@ -4,7 +4,7 @@ import { Context } from '../App';
 import InstrumentTemplate from '../Components/Instruments/InstrumentTemplate';
 import '../Styles/Components/Instruments.css';
 
-const onStyle = { boxShadow: '0 0 10px 5px #9d8df1', borderRadius: '50%' };
+const onStyle = { boxShadow: '0 0 10px 5px #9d8df1', backgroundColor: '#9d8df1', borderRadius: '50%' };
 export default function Instruments() {
   const myInstrument = useContext(Context).myInstrument;
   useEffect(() => {

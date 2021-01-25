@@ -2,6 +2,9 @@ import { Link } from 'react-router-dom';
 import '../Styles/Pages/Home.css';
 import { useContext } from 'react';
 import { Context } from '../App';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFacebook } from '@fortawesome/free-brands-svg-icons';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 
 export default function Home() {
   const loggedIn = useContext(Context).sessionPin;
@@ -29,6 +32,18 @@ export default function Home() {
           <li>⭐️Step 3:Choose an instrument and start playing ✨</li>
         </ul>
       </div>
+      <footer>
+        <div className="link-icons">
+          <a href="https://www.facebook.com/">
+            <FontAwesomeIcon icon={faFacebook} />
+          </a>
+          <a href="https://github.com/HatAndBread">
+            <FontAwesomeIcon icon={faGithub} />
+          </a>
+        </div>
+        Enjoy Hootenanny? Buy me a <a href="https://github.com/HatAndBread">beer 🍺</a> or
+        <a href="https://github.com/HatAndBread"> give me a job.</a>
+      </footer>
     </div>
   );
 }

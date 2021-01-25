@@ -6,4 +6,6 @@
 
 .instrument-links a {
   font-size: 48px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
