@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const cors = require('cors');
+const clean = require('./db/clean');
 require('./db/createTables')();
 const PORT = 8080 || process.env.PORT;
 
@@ -23,6 +24,8 @@ app.get('/', (req, res) => {
 app.get('/hi', (req, res) => {
   res.json({ message: 'dummy' });
 });
+
+setInterval(clean, 999999);
 
 server.listen(PORT, () => {
   console.log(`Listening on ${PORT}👯‍♀🎺`);
