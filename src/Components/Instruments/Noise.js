@@ -1,5 +1,4 @@
-import { useContext, useEffect } from 'react';
-import { Context } from '../../App';
+import { useEffect } from 'react';
 import '../../Styles/Components/Noise.css';
 import NoiseArea from './Noise/NoiseArea';
 

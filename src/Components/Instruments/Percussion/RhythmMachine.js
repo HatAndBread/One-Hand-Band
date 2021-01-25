@@ -1,7 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
 import { Context } from '../../../App';
-import { percussionTypes } from '../Percussion';
-import percussionObj from './percussionObj';
 import RhythmMachineDrumSelect from './RhythmMachineDrumSelect';
 import '../../../Styles/Components/DrumMachine.css';
 

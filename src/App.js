@@ -16,6 +16,7 @@ import effectsObject from './Components/Effects/EffectsObject';
 import percussionObj from './Components/Instruments/Percussion/percussionObj';
 import handleSettings from './MusicLogic/handleSettings';
 import handleEffects from './MusicLogic/handleEffects';
+import { start } from 'tone';
 
 export const Context = createContext();
 
@@ -60,6 +61,14 @@ function App() {
   };
   const [bpm, setBpm] = useState('120');
   const [timeSignature, setTimeSignature] = useState('4');
+
+  useEffect(() => {
+    const startContext = () => {
+      start();
+      window.removeEventListener('click', startContext, false);
+    };
+    document.addEventListener('click', startContext);
+  }, []);
 
   useEffect(() => {
     console.log('Username has been set to ' + userName);

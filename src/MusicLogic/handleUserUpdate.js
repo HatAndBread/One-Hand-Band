@@ -1,4 +1,3 @@
-import * as Tone from 'tone';
 import instrumentBank from './instrumentBank';
 import SoundSet from './SoundSet';
 
