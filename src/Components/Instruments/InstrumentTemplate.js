@@ -10,13 +10,21 @@ import Drone from './Drone';
 import Noise from './Noise';
 import Percussion from './Percussion';
 import Skronk from './Skronk';
+import handleEffects from '../../MusicLogic/handleEffects';
 
 export default function InstrumentTemplate({ instrument }) {
+  const sessionPin = useContext(Context).sessionPin;
+  const getGlobalEffects = useContext(Context).getGlobalEffects;
+
   const setMusicData = useContext(Context).setMusicData;
   const [finalData, setFinalData] = useState(null);
   const setMyInstrument = useContext(Context).setMyInstrument;
   const socketId = useContext(Context).socketId;
   const [settingsOpen, setSettingsOpen] = useState(false);
+  useEffect(() => {
+    handleEffects(getGlobalEffects(), socketId, instrument, sessionPin);
+  }, [getGlobalEffects, socketId, instrument, sessionPin]);
+
   const clone = useCallback(
     (obj) => {
       const copy = JSON.parse(JSON.stringify(obj));

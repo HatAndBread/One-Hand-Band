@@ -8,7 +8,6 @@ const whiteOnStyle = { backgroundColor: '#9d8df1' };
 const whiteOffStyle = { backgroundColor: 'ivory' };
 
 export default function KeyboardKey(props) {
-  console.log(props);
   const [whiteBeingPlayed, setWhiteBeingPlayed] = useState(false);
   const [blackBeingPlayed, setBlackBeingPlayed] = useState(false);
   const c = useContext(KeyboardContext);

@@ -9,12 +9,10 @@ export default class Instrument {
     this.distortion = new Tone.Distortion(0).connect(this.pulverizer);
     this.pitchShifter = new Tone.PitchShift(0).connect(this.distortion);
     this.vibrato = new Tone.Vibrato(3, 1).connect(this.pitchShifter);
-
     this.setEffects(EffectsObject());
   }
 
   setEffects(effects) {
-    console.log(effects);
     Object.keys(effects).forEach((effect) => {
       if (effects[effect].wet) {
         effects[effect].on ? (this[effect].wet.value = effects[effect].wet.level) : (this[effect].wet.value = 0);
@@ -33,7 +31,6 @@ export default class Instrument {
           this.distortion.distortion = effects.distortion.level.level;
           break;
         case 'pitchShifter':
-          console.log('delay');
           this.pitchShifter.pitch = effects.pitchShifter.shift.level;
           break;
         case 'vibrato':

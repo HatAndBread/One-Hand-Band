@@ -28,6 +28,7 @@ function App() {
   const [myInstrument, setMyInstrument] = useState(undefined);
   const [users, setUsers] = useState([]);
   const [host, setHost] = useState(false);
+  const [audioContextStarted, setAudioContextStarted] = useState(false);
   const [dropDownOut, setDropDownOut] = useState(false);
   const [globalInstrumentSettings, setGlobalInstrumentSettings] = useState({
     keyboard: { envelope: defaultEnvelopeSettings, volume: 0.5, rampTo: 0, wave: 'sine' },
@@ -65,6 +66,7 @@ function App() {
   useEffect(() => {
     const startContext = () => {
       start();
+      setAudioContextStarted(true);
       window.removeEventListener('click', startContext, false);
     };
     document.addEventListener('click', startContext);
@@ -86,7 +88,7 @@ function App() {
     };
     socket.on('newMember', handleInstrumentChange);
     socket.on('instrumentChange', handleInstrumentChange);
-    console.info(users);
+    users.length && console.info(users);
     return () => {
       socket.removeAllListeners('instrumentChange', handleInstrumentChange);
       socket.removeAllListeners('newMember', handleInstrumentChange);
@@ -209,7 +211,8 @@ function App() {
         keyboardInfinity,
         setKeyboardInfinity,
         dropDownOut,
-        setDropDownOut
+        setDropDownOut,
+        audioContextStarted
       }}
     >
       <Router>
