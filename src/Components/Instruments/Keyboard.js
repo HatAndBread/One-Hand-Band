@@ -10,7 +10,7 @@ export default function Keyboard({ setFinalData }) {
   const keyboardInfinity = useContext(Context).keyboardInfinity;
   const [windowSize, setWindowSize] = useState({ width: window.innerWidth, height: window.innerHeight });
   const [touches, setTouches] = useState({ x: null, y: null });
-  const [pointerDown, setPointerDown] = useState(false);
+  const [pointerDown, setPointerDown] = useState(keyboardInfinity ? true : false);
   const [currentNote, setCurrentNote] = useState({ note: null, octave: 1 });
   const [mainOctave, setMainOctave] = useState(2);
   useEffect(() => {
@@ -47,9 +47,9 @@ export default function Keyboard({ setFinalData }) {
     if (pointerDown) {
       setFinalData({ data: currentNote, type: 'play' });
     } else {
-      setFinalData({ data: 'stop', type: 'stop' });
+      !keyboardInfinity && setFinalData({ data: 'stop', type: 'stop' });
     }
-  }, [setFinalData, currentNote, pointerDown]);
+  }, [setFinalData, currentNote, pointerDown, keyboardInfinity]);
 
   return (
     <KeyboardContext.Provider value={{ pointerDown, setTouches, touches, setCurrentNote, currentNote, mainOctave }}>

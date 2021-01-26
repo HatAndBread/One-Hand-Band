@@ -15,12 +15,13 @@ export default function handleKeyboard(data) {
 }
 
 const playNote = (data) => {
-  console.log(data);
-  const note = Tone.Frequency(data.data.note + data.data.octave).toFrequency();
-  const soundSet = getSoundSet(data.socketId);
-  if (soundSet) {
-    soundSet.keyboard.oscillator.frequency.rampTo(note, soundSet.keyboard.rampTo);
-    soundSet.keyboard.play();
+  if (data.data.note) {
+    const note = Tone.Frequency(data.data.note + data.data.octave).toFrequency();
+    const soundSet = getSoundSet(data.socketId);
+    if (soundSet) {
+      soundSet.keyboard.oscillator.frequency.rampTo(note, soundSet.keyboard.rampTo);
+      soundSet.keyboard.play();
+    }
   }
 };
 
