@@ -67,13 +67,6 @@ function App() {
       start();
       window.removeEventListener('click', startContext, false);
     };
-    const animationLoop = () => {
-      requestAnimationFrame(animationLoop);
-    };
-    animationLoop();
-    animationLoop();
-    animationLoop();
-    animationLoop();
     document.addEventListener('click', startContext);
   }, []);
 
