@@ -21,8 +21,8 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-app.get('/hi', (req, res) => {
-  res.json({ message: 'dummy' });
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 setInterval(clean, 999999);
