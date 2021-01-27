@@ -149,10 +149,12 @@ class Noise extends Instrument {
       updateLoop();
     }
   }
-  stop(data) {
-    this[this.nowPlaying].stop ? this[this.nowPlaying].stop(0) : this[this.nowPlaying].triggerRelease(Tone.now());
-    this.nowPlaying = null;
-    this.animationFrame = false;
+  stop() {
+    if (this[this.nowPlaying]) {
+      this[this.nowPlaying].stop ? this[this.nowPlaying].stop(0) : this[this.nowPlaying].triggerRelease(Tone.now());
+      this.nowPlaying = null;
+      this.animationFrame = false;
+    }
   }
   play(data) {
     if (data.x <= 0.001) {
