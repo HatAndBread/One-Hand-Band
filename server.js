@@ -5,9 +5,10 @@ const cors = require('cors');
 const clean = require('./db/clean');
 require('./db/createTables')();
 const PORT = 8080 || process.env.PORT;
-
+const forceHttps = require('./force-https');
 const server = require('http').createServer(app);
 
+app.all('*', forceHttps);
 app.use(
   cors({
     origin: 'http://localhost:3000',
