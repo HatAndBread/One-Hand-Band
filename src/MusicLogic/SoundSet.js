@@ -14,7 +14,6 @@ class SoundSet {
 
   setEffects(instrument, effects) {
     const s = this[instrument];
-    console.log(effects);
     if (s) {
       Object.keys(effects).forEach((key) => {
         this[key] && this[key].setEffects(effects[key]);

@@ -12,6 +12,8 @@ import Percussion from './Percussion';
 import Skronk from './Skronk';
 import handleEffects from '../../MusicLogic/handleEffects';
 
+const mounted = [];
+
 export default function InstrumentTemplate({ instrument }) {
   const sessionPin = useContext(Context).sessionPin;
   const getGlobalEffects = useContext(Context).getGlobalEffects;
@@ -21,9 +23,12 @@ export default function InstrumentTemplate({ instrument }) {
   const setMyInstrument = useContext(Context).setMyInstrument;
   const socketId = useContext(Context).socketId;
   const [settingsOpen, setSettingsOpen] = useState(false);
-  useEffect(() => {
+
+  if (!mounted.includes(instrument)) {
+    console.log('Ho! Mounting for the first time');
     handleEffects(getGlobalEffects(), socketId, instrument, sessionPin);
-  }, [getGlobalEffects, socketId, instrument, sessionPin]);
+    mounted.push(instrument);
+  }
 
   const clone = useCallback(
     (obj) => {
@@ -53,6 +58,7 @@ export default function InstrumentTemplate({ instrument }) {
       setFinalData(null);
     }
   }, [finalData, setMusicData, clone]);
+
   return (
     <div onContextMenu={preventer}>
       <SettingsLink forInstrument={instrument} />

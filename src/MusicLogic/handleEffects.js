@@ -5,8 +5,6 @@ export default function handleEffects(effects, socketId, instrument, sessionPin,
   const soundSet = getSoundSet(socketId);
   if (sessionPin === undefined) {
     throw new Error('missing sessionPin');
-  } else {
-    console.log(sessionPin);
   }
 
   if (sessionPin && !fromAnotherUser) {

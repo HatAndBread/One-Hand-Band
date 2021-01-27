@@ -60,7 +60,7 @@ function App() {
   const getGlobalEffects = () => {
     return JSON.parse(JSON.stringify(globalEffectsSettings));
   };
-  const [bpm, setBpm] = useState('120');
+  const [bpm, setBpm] = useState('90');
   const [timeSignature, setTimeSignature] = useState('4');
 
   useEffect(() => {
@@ -122,9 +122,9 @@ function App() {
 
   useEffect(() => {
     const handleSocketMusic = (musicData, user) => {
-      console.log(musicData);
-      console.log(user);
-      playMusic(musicData);
+      if (user !== userName) {
+        playMusic(musicData);
+      }
     };
     socket.on('musicData', handleSocketMusic);
     return () => {
@@ -134,7 +134,6 @@ function App() {
 
   useEffect(() => {
     const handleSettingsChange = (settings, socketId, instrument, sessionPin) => {
-      console.log('SETTINGS received from ANOTHER user');
       handleSettings(settings, socketId, instrument, sessionPin, true);
     };
     socket.on('settingsChange', handleSettingsChange);
@@ -143,7 +142,6 @@ function App() {
 
   useEffect(() => {
     const handleEffectsChange = (effects, socketId, instrument, sessionPin) => {
-      console.log('EFFECTS received from ANOTHER user');
       handleEffects(effects, socketId, instrument, sessionPin, true);
     };
     socket.on('effectsChange', handleEffectsChange);
@@ -151,18 +149,21 @@ function App() {
   });
 
   useEffect(() => {
-    if (sessionPin) {
-      if (musicData) {
-        socket.emit('musicData', musicData, sessionPin, userName);
-        setMusicData(null);
-      }
-    } else {
-      if (musicData) {
-        playMusic(musicData);
-        setMusicData(null);
+    if (audioContextStarted) {
+      if (sessionPin) {
+        if (musicData) {
+          playMusic(musicData);
+          socket.emit('musicData', musicData, sessionPin, userName);
+          setMusicData(null);
+        }
+      } else {
+        if (musicData) {
+          playMusic(musicData);
+          setMusicData(null);
+        }
       }
     }
-  }, [musicData, sessionPin, userName]);
+  }, [musicData, sessionPin, userName, audioContextStarted]);
   const loopObject = {
     one: { drum: percussionData.one, times: new Array(timeSignature * 4) },
     two: { drum: percussionData.two, times: new Array(timeSignature * 4) },
