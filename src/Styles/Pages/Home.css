@@ -1,9 +1,10 @@
 .home-container {
   display: flex;
 
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column;
+
   width: 100vw;
   height: 100vh;
   background-image: linear-gradient(315deg, rgba(127, 90, 131, 0.6), rgba(13, 50, 77, 0.5)),
@@ -28,7 +29,7 @@ h1 {
 
 .home-button-container {
   display: flex;
-  height: 64vh;
+  height: 50vh;
   flex-direction: column;
   justify-content: space-around;
 }
