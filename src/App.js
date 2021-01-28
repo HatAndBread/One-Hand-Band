@@ -16,7 +16,7 @@ import effectsObject from './Components/Effects/EffectsObject';
 import percussionObj from './Components/Instruments/Percussion/percussionObj';
 import handleSettings from './MusicLogic/handleSettings';
 import handleEffects from './MusicLogic/handleEffects';
-import { start } from 'tone';
+import * as Tone from 'tone';
 
 export const Context = createContext();
 
@@ -65,7 +65,8 @@ function App() {
 
   useEffect(() => {
     const startContext = () => {
-      start();
+      Tone.context.lookAhead = 0.3;
+      Tone.start();
       setAudioContextStarted(true);
       window.removeEventListener('click', startContext, false);
     };
@@ -151,20 +152,18 @@ function App() {
   });
 
   useEffect(() => {
-    if (audioContextStarted) {
-      if (sessionPin) {
-        if (musicData) {
-          socket.emit('musicData', musicData, sessionPin, userName);
-          setMusicData(null);
-        }
-      } else {
-        if (musicData) {
-          playMusic(musicData);
-          setMusicData(null);
-        }
+    if (sessionPin) {
+      if (musicData) {
+        socket.emit('musicData', musicData, sessionPin, userName);
+        setMusicData(null);
+      }
+    } else {
+      if (musicData) {
+        playMusic(musicData);
+        setMusicData(null);
       }
     }
-  }, [musicData, sessionPin, userName, audioContextStarted]);
+  }, [musicData, sessionPin, userName]);
   const loopObject = {
     one: { drum: percussionData.one, times: new Array(timeSignature * 4) },
     two: { drum: percussionData.two, times: new Array(timeSignature * 4) },

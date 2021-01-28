@@ -1,6 +1,11 @@
 import * as Tone from 'tone';
 import EffectsObject from '../Components/Effects/EffectsObject';
 
+const theLoop = () => {
+  Tone.Destination.volume.value = -5;
+  requestAnimationFrame(theLoop);
+};
+
 export default class Instrument {
   constructor() {
     this.gain = new Tone.Gain(0.2).toDestination();
