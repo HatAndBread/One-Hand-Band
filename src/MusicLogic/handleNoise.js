@@ -1,7 +1,6 @@
-import { getSoundSet } from './instrumentBank';
+import soundSet from './SoundSet';
 
 export default function handleNoise(data) {
-  const soundSet = getSoundSet(data.socketId);
   if (soundSet) {
     if (data.start) {
       soundSet.noise.start(data);
