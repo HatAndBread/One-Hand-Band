@@ -4,8 +4,7 @@ import Percussion from './Percussion';
 import Noise from './Noise';
 
 class SoundSet {
-  constructor(socketId) {
-    this.socketId = socketId;
+  constructor() {
     this.keyboard = new Keyboard();
     this.drone = new Drone();
     this.percussion = new Percussion();
@@ -58,4 +57,6 @@ class SoundSet {
   }
 }
 
-export default SoundSet;
+const soundSet = new SoundSet();
+
+export default soundSet;

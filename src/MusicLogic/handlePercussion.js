@@ -1,8 +1,6 @@
-import { getSoundSet } from './instrumentBank';
+import soundSet from './SoundSet';
 
 export default function handlePercussion(data) {
-  console.log(data);
-  const soundSet = getSoundSet(data.socketId);
   if (soundSet) {
     if (data.drum === 'rhythmMachine') {
       soundSet.percussion.setLoop(data);

@@ -1,9 +1,7 @@
-import { getSoundSet } from './instrumentBank';
+import soundSet from './SoundSet';
 import socket from '../clientSocketHandler';
 
 export default function handleSettings(settings, socketId, instrument, sessionPin, fromAnotherUser) {
-  const soundSet = getSoundSet(socketId);
-
   if (sessionPin === undefined) {
     throw new Error('missing sessionPin');
   } else {
