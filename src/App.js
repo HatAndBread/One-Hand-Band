@@ -122,9 +122,7 @@ function App() {
 
   useEffect(() => {
     const handleSocketMusic = (musicData, user) => {
-      if (user !== userName) {
-        playMusic(musicData);
-      }
+      playMusic(musicData, user);
     };
     socket.on('musicData', handleSocketMusic);
     return () => {
@@ -152,7 +150,6 @@ function App() {
     if (audioContextStarted) {
       if (sessionPin) {
         if (musicData) {
-          playMusic(musicData);
           socket.emit('musicData', musicData, sessionPin, userName);
           setMusicData(null);
         }

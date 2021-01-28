@@ -5,19 +5,15 @@ import NoiseArea from './Noise/NoiseArea';
 export default function Noise({ setFinalData }) {
   useEffect(() => {
     const handlePointerDown = (e) => {
-      if (e.target.dataset.name) {
+      if (e.target.dataset && e.target.dataset.name) {
         setFinalData({ which: e.target.dataset.name, x: e.offsetY, y: e.offsetY, start: true });
       }
     };
     const handlePointerMove = (e) => {
-      if (e.target.dataset.name) {
-        setFinalData({ which: e.target.dataset.name, x: e.offsetX, y: e.offsetY });
-      }
+      setFinalData({ which: e.target.dataset.name, x: e.offsetX, y: e.offsetY });
     };
     const handlePointerUp = (e) => {
-      if (e.target.dataset.name) {
-        setFinalData({ which: e.target.dataset.name, x: e.offsetY, y: e.offsetY, stop: true });
-      }
+      setFinalData({ which: e.target.dataset.name, x: e.offsetY, y: e.offsetY, stop: true });
     };
     document.addEventListener('pointerdown', handlePointerDown);
     document.addEventListener('pointermove', handlePointerMove);
