@@ -3,7 +3,7 @@ import EffectsObject from '../Components/Effects/EffectsObject';
 
 export default class Instrument {
   constructor() {
-    this.gain = new Tone.Gain(0.3).toDestination();
+    this.gain = new Tone.Gain(0.2).toDestination();
     this.comp = new Tone.Compressor(-30, 10).connect(this.gain);
     this.delay = new Tone.FeedbackDelay(0, 1).connect(this.comp);
     this.pulverizer = new Tone.BitCrusher(1).connect(this.delay);

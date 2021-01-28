@@ -13,35 +13,62 @@ export default function Keyboard({ setFinalData }) {
   const [pointerDown, setPointerDown] = useState(keyboardInfinity ? true : false);
   const [currentNote, setCurrentNote] = useState({ note: null, octave: 1 });
   const [mainOctave, setMainOctave] = useState(2);
+  const [touchScreen, setTouchScreen] = useState(false);
+
   useEffect(() => {
-    const handleTouchMove = (e) => setTouches({ x: e.touches[0].clientX, y: e.touches[0].clientY });
-    const handlePointerUp = (e) => !keyboardInfinity && setPointerDown(false);
+    let exit = false;
+    const theLoop = () => {
+      !exit && window.requestAnimationFrame(theLoop);
+    };
+    theLoop();
+
+    return () => {
+      exit = true;
+    };
+  });
+  useEffect(() => {
+    window.addEventListener('pointerdown', (e) => {
+      e.pointerType === 'touch' ? setTouchScreen(true) : setTouchScreen(false);
+    });
+  }, []);
+
+  useEffect(() => {
+    const handlePointerUp = () => {
+      !keyboardInfinity && setPointerDown(false);
+    };
     const updateWindowSize = () => setWindowSize({ width: window.innerWidth, height: window.innerHeight });
-    const handlePointerMove = (e) => setTouches({ x: e.x, y: e.y });
-    const handlePointerDown = (e) => {
+    const handlePointerMove = (e) => {
       if (e.target.className === 'white-key' || e.target.className === 'black-key') {
+        setTouches({ x: e.x, y: e.y });
+      }
+    };
+    const handlePointerDown = (e) => {
+      console.log(touchScreen);
+      if (e.target.className === 'white-key' || e.target.className === 'black-key') {
+        !touchScreen && setCurrentNote({ note: null, octave: 1 });
         setPointerDown(true);
-        e.touches && handleTouchMove(e);
+        setTouches({ x: e.x, y: e.y });
+      }
+    };
+    const handleClick = (e) => {
+      if (e.target.className === 'white-key' || e.target.className === 'black-key') {
+        e.preventDefault();
       }
     };
     window.addEventListener('resize', updateWindowSize);
-    window.addEventListener('touchmove', handleTouchMove);
     window.addEventListener('pointerup', handlePointerUp);
     window.addEventListener('pointerdown', handlePointerDown);
     window.addEventListener('pointermove', handlePointerMove);
-    window.addEventListener('touchstart', handlePointerDown);
-    window.addEventListener('touchend', handlePointerUp);
+    window.addEventListener('click', handleClick);
 
     return () => {
       window.removeEventListener('resize', updateWindowSize);
-      window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('pointerup', handlePointerUp);
       window.removeEventListener('pointerdown', handlePointerDown);
       window.removeEventListener('pointermove', handlePointerMove);
-      window.removeEventListener('touchstart', handlePointerDown);
-      window.removeEventListener('touchend', handlePointerUp);
+      window.removeEventListener('click', handleClick);
     };
-  }, [keyboardInfinity]);
+  }, [keyboardInfinity, touchScreen]);
 
   useEffect(() => {
     if (pointerDown) {
