@@ -4,12 +4,10 @@ import { Route } from 'react-router-dom';
 import SettingsLink from './SettingsLink';
 import Settings from '../Settings/Settings';
 import Effects from '../Effects/Effects';
-import Theremin from './Theremin';
 import Keyboard from './Keyboard';
 import Drone from './Drone';
 import Noise from './Noise';
 import Percussion from './Percussion';
-import Skronk from './Skronk';
 import handleEffects from '../../MusicLogic/handleEffects';
 
 const mounted = [];
@@ -70,11 +68,9 @@ export default function InstrumentTemplate({ instrument }) {
         <Effects instrument={instrument} setSettingsOpen={setSettingsOpen} />
       </Route>
       {!settingsOpen && instrument === 'drone' && <Drone setFinalData={setFinalData} />}
-      {!settingsOpen && instrument === 'theremin' && <Theremin setFinalData={setFinalData} />}
       {!settingsOpen && instrument === 'keyboard' && <Keyboard setFinalData={setFinalData} />}
       {!settingsOpen && instrument === 'noise' && <Noise setFinalData={setFinalData} />}
       {!settingsOpen && instrument === 'percussion' && <Percussion setFinalData={setFinalData} />}
-      {!settingsOpen && instrument === 'skronk' && <Skronk setFinalData={setFinalData} />}
     </div>
   );
 }

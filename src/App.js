@@ -133,6 +133,9 @@ function App() {
   useEffect(() => {
     const handleSettingsChange = (settings, socketId, instrument, sessionPin) => {
       handleSettings(settings, socketId, instrument, sessionPin, true);
+      const copy = JSON.parse(JSON.stringify(globalInstrumentSettings));
+      copy[instrument] = settings;
+      setGlobalInstrumentSettings(copy);
     };
     socket.on('settingsChange', handleSettingsChange);
     return () => socket.removeAllListeners('settingsChange', handleSettingsChange);
@@ -141,6 +144,7 @@ function App() {
   useEffect(() => {
     const handleEffectsChange = (effects, socketId, instrument, sessionPin) => {
       handleEffects(effects, socketId, instrument, sessionPin, true);
+      setGlobalEffectsSettings(effects);
     };
     socket.on('effectsChange', handleEffectsChange);
     return () => socket.removeAllListeners('settingsChange', handleEffectsChange);

@@ -1,5 +1,5 @@
 import * as Tone from 'tone';
-import { getSoundSet } from './instrumentBank';
+import soundSet from './SoundSet';
 
 export default function handleKeyboard(data) {
   switch (data.type) {
@@ -18,7 +18,6 @@ const playNote = (data) => {
   console.log(data);
   if (data.data.note) {
     const note = Tone.Frequency(data.data.note + data.data.octave).toFrequency();
-    const soundSet = getSoundSet(data.socketId);
     if (soundSet) {
       soundSet.keyboard.oscillator.frequency.rampTo(note, soundSet.keyboard.rampTo);
       soundSet.keyboard.play();
@@ -28,7 +27,6 @@ const playNote = (data) => {
 
 const stopNote = (data) => {
   console.log('stopping note!');
-  const soundSet = getSoundSet(data.socketId);
   if (soundSet) {
     soundSet.keyboard.stop();
   }
