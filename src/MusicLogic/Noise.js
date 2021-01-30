@@ -30,41 +30,48 @@ import saxSkronk12 from '../assets/saxSkronk12.mp3';
 import saxSkronk13 from '../assets/saxSkronk13.mp3';
 import saxSkronk14 from '../assets/saxSkronk14.mp3';
 
+const sampleUrls = {
+  amRadioNoise: amRadioNoise,
+  analogueWhiteNoise: analogueWhiteNoise,
+  digitalNoise: digitalNoise,
+  feedback: feedback,
+  guitarFeedback: guitarFeedback,
+  guitarNoise1: guitarNoise1,
+  guitarNoise2: guitarNoise2,
+  guitarNoise3: guitarNoise3,
+  guitarNoise4: guitarNoise4,
+  heavyStatic: heavyStatic,
+  micFeedback: micFeedback,
+  radioBuzz: radioBuzz,
+  recordPlayerGlitch: recordPlayerGlitch,
+  saxSqueek: saxSqueek,
+  trumpetHiss: trumpetHiss,
+  saxSkronk: saxSkronk,
+  saxSkronk2: saxSkronk2,
+  saxSkronk3: saxSkronk3,
+  saxSkronk4: saxSkronk4,
+  saxSkronk5: saxSkronk5,
+  saxSkronk6: saxSkronk6,
+  saxSkronk7: saxSkronk7,
+  saxSkronk8: saxSkronk8,
+  saxSkronk9: saxSkronk9,
+  saxSkronk10: saxSkronk10,
+  saxSkronk11: saxSkronk11,
+  saxSkronk12: saxSkronk12,
+  saxSkronk13: saxSkronk13,
+  saxSkronk14: saxSkronk14
+};
+
 class Noise extends Instrument {
   constructor() {
     super();
-    this.amRadioNoise = new Tone.Player(amRadioNoise).connect(this.vibrato);
-    this.analogueWhiteNoise = new Tone.Player(analogueWhiteNoise).connect(this.vibrato);
-    this.digitalNoise = new Tone.Player(digitalNoise).connect(this.vibrato);
-    this.feedback = new Tone.Player(feedback).connect(this.vibrato);
-    this.guitarFeedback = new Tone.Player(guitarFeedback).connect(this.vibrato);
-    this.guitarNoise1 = new Tone.Player(guitarNoise1).connect(this.vibrato);
-    this.guitarNoise2 = new Tone.Player(guitarNoise2).connect(this.vibrato);
-    this.guitarNoise3 = new Tone.Player(guitarNoise3).connect(this.vibrato);
-    this.guitarNoise4 = new Tone.Player(guitarNoise4).connect(this.vibrato);
-    this.heavyStatic = new Tone.Player(heavyStatic).connect(this.vibrato);
-    this.micFeedback = new Tone.Player(micFeedback).connect(this.vibrato);
-    this.radioBuzz = new Tone.Player(radioBuzz).connect(this.vibrato);
-    this.recordPlayerGlitch = new Tone.Player(recordPlayerGlitch).connect(this.vibrato);
-    this.saxSqueek = new Tone.Player(saxSqueek).connect(this.vibrato);
-    this.trumpetHiss = new Tone.Player(trumpetHiss).connect(this.vibrato);
-    this.saxSkronk = new Tone.Player(saxSkronk).connect(this.vibrato);
-    this.saxSkronk2 = new Tone.Player(saxSkronk2).connect(this.vibrato);
-    this.saxSkronk3 = new Tone.Player(saxSkronk3).connect(this.vibrato);
-    this.saxSkronk4 = new Tone.Player(saxSkronk4).connect(this.vibrato);
-    this.saxSkronk5 = new Tone.Player(saxSkronk5).connect(this.vibrato);
-    this.saxSkronk6 = new Tone.Player(saxSkronk6).connect(this.vibrato);
-    this.saxSkronk7 = new Tone.Player(saxSkronk7).connect(this.vibrato);
-    this.saxSkronk8 = new Tone.Player(saxSkronk8).connect(this.vibrato);
-    this.saxSkronk9 = new Tone.Player(saxSkronk9).connect(this.vibrato);
-    this.saxSkronk10 = new Tone.Player(saxSkronk10).connect(this.vibrato);
-    this.saxSkronk11 = new Tone.Player(saxSkronk11).connect(this.vibrato);
-    this.saxSkronk12 = new Tone.Player(saxSkronk12).connect(this.vibrato);
-    this.saxSkronk13 = new Tone.Player(saxSkronk13).connect(this.vibrato);
-    this.saxSkronk14 = new Tone.Player(saxSkronk14).connect(this.vibrato);
-    this.pink = new Tone.Noise('pink').connect(this.vibrato);
-    this.white = new Tone.Noise('white').connect(this.vibrato);
-    this.brown = new Tone.Noise('brown').connect(this.vibrato);
+    this.loaded = false;
+    this.player = new Tone.Player();
+    this.samples = new Tone.ToneAudioBuffers(sampleUrls, () => {
+      console.log('noise samples loaded!');
+      this.loaded = true;
+      this.player.connect(this.vibrato);
+    });
     this.oscillatorGain = new Tone.Gain(0.3).connect(this.vibrato);
     this.oscillatorPulverizer = new Tone.BitCrusher(1).connect(this.oscillatorGain);
     this.sine = new Tone.AmplitudeEnvelope().connect(this.oscillatorPulverizer);
@@ -82,9 +89,6 @@ class Noise extends Instrument {
         'heavyStatic',
         'radioBuzz',
         'recordPlayerGlitch',
-        'pink',
-        'brown',
-        'white',
         'trumpetHiss'
       ],
       feedback: [
@@ -110,24 +114,34 @@ class Noise extends Instrument {
     };
     this.initialize();
   }
-  getRandomSound(type) {}
+  getRandomSound() {}
   initialize() {
     Object.keys(this).forEach((key) => {
       if (this[key] instanceof Tone.Player) {
         this[key].loop = true;
+        this[key].volume.value = -16;
       }
       if (this[key] instanceof Tone.Oscillator) {
-        this[key].volume.value = -3;
+        this[key].volume.value = -1;
       }
     });
   }
 
   start(data) {
+    this.loaded && this.startLogic(data);
+  }
+  startLogic(data) {
     const which = camelCase(data.which);
     const ranNum = Math.floor(Math.random() * this.types[which].length);
     this.nowPlaying = this.types[which][ranNum];
-    if (this[this.nowPlaying].start) {
-      this[this.nowPlaying].start(0, Math.floor(Math.random() * 10));
+
+    if (Object.keys(sampleUrls).includes(this.nowPlaying)) {
+      this.player.buffer = this.samples.get(this.nowPlaying);
+      console.log(data.x);
+      data.x < data.width / 2
+        ? (this.player.playbackRate = data.x * 0.01)
+        : (this.player.playbackRate = data.x * 0.01 * (data.x * 0.01));
+      this.player.start(0, Math.floor(Math.random() * 10));
     } else {
       this[this.nowPlaying].triggerAttack(Tone.now());
       const updateLoop = () => {
@@ -150,11 +164,9 @@ class Noise extends Instrument {
     }
   }
   stop() {
-    if (this[this.nowPlaying]) {
-      this[this.nowPlaying].stop ? this[this.nowPlaying].stop(0) : this[this.nowPlaying].triggerRelease(Tone.now());
-      this.nowPlaying = null;
-      this.animationFrame = false;
-    }
+    this[this.nowPlaying] ? this[this.nowPlaying].triggerRelease(Tone.now()) : this.player.stop(0);
+    this.nowPlaying = null;
+    this.animationFrame = false;
   }
   play(data) {
     if (data.x <= 0.001) {
@@ -163,13 +175,21 @@ class Noise extends Instrument {
     if (data.y <= 0.001) {
       data.y = 0.00101;
     }
-    if (this[this.nowPlaying] && this[this.nowPlaying].playbackRate) {
-      this[this.nowPlaying].playbackRate = data.x * 0.005;
+    if (Object.keys(sampleUrls).includes(this.nowPlaying)) {
+      console.log(data.x);
+      data.x < data.width / 2
+        ? (this.player.playbackRate = data.x * 0.01)
+        : (this.player.playbackRate = data.x * 0.01 * (data.x * 0.01));
     } else {
-      this.oscillator.frequency.value = data.x * 10;
+      if (data.x < data.width / 2) {
+        this.oscillator.frequency.value = data.x * -10 * (data.x * -10);
+        this.oscillator4.frequency.value = Math.random() * data.x;
+      } else {
+        this.oscillator.frequency.value = data.x * 10 * (data.x * 10);
+        this.oscillator4.frequency.value = Math.random() * data.x;
+      }
       this.oscillator2.frequency.value = data.y * 5 + Math.random() * 10;
       this.oscillator3.frequency.value = ((data.y / 2) * data.x) / 2;
-      this.oscillator4.frequency.value = Math.random() * data.x;
     }
   }
 }
@@ -190,3 +210,15 @@ function camelCase(string) {
 }
 
 export default Noise;
+
+// Tone.Offline(() => {
+//   // only nodes created in this callback will be recorded
+//   const oscillator = new Tone.Oscillator().toDestination().start(0);
+// }, 0.1).then((buffer) => {
+//   // do something with the output buffer
+//   const p = new Tone.Player().toDestination();
+//   p.loop = true;
+//   p.buffer = buffer;
+//   p.start(1);
+//   console.log('Yo, this is the buffer', buffer);
+// });

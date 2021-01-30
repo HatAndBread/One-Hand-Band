@@ -1,7 +1,6 @@
-import soundSet from './SoundSet';
 import socket from '../clientSocketHandler';
 
-export default function handleSettings(settings, socketId, instrument, sessionPin, fromAnotherUser) {
+export default function handleSettings(settings, socketId, instrument, sessionPin, fromAnotherUser, soundSet) {
   if (sessionPin === undefined) {
     throw new Error('missing sessionPin');
   } else {
@@ -12,6 +11,7 @@ export default function handleSettings(settings, socketId, instrument, sessionPi
   }
   if (soundSet) {
     soundSet.setSettings(instrument, settings);
+  } else {
+    console.log(soundSet);
   }
-  console.log(soundSet);
 }

@@ -1,20 +1,19 @@
 import * as Tone from 'tone';
-import soundSet from './SoundSet';
 
-export default function handleKeyboard(data) {
+export default function handleKeyboard(data, soundSet) {
   switch (data.type) {
     case 'play':
-      playNote(data);
+      playNote(data, soundSet);
       break;
     case 'stop':
-      stopNote(data);
+      stopNote(soundSet);
       break;
     default:
       console.error('No Note!');
   }
 }
 
-const playNote = (data) => {
+const playNote = (data, soundSet) => {
   if (data.data.note) {
     const note = Tone.Frequency(data.data.note + data.data.octave).toFrequency();
     if (soundSet) {
@@ -24,7 +23,7 @@ const playNote = (data) => {
   }
 };
 
-const stopNote = (data) => {
+const stopNote = (soundSet) => {
   if (soundSet) {
     soundSet.keyboard.stop();
   }

@@ -10,13 +10,14 @@ export default function Settings({ instrument, setSettingsOpen }) {
   const globalInstrumentSettings = useContext(Context).globalInstrumentSettings;
   const sessionPin = useContext(Context).sessionPin;
   const socketId = useContext(Context).socketId;
+  const soundSet = useContext(Context).soundSet;
 
   const handleChange = (e) => {
     const copy = JSON.parse(JSON.stringify(globalInstrumentSettings));
     console.log(e.target.name);
     copy[instrument][e.target.name] = e.target.value;
     setSettings(copy);
-    handleSettings(copy[instrument], socketId, instrument, sessionPin);
+    handleSettings(copy[instrument], socketId, instrument, sessionPin, false, soundSet);
   };
   useEffect(() => {
     setSettingsOpen(true);

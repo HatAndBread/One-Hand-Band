@@ -17,6 +17,7 @@ export default function IndividualEffect({ type, params, instrument }) {
   const getGlobalEffects = useContext(Context).getGlobalEffects;
   const socketId = useContext(Context).socketId;
   const effects = useContext(Context).globalEffectsSettings[instrument];
+  const soundSet = useContext(Context).soundSet;
   const setEffects = useContext(Context).setGlobalEffectsSettings;
   const [buttStyle, setButtStyle] = useState(effects[type].on ? onStyle : offStyle);
   const onOffButtClick = () => {
@@ -24,12 +25,12 @@ export default function IndividualEffect({ type, params, instrument }) {
     if (buttStyle === offStyle) {
       clone[instrument][type].on = true;
       setEffects(clone);
-      handleEffects(clone, socketId, instrument, sessionPin);
+      handleEffects(clone, socketId, instrument, sessionPin, false, soundSet);
       setButtStyle(onStyle);
     } else {
       clone[instrument][type].on = false;
       setEffects(clone);
-      handleEffects(clone, socketId, instrument, sessionPin);
+      handleEffects(clone, socketId, instrument, sessionPin, false, soundSet);
       setButtStyle(offStyle);
     }
     setEffects(clone);
@@ -38,7 +39,7 @@ export default function IndividualEffect({ type, params, instrument }) {
     const clone = getGlobalEffects();
     clone[instrument][type][e.target.dataset.type].level = e.target.value;
     setEffects(clone);
-    handleEffects(clone, socketId, instrument, sessionPin);
+    handleEffects(clone, socketId, instrument, sessionPin, false, soundSet);
   };
   return (
     <div className="individual-effect">

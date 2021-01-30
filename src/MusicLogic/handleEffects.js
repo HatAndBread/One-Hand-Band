@@ -1,7 +1,6 @@
 import socket from '../clientSocketHandler';
-import soundSet from './SoundSet';
 
-export default function handleEffects(effects, socketId, instrument, sessionPin, fromAnotherUser) {
+export default function handleEffects(effects, socketId, instrument, sessionPin, fromAnotherUser, soundSet) {
   if (sessionPin === undefined) {
     throw new Error('missing sessionPin');
   }

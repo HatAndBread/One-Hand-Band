@@ -3,7 +3,7 @@ import Drone from './Drone';
 import Percussion from './Percussion';
 import Noise from './Noise';
 
-export class SoundSet {
+export default class SoundSet {
   constructor() {
     this.keyboard = new Keyboard();
     this.drone = new Drone();
@@ -56,7 +56,3 @@ export class SoundSet {
     }
   }
 }
-
-const soundSet = new SoundSet();
-
-export default soundSet;

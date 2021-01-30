@@ -8,12 +8,13 @@ export default function SettingsWaves({ instrument }) {
   const setSettings = useContext(Context).setGlobalInstrumentSettings;
   const sessionPin = useContext(Context).sessionPin;
   const socketId = useContext(Context).socketId;
+  const soundSet = useContext(Context).soundSet;
   const handleChange = (e) => {
     const copy = JSON.parse(JSON.stringify(settings));
     copy[instrument].wave = e.target.value;
     setSettings(copy);
     console.log(copy);
-    handleSettings(copy[instrument], socketId, instrument, sessionPin);
+    handleSettings(copy[instrument], socketId, instrument, sessionPin, false, soundSet);
   };
   return (
     <form onChange={handleChange} className="wave-selector">

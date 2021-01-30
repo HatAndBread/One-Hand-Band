@@ -8,27 +8,27 @@ const keyboard = 'keyboard';
 const percussion = 'percussion';
 const drone = 'drone';
 
-function handler(data) {
+function handler(data, soundSet) {
   switch (data.instrument) {
     case keyboard:
-      handleKeyboard(data);
+      handleKeyboard(data, soundSet);
       break;
     case noise:
-      handleNoise(data);
+      handleNoise(data, soundSet);
       break;
     case percussion:
-      handlePercussion(data);
+      handlePercussion(data, soundSet);
       break;
     case drone:
-      handleDrone(data);
+      handleDrone(data, soundSet);
       break;
     default:
       console.error(`No such instrument: ${data.instrument}`);
   }
 }
 
-export default function playMusic(data) {
+export default function playMusic(data, soundSet) {
   if (data && data.instrument) {
-    handler(data);
+    handler(data, soundSet);
   }
 }

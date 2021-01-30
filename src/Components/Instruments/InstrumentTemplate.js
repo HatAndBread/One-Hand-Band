@@ -15,8 +15,8 @@ const mounted = [];
 export default function InstrumentTemplate({ instrument }) {
   const sessionPin = useContext(Context).sessionPin;
   const getGlobalEffects = useContext(Context).getGlobalEffects;
-
   const setMusicData = useContext(Context).setMusicData;
+  const soundSet = useContext(Context).soundSet;
   const [finalData, setFinalData] = useState(null);
   const setMyInstrument = useContext(Context).setMyInstrument;
   const socketId = useContext(Context).socketId;
@@ -24,7 +24,7 @@ export default function InstrumentTemplate({ instrument }) {
 
   if (!mounted.includes(instrument)) {
     console.log('Ho! Mounting for the first time');
-    handleEffects(getGlobalEffects(), socketId, instrument, sessionPin);
+    handleEffects(getGlobalEffects(), socketId, instrument, sessionPin, false, soundSet);
     mounted.push(instrument);
   }
 

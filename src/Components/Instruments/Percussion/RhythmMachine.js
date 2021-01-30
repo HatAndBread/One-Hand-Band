@@ -115,7 +115,7 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
             </div>
           );
         }
-        if (i % 4 === 0) {
+        if (i % 4 === 0 && i < ts * 4) {
           arr.push(<div key={Math.random()} className="machine-divider"></div>);
         }
       }

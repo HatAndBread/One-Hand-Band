@@ -16,11 +16,13 @@ import effectsObject from './Components/Effects/EffectsObject';
 import percussionObj from './Components/Instruments/Percussion/percussionObj';
 import handleSettings from './MusicLogic/handleSettings';
 import handleEffects from './MusicLogic/handleEffects';
+import SoundSet from './MusicLogic/SoundSet';
 import * as Tone from 'tone';
 
 export const Context = createContext();
 
 function App() {
+  const [soundSet, SetSoundSet] = useState(null);
   const [sessionPin, setSessionPin] = useState(null);
   const [socketId, setSocketId] = useState(null);
   const [userName, setUserName] = useState(null);
@@ -67,8 +69,9 @@ function App() {
     const startContext = () => {
       Tone.context.lookAhead = 0.2;
       Tone.start();
+      SetSoundSet(new SoundSet());
       setAudioContextStarted(true);
-      window.removeEventListener('click', startContext, false);
+      document.removeEventListener('click', startContext, false);
     };
     document.addEventListener('click', startContext);
   }, []);
@@ -123,7 +126,7 @@ function App() {
 
   useEffect(() => {
     const handleSocketMusic = (musicData, user) => {
-      playMusic(musicData, user);
+      playMusic(musicData, soundSet);
     };
     socket.on('musicData', handleSocketMusic);
     return () => {
@@ -133,7 +136,7 @@ function App() {
 
   useEffect(() => {
     const handleSettingsChange = (settings, socketId, instrument, sessionPin) => {
-      handleSettings(settings, socketId, instrument, sessionPin, true);
+      handleSettings(settings, socketId, instrument, sessionPin, true, soundSet);
       const copy = JSON.parse(JSON.stringify(globalInstrumentSettings));
       copy[instrument] = settings;
       setGlobalInstrumentSettings(copy);
@@ -144,7 +147,7 @@ function App() {
 
   useEffect(() => {
     const handleEffectsChange = (effects, socketId, instrument, sessionPin) => {
-      handleEffects(effects, socketId, instrument, sessionPin, true);
+      handleEffects(effects, socketId, instrument, sessionPin, true, soundSet);
       setGlobalEffectsSettings(effects);
     };
     socket.on('effectsChange', handleEffectsChange);
@@ -159,11 +162,11 @@ function App() {
       }
     } else {
       if (musicData) {
-        playMusic(musicData);
+        playMusic(musicData, soundSet);
         setMusicData(null);
       }
     }
-  }, [musicData, sessionPin, userName]);
+  }, [musicData, sessionPin, userName, soundSet]);
   const loopObject = {
     one: { drum: percussionData.one, times: new Array(timeSignature * 4) },
     two: { drum: percussionData.two, times: new Array(timeSignature * 4) },
@@ -177,6 +180,7 @@ function App() {
   return (
     <Context.Provider
       value={{
+        soundSet,
         sessionPin,
         socketId,
         userName,
