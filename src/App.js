@@ -65,7 +65,7 @@ function App() {
 
   useEffect(() => {
     const startContext = () => {
-      Tone.context.lookAhead = 0.3;
+      Tone.context.lookAhead = 0.2;
       Tone.start();
       setAudioContextStarted(true);
       window.removeEventListener('click', startContext, false);

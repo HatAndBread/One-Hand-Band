@@ -2,7 +2,6 @@ import * as Tone from 'tone';
 import soundSet from './SoundSet';
 
 export default function handleDrone(data) {
-  console.log(data);
   if (soundSet) {
     setPitches([data.one.pitch, data.two.pitch, data.three.pitch]);
     setWaves([data.one.wave, data.two.wave, data.three.wave]);
@@ -27,7 +26,6 @@ const setPitches = (pitches) => {
   soundSet.drone.droneOne.frequency.rampTo(pitches[0], 0.2);
   soundSet.drone.droneTwo.frequency.rampTo(pitches[1], 0.2);
   soundSet.drone.droneThree.frequency.rampTo(pitches[2], 0.2);
-  console.log(soundSet);
 };
 const play = (drones) => {
   drones[0] ? soundSet.drone.play('One') : soundSet.drone.stop('One');

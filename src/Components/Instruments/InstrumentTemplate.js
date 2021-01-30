@@ -50,7 +50,6 @@ export default function InstrumentTemplate({ instrument }) {
   }, [setMyInstrument, instrument]);
 
   useEffect(() => {
-    finalData && console.log(finalData.data);
     if (finalData) {
       const copy = clone(finalData);
       setMusicData(copy);

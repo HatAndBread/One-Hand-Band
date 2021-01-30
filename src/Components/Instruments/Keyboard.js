@@ -43,7 +43,6 @@ export default function Keyboard({ setFinalData }) {
       }
     };
     const handlePointerDown = (e) => {
-      console.log(touchScreen);
       if (e.target.className === 'white-key' || e.target.className === 'black-key') {
         !touchScreen && setCurrentNote({ note: null, octave: 1 });
         setPointerDown(true);

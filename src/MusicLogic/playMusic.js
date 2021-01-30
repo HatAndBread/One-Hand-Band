@@ -9,7 +9,6 @@ const percussion = 'percussion';
 const drone = 'drone';
 
 function handler(data) {
-  console.log('DATA HERE', data);
   switch (data.instrument) {
     case keyboard:
       handleKeyboard(data);

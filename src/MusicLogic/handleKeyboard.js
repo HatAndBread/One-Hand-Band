@@ -15,7 +15,6 @@ export default function handleKeyboard(data) {
 }
 
 const playNote = (data) => {
-  console.log(data);
   if (data.data.note) {
     const note = Tone.Frequency(data.data.note + data.data.octave).toFrequency();
     if (soundSet) {
@@ -26,7 +25,6 @@ const playNote = (data) => {
 };
 
 const stopNote = (data) => {
-  console.log('stopping note!');
   if (soundSet) {
     soundSet.keyboard.stop();
   }

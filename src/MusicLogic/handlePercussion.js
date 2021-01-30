@@ -6,7 +6,6 @@ export default function handlePercussion(data) {
       soundSet.percussion.setLoop(data);
     } else {
       soundSet.percussion.play(data.drum, data.sampleRate);
-      console.log(soundSet, data.drum);
     }
   }
 }
