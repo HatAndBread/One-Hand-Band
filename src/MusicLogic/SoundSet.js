@@ -51,7 +51,8 @@ export default class SoundSet {
       this[instrument].gain.gain.value = settings.volume;
       if (instrument === 'keyboard') {
         this[instrument].rampTo = settings.rampTo;
-        this[instrument].oscillator.type = settings.wave;
+        //this[instrument].soundType = settings.wave;
+        this.keyboard.keyboardPlayer.buffer = this.keyboard.getWave(settings.wave);
       }
     }
   }
