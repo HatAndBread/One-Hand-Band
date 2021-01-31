@@ -3,7 +3,7 @@ export default function handlePercussion(data, soundSet) {
     if (data.drum === 'rhythmMachine') {
       soundSet.percussion.setLoop(data);
     } else {
-      soundSet.percussion.play(data.drum, data.sampleRate);
+      soundSet.percussion.play(data.drum, data.sampleRate, data.number);
     }
   }
 }

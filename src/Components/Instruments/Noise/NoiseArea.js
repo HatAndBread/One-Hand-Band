@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react';
 import '../../../Styles/Components/Noise.css';
 
-export default function NoiseArea({ name, setWidth }) {
+export default function NoiseArea({ name, setWidth, color }) {
   const myRef = useRef();
   useEffect(() => {
     setWidth && setWidth(myRef.current.offsetWidth);
@@ -18,8 +18,10 @@ export default function NoiseArea({ name, setWidth }) {
     }
   });
   return (
-    <div className="noise-area-container" data-name={name} ref={myRef}>
-      <div className="noise-label">{name}</div>
+    <div className="noise-area-container" data-name={name} ref={myRef} style={color}>
+      <div className="noise-label" style={{ pointerEvents: 'none' }}>
+        {name}
+      </div>
     </div>
   );
 }

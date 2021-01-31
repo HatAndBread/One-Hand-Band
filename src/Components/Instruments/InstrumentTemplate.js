@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState, useCallback } from 'react';
 import { Context } from '../../App';
 import { Route } from 'react-router-dom';
+import Loading from '../Loading/Loading';
 import SettingsLink from './SettingsLink';
 import Settings from '../Settings/Settings';
 import Effects from '../Effects/Effects';
@@ -14,6 +15,7 @@ const mounted = [];
 
 export default function InstrumentTemplate({ instrument }) {
   const sessionPin = useContext(Context).sessionPin;
+  const instrumentsLoaded = useContext(Context).instrumentsLoaded;
   const getGlobalEffects = useContext(Context).getGlobalEffects;
   const setMusicData = useContext(Context).setMusicData;
   const soundSet = useContext(Context).soundSet;
@@ -58,18 +60,24 @@ export default function InstrumentTemplate({ instrument }) {
   }, [finalData, setMusicData, clone]);
 
   return (
-    <div onContextMenu={preventer}>
-      <SettingsLink forInstrument={instrument} />
-      <Route path={`/instrument/${instrument}/settings`}>
-        <Settings instrument={instrument} setSettingsOpen={setSettingsOpen} />
-      </Route>
-      <Route path={`/instrument/${instrument}/effects`}>
-        <Effects instrument={instrument} setSettingsOpen={setSettingsOpen} />
-      </Route>
-      {!settingsOpen && instrument === 'drone' && <Drone setFinalData={setFinalData} />}
-      {!settingsOpen && instrument === 'keyboard' && <Keyboard setFinalData={setFinalData} />}
-      {!settingsOpen && instrument === 'noise' && <Noise setFinalData={setFinalData} />}
-      {!settingsOpen && instrument === 'percussion' && <Percussion setFinalData={setFinalData} />}
+    <div>
+      {instrumentsLoaded ? (
+        <div onContextMenu={preventer}>
+          <SettingsLink forInstrument={instrument} />
+          <Route path={`/instrument/${instrument}/settings`}>
+            <Settings instrument={instrument} setSettingsOpen={setSettingsOpen} />
+          </Route>
+          <Route path={`/instrument/${instrument}/effects`}>
+            <Effects instrument={instrument} setSettingsOpen={setSettingsOpen} />
+          </Route>
+          {!settingsOpen && instrument === 'drone' && <Drone setFinalData={setFinalData} />}
+          {!settingsOpen && instrument === 'keyboard' && <Keyboard setFinalData={setFinalData} />}
+          {!settingsOpen && instrument === 'noise' && <Noise setFinalData={setFinalData} />}
+          {!settingsOpen && instrument === 'percussion' && <Percussion setFinalData={setFinalData} />}
+        </div>
+      ) : (
+        <Loading />
+      )}
     </div>
   );
 }

@@ -1,7 +1,6 @@
 import './App.css';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
-import { createContext } from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, createContext } from 'react';
 import DropDownMenu from './Components/Nav/DropDownMenu';
 import Home from './Pages/Home';
 import About from './Pages/About';
@@ -21,7 +20,14 @@ import * as Tone from 'tone';
 
 export const Context = createContext();
 
+let loaded = 0;
+export const setLoaded = () => (loaded += 1);
+
 function App() {
+  const [instrumentsLoaded, setInstrumentsLoaded] = useState(false);
+  useEffect(() => {
+    instrumentsLoaded && console.log('all instruments loaded');
+  }, [instrumentsLoaded]);
   const [soundSet, SetSoundSet] = useState(null);
   const [sessionPin, setSessionPin] = useState(null);
   const [socketId, setSocketId] = useState(null);
@@ -71,6 +77,13 @@ function App() {
       Tone.start();
       SetSoundSet(new SoundSet());
       setAudioContextStarted(true);
+
+      const interval = setInterval(() => {
+        if (loaded === 2) {
+          setInstrumentsLoaded(true);
+          clearInterval(interval);
+        }
+      }, 10);
       document.removeEventListener('click', startContext, false);
     };
     document.addEventListener('click', startContext);
@@ -180,6 +193,7 @@ function App() {
   return (
     <Context.Provider
       value={{
+        instrumentsLoaded,
         soundSet,
         sessionPin,
         socketId,

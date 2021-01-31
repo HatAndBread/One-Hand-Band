@@ -22,43 +22,43 @@ import kempur from '../assets/kempur.mp3';
 import rebana from '../assets/rebana.mp3';
 import ruler from '../assets/ruler.mp3';
 import spring from '../assets/spring.mp3';
+import { setLoaded } from '../App';
 
 class Percussion extends Instrument {
   constructor() {
     super();
-    this.snare = new Tone.Player(snare).connect(this.vibrato);
-    this.kick = new Tone.Player(kick).connect(this.vibrato);
-    this.ride = new Tone.Player(ride).connect(this.vibrato);
-    this.hat = new Tone.Player(hat).connect(this.vibrato);
-    this.tom = new Tone.Player(tom).connect(this.vibrato);
-    this.bowl = new Tone.Player(bowl).connect(this.vibrato);
-    this.bugara1 = new Tone.Player(bugara1).connect(this.vibrato);
-    this.bugara2 = new Tone.Player(bugara2).connect(this.vibrato);
-    this.ceng = new Tone.Player(ceng).connect(this.vibrato);
-    this.demung1 = new Tone.Player(demung1).connect(this.vibrato);
-    this.demung2 = new Tone.Player(demung2).connect(this.vibrato);
-    this.demung3 = new Tone.Player(demung3).connect(this.vibrato);
-    this.djembe1 = new Tone.Player(djembe1).connect(this.vibrato);
-    this.djembe2 = new Tone.Player(djembe2).connect(this.vibrato);
-    this.djembe3 = new Tone.Player(djembe3).connect(this.vibrato);
-    this.jegog = new Tone.Player(jegog).connect(this.vibrato);
-    this.kantilan = new Tone.Player(kantilan).connect(this.vibrato);
-    this.kempur = new Tone.Player(kempur).connect(this.vibrato);
-    this.rebana = new Tone.Player(rebana).connect(this.vibrato);
-    this.spring = new Tone.Player(spring).connect(this.vibrato);
-    this.ruler = new Tone.Player(ruler).connect(this.vibrato);
+    this.loaded = false;
+    this.one = new Tone.Player();
+    this.two = new Tone.Player();
+    this.three = new Tone.Player();
+    this.four = new Tone.Player();
+    this.five = new Tone.Player();
+    this.six = new Tone.Player();
+    this.samples = new Tone.ToneAudioBuffers(sampleUrls, () => {
+      console.log('percussion samples loaded!');
+      setLoaded();
+      this.loaded = true;
+      this.one.connect(this.vibrato);
+      this.two.connect(this.vibrato);
+      this.three.connect(this.vibrato);
+      this.four.connect(this.vibrato);
+      this.five.connect(this.vibrato);
+      this.six.connect(this.vibrato);
+    });
     this.loop = new Tone.Loop((time) => {}, '16n').start(0);
     this.beat = 0;
     this.drumsNums = ['one', 'two', 'three', 'four', 'five', 'six'];
   }
-  play(drum, sampleRate) {
-    this[drum].playbackRate = sampleRate;
-    this[drum].start();
+  play(drum, sampleRate, number) {
+    if (this.loaded) {
+      this[number].buffer = this.samples.get(drum);
+      this[number].playbackRate = sampleRate;
+      this[number].start();
+    }
   }
   playbackRateHasChanged(data) {
     for (let i = 0; i < this.drumsNums.length; i++) {
-      if (this[data.loop[this.drumsNums[i]].drum.drum].playbackRate !== data.loop[this.drumsNums[i]].drum.sampleRate)
-        return true;
+      if (this[this.drumsNums[i]].playbackRate !== data.loop[this.drumsNums[i]].drum.sampleRate) return true;
     }
     return false;
   }
@@ -71,30 +71,34 @@ class Percussion extends Instrument {
     }
   }
   setLoop(data) {
-    this.updateBpmAndTimeSignature(data);
-    if (this.playbackRateHasChanged(data)) {
-      this.drumsNums.forEach((num) => {
-        this[data.loop[num].drum.drum].playbackRate = data.loop[num].drum.sampleRate;
-      });
-    }
-    if (isStopped(data.loop)) {
-      Tone.Transport.stop();
-      this.beat = 0;
-    } else {
-      const callback = (time) => {
+    console.log(data);
+    if (this.loaded) {
+      this.updateBpmAndTimeSignature(data);
+      if (this.playbackRateHasChanged(data)) {
         this.drumsNums.forEach((num) => {
-          if (data.loop[num].times[this.beat]) {
-            this[data.loop[num].drum.drum].playbackRate = data.loop[num].drum.sampleRate;
-            this[data.loop[num].drum.drum].start(time);
-          }
+          this[num].playbackRate = data.loop[num].drum.sampleRate;
         });
-        this.beat += 1;
-        if (this.beat >= Tone.Transport.timeSignature * 4) {
-          this.beat = 0;
-        }
-      };
-      this.loop.callback = callback;
-      Tone.Transport.state === 'stopped' && Tone.Transport.start();
+      }
+      if (isStopped(data.loop)) {
+        Tone.Transport.stop();
+        this.beat = 0;
+      } else {
+        const callback = (time) => {
+          this.drumsNums.forEach((num) => {
+            if (data.loop[num].times[this.beat]) {
+              this[num].playbackRate = data.loop[num].drum.sampleRate;
+              this[num].buffer = this.samples.get(data.loop[num].drum.drum);
+              this[num].start(time);
+            }
+          });
+          this.beat += 1;
+          if (this.beat >= Tone.Transport.timeSignature * 4) {
+            this.beat = 0;
+          }
+        };
+        this.loop.callback = callback;
+        Tone.Transport.state === 'stopped' && Tone.Transport.start();
+      }
     }
   }
 }
@@ -106,6 +110,30 @@ const isStopped = (loop) => {
     }
   }
   return true;
+};
+
+const sampleUrls = {
+  snare,
+  kick,
+  ride,
+  hat,
+  tom,
+  bowl,
+  bugara1,
+  bugara2,
+  ceng,
+  demung1,
+  demung2,
+  demung3,
+  djembe1,
+  djembe2,
+  djembe3,
+  jegog,
+  kantilan,
+  kempur,
+  rebana,
+  ruler,
+  spring
 };
 
 export default Percussion;

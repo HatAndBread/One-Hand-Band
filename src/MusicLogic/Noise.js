@@ -29,38 +29,7 @@ import saxSkronk11 from '../assets/saxSkronk11.mp3';
 import saxSkronk12 from '../assets/saxSkronk12.mp3';
 import saxSkronk13 from '../assets/saxSkronk13.mp3';
 import saxSkronk14 from '../assets/saxSkronk14.mp3';
-
-const sampleUrls = {
-  amRadioNoise: amRadioNoise,
-  analogueWhiteNoise: analogueWhiteNoise,
-  digitalNoise: digitalNoise,
-  feedback: feedback,
-  guitarFeedback: guitarFeedback,
-  guitarNoise1: guitarNoise1,
-  guitarNoise2: guitarNoise2,
-  guitarNoise3: guitarNoise3,
-  guitarNoise4: guitarNoise4,
-  heavyStatic: heavyStatic,
-  micFeedback: micFeedback,
-  radioBuzz: radioBuzz,
-  recordPlayerGlitch: recordPlayerGlitch,
-  saxSqueek: saxSqueek,
-  trumpetHiss: trumpetHiss,
-  saxSkronk: saxSkronk,
-  saxSkronk2: saxSkronk2,
-  saxSkronk3: saxSkronk3,
-  saxSkronk4: saxSkronk4,
-  saxSkronk5: saxSkronk5,
-  saxSkronk6: saxSkronk6,
-  saxSkronk7: saxSkronk7,
-  saxSkronk8: saxSkronk8,
-  saxSkronk9: saxSkronk9,
-  saxSkronk10: saxSkronk10,
-  saxSkronk11: saxSkronk11,
-  saxSkronk12: saxSkronk12,
-  saxSkronk13: saxSkronk13,
-  saxSkronk14: saxSkronk14
-};
+import { setLoaded } from '../App';
 
 class Noise extends Instrument {
   constructor() {
@@ -69,6 +38,7 @@ class Noise extends Instrument {
     this.player = new Tone.Player();
     this.samples = new Tone.ToneAudioBuffers(sampleUrls, () => {
       console.log('noise samples loaded!');
+      setLoaded();
       this.loaded = true;
       this.player.connect(this.vibrato);
     });
@@ -119,10 +89,9 @@ class Noise extends Instrument {
     Object.keys(this).forEach((key) => {
       if (this[key] instanceof Tone.Player) {
         this[key].loop = true;
-        this[key].volume.value = -16;
       }
       if (this[key] instanceof Tone.Oscillator) {
-        this[key].volume.value = -1;
+        this[key].volume.value = -4;
       }
     });
   }
@@ -176,7 +145,6 @@ class Noise extends Instrument {
       data.y = 0.00101;
     }
     if (Object.keys(sampleUrls).includes(this.nowPlaying)) {
-      console.log(data.x);
       data.x < data.width / 2
         ? (this.player.playbackRate = data.x * 0.01)
         : (this.player.playbackRate = data.x * 0.01 * (data.x * 0.01));
@@ -188,7 +156,7 @@ class Noise extends Instrument {
         this.oscillator.frequency.value = data.x * 10 * (data.x * 10);
         this.oscillator4.frequency.value = Math.random() * data.x;
       }
-      this.oscillator2.frequency.value = data.y * 5 + Math.random() * 10;
+      this.oscillator2.frequency.value = data.y * 7 * (data.y * 7) + Math.random() * 10;
       this.oscillator3.frequency.value = ((data.y / 2) * data.x) / 2;
     }
   }
@@ -222,3 +190,35 @@ export default Noise;
 //   p.start(1);
 //   console.log('Yo, this is the buffer', buffer);
 // });
+
+const sampleUrls = {
+  amRadioNoise: amRadioNoise,
+  analogueWhiteNoise: analogueWhiteNoise,
+  digitalNoise: digitalNoise,
+  feedback: feedback,
+  guitarFeedback: guitarFeedback,
+  guitarNoise1: guitarNoise1,
+  guitarNoise2: guitarNoise2,
+  guitarNoise3: guitarNoise3,
+  guitarNoise4: guitarNoise4,
+  heavyStatic: heavyStatic,
+  micFeedback: micFeedback,
+  radioBuzz: radioBuzz,
+  recordPlayerGlitch: recordPlayerGlitch,
+  saxSqueek: saxSqueek,
+  trumpetHiss: trumpetHiss,
+  saxSkronk: saxSkronk,
+  saxSkronk2: saxSkronk2,
+  saxSkronk3: saxSkronk3,
+  saxSkronk4: saxSkronk4,
+  saxSkronk5: saxSkronk5,
+  saxSkronk6: saxSkronk6,
+  saxSkronk7: saxSkronk7,
+  saxSkronk8: saxSkronk8,
+  saxSkronk9: saxSkronk9,
+  saxSkronk10: saxSkronk10,
+  saxSkronk11: saxSkronk11,
+  saxSkronk12: saxSkronk12,
+  saxSkronk13: saxSkronk13,
+  saxSkronk14: saxSkronk14
+};

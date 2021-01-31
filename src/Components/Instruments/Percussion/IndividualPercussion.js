@@ -14,6 +14,7 @@ export default function IndividualPercussion({ defaultDrum, number, setFinalData
       drum: drum,
       volume: percussionData[number].volume,
       sampleRate: percussionData[number].sampleRate,
+      number: number,
       socketId: socketId
     });
   };
