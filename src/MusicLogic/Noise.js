@@ -44,11 +44,10 @@ class Noise extends Instrument {
     });
     this.oscillatorGain = new Tone.Gain(0.3).connect(this.vibrato);
     this.oscillatorPulverizer = new Tone.BitCrusher(1).connect(this.oscillatorGain);
-    this.sine = new Tone.AmplitudeEnvelope().connect(this.oscillatorPulverizer);
-    this.oscillator = new Tone.Oscillator().connect(this.sine).start();
-    this.oscillator2 = new Tone.Oscillator().connect(this.sine).start();
-    this.oscillator3 = new Tone.Oscillator().connect(this.sine).start();
-    this.oscillator4 = new Tone.Oscillator().connect(this.sine).start();
+    this.oscillator = new Tone.Oscillator().connect(this.oscillatorPulverizer);
+    this.oscillator2 = new Tone.Oscillator().connect(this.oscillatorPulverizer);
+    this.oscillator3 = new Tone.Oscillator().connect(this.oscillatorPulverizer);
+    this.oscillator4 = new Tone.Oscillator().connect(this.oscillatorPulverizer);
     this.nowPlaying = null;
     this.animationFrame = false;
     this.types = {
@@ -112,7 +111,10 @@ class Noise extends Instrument {
         : (this.player.playbackRate = data.x * 0.01 * (data.x * 0.01));
       this.player.start(0, Math.floor(Math.random() * 10));
     } else {
-      this[this.nowPlaying].triggerAttack(Tone.now());
+      Object.keys(this).forEach((key) => {
+        this[key] instanceof Tone.Oscillator && this[key].start(Tone.now());
+      });
+      //this[this.nowPlaying].triggerAttack(Tone.now());
       const updateLoop = () => {
         let ranNum = Math.floor(Math.random() * 5);
         const minus = this.oscillator4.frequency.value - 100;
@@ -136,6 +138,9 @@ class Noise extends Instrument {
     this[this.nowPlaying] ? this[this.nowPlaying].triggerRelease(Tone.now()) : this.player.stop(0);
     this.nowPlaying = null;
     this.animationFrame = false;
+    Object.keys(this).forEach((key) => {
+      this[key] instanceof Tone.Oscillator && this[key].stop(Tone.now());
+    });
   }
   play(data) {
     if (data.x <= 0.001) {
@@ -181,13 +186,12 @@ export default Noise;
 
 // Tone.Offline(() => {
 //   // only nodes created in this callback will be recorded
-//   const oscillator = new Tone.Oscillator().toDestination().start(0);
+//   const oscillator = new Tone.Oscillator(440).toDestination().start(0);
 // }, 0.1).then((buffer) => {
 //   // do something with the output buffer
 //   const p = new Tone.Player().toDestination();
 //   p.loop = true;
 //   p.buffer = buffer;
-//   p.start(1);
 //   console.log('Yo, this is the buffer', buffer);
 // });
 

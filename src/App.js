@@ -73,11 +73,21 @@ function App() {
 
   useEffect(() => {
     const startContext = () => {
-      Tone.context.lookAhead = 0.2;
-      Tone.start();
-      SetSoundSet(new SoundSet());
-      setAudioContextStarted(true);
-
+      const init = () => {
+        Tone.context.lookAhead = 0.2;
+        Tone.start();
+        SetSoundSet(new SoundSet());
+        setAudioContextStarted(true);
+      };
+      if (Tone.context.state !== 'suspended') {
+        init();
+      } else {
+        // for stupid safari
+        Tone.context.resume();
+        Tone.context.on('statechange', () => {
+          init();
+        });
+      }
       const interval = setInterval(() => {
         if (loaded === 2) {
           setInstrumentsLoaded(true);

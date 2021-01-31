@@ -13,7 +13,6 @@ export default function handleDrone(data, soundSet) {
 }
 
 const setVolumes = (volumes, soundSet) => {
-  console.log('VOLUMES', volumes, soundSet.drone.droneOne.volume.value);
   volumes[0] !== soundSet.drone.droneOne.volume.value && (soundSet.drone.droneOne.volume.value = volumes[0]);
   volumes[1] !== soundSet.drone.droneTwo.volume.value && (soundSet.drone.droneTwo.volume.value = volumes[1]);
   volumes[2] !== soundSet.drone.droneThree.volume.value && (soundSet.drone.droneThree.volume.value = volumes[2]);

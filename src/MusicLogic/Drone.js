@@ -8,25 +8,27 @@ class Drone extends Instrument {
     this.envelopeOne = new Tone.AmplitudeEnvelope(defaultEnvelopeSettings).connect(this.vibrato);
     this.envelopeTwo = new Tone.AmplitudeEnvelope(defaultEnvelopeSettings).connect(this.vibrato);
     this.envelopeThree = new Tone.AmplitudeEnvelope(defaultEnvelopeSettings).connect(this.vibrato);
-    this.droneOne = new Tone.Oscillator().connect(this.envelopeOne).start();
-    this.droneTwo = new Tone.Oscillator().connect(this.envelopeTwo).start();
-    this.droneThree = new Tone.Oscillator().connect(this.envelopeThree).start();
+    this.droneOne = new Tone.Oscillator().connect(this.envelopeOne);
+    this.droneTwo = new Tone.Oscillator().connect(this.envelopeTwo);
+    this.droneThree = new Tone.Oscillator().connect(this.envelopeThree);
     this.rampTo = 0;
   }
 
   play(number) {
     const drone = this[`drone${number}`];
     if (!drone.playing) {
+      drone.start(Tone.now());
       drone.playing = true;
       this[`envelope${number}`].triggerAttack(Tone.now());
     }
   }
   stop(number) {
     const drone = this[`drone${number}`];
+    const envelo = this[`envelope${number}`];
     if (drone.playing) {
       drone.playing = false;
-      console.log('turned it off', drone.playing);
-      this[`envelope${number}`].triggerRelease(Tone.now());
+      drone.stop(`+${envelo.release}`);
+      envelo.triggerRelease(Tone.now());
     }
   }
 }

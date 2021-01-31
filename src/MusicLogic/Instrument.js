@@ -1,10 +1,16 @@
 import * as Tone from 'tone';
 import EffectsObject from '../Components/Effects/EffectsObject';
+import sine from '../assets/sine.mp3';
+import sawtooth from '../assets/sawtooth.mp3';
+import square from '../assets/square.mp3';
+import triangle from '../assets/triangle.mp3';
 
 const theLoop = () => {
   Tone.Destination.volume.value = -5;
   requestAnimationFrame(theLoop);
 };
+
+const waveUrls = { sine, sawtooth, square, triangle };
 
 export default class Instrument {
   constructor() {
