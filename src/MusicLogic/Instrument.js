@@ -4,6 +4,7 @@ import sine from '../assets/sine.mp3';
 import sawtooth from '../assets/sawtooth.mp3';
 import square from '../assets/square.mp3';
 import triangle from '../assets/triangle.mp3';
+import { setLoaded } from '../App';
 
 const theLoop = () => {
   Tone.Destination.volume.value = -5;
@@ -11,6 +12,8 @@ const theLoop = () => {
 };
 
 const waveUrls = { sine, sawtooth, square, triangle };
+
+let waves;
 
 export default class Instrument {
   constructor() {
@@ -22,6 +25,19 @@ export default class Instrument {
     this.pitchShifter = new Tone.PitchShift(0).connect(this.distortion);
     this.vibrato = new Tone.Vibrato(3, 1).connect(this.pitchShifter);
     this.setEffects(EffectsObject());
+    if (!waves) {
+      waves = new Tone.ToneAudioBuffers(waveUrls, () => {
+        console.log('noise samples loaded!');
+        setLoaded();
+        this.player.connect(this.vibrato);
+      });
+    }
+  }
+
+  getWave(which) {
+    if (waves) {
+      return waves.get(which);
+    }
   }
 
   setEffects(effects) {

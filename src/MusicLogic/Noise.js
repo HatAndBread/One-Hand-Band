@@ -44,12 +44,11 @@ class Noise extends Instrument {
     });
     this.oscillatorGain = new Tone.Gain(0.3).connect(this.vibrato);
     this.oscillatorPulverizer = new Tone.BitCrusher(1).connect(this.oscillatorGain);
-    this.oscillator = new Tone.Oscillator().connect(this.oscillatorPulverizer);
-    this.oscillator2 = new Tone.Oscillator().connect(this.oscillatorPulverizer);
-    this.oscillator3 = new Tone.Oscillator().connect(this.oscillatorPulverizer);
-    this.oscillator4 = new Tone.Oscillator().connect(this.oscillatorPulverizer);
+    this.oscillator = new Tone.Player().connect(this.oscillatorPulverizer);
+    this.oscillator2 = new Tone.Player().connect(this.oscillatorPulverizer);
+    this.oscillator3 = new Tone.Player().connect(this.oscillatorPulverizer);
+    this.oscillator4 = new Tone.Player().connect(this.oscillatorPulverizer);
     this.nowPlaying = null;
-    this.animationFrame = false;
     this.types = {
       ambientNoise: [
         'amRadioNoise',
@@ -79,18 +78,19 @@ class Noise extends Instrument {
         'saxSkronk6',
         'saxSkronk7'
       ],
-      oscillators: ['sine']
+      oscillators: ['oscillators']
     };
     this.initialize();
+  }
+  randomWaveType() {
+    const waveTypes = ['sine', 'square', 'triangle', 'sawtooth'];
+    return waveTypes[Math.floor(Math.random() * waveTypes.length)];
   }
   getRandomSound() {}
   initialize() {
     Object.keys(this).forEach((key) => {
       if (this[key] instanceof Tone.Player) {
         this[key].loop = true;
-      }
-      if (this[key] instanceof Tone.Oscillator) {
-        this[key].volume.value = -4;
       }
     });
   }
@@ -99,9 +99,15 @@ class Noise extends Instrument {
     this.loaded && this.startLogic(data);
   }
   startLogic(data) {
+    console.log('STARTIN');
+    this.oscillator.buffer = this.getWave(this.randomWaveType());
+    this.oscillator2.buffer = this.getWave(this.randomWaveType());
+    this.oscillator3.buffer = this.getWave(this.randomWaveType());
+    this.oscillator4.buffer = this.getWave(this.randomWaveType());
     const which = camelCase(data.which);
     const ranNum = Math.floor(Math.random() * this.types[which].length);
     this.nowPlaying = this.types[which][ranNum];
+    console.log('START', this.nowPlaying);
 
     if (Object.keys(sampleUrls).includes(this.nowPlaying)) {
       this.player.buffer = this.samples.get(this.nowPlaying);
@@ -111,36 +117,23 @@ class Noise extends Instrument {
         : (this.player.playbackRate = data.x * 0.01 * (data.x * 0.01));
       this.player.start(0, Math.floor(Math.random() * 10));
     } else {
-      Object.keys(this).forEach((key) => {
-        this[key] instanceof Tone.Oscillator && this[key].start(Tone.now());
-      });
-      //this[this.nowPlaying].triggerAttack(Tone.now());
-      const updateLoop = () => {
-        let ranNum = Math.floor(Math.random() * 5);
-        const minus = this.oscillator4.frequency.value - 100;
-        const decider = Math.floor(Math.random() * 2);
-        let increaseNum;
-        if (decider && minus > 0) {
-          increaseNum = Math.random() * -10;
-        } else {
-          increaseNum = Math.random() * 10;
-        }
-        if (!ranNum) {
-          this.oscillator4.frequency.value += increaseNum;
-        }
-        this.animationFrame && window.requestAnimationFrame(updateLoop);
-      };
-      this.animationFrame = true;
-      updateLoop();
+      this.oscillator.start(Tone.now());
+      this.oscillator2.start(Tone.now());
+      this.oscillator3.start(Tone.now());
+      this.oscillator4.start(Tone.now());
     }
   }
+  stopOscillators() {
+    console.log('YO STOPPPIN');
+    this.oscillator.stop(Tone.now());
+    this.oscillator2.stop(Tone.now());
+    this.oscillator3.stop(Tone.now());
+    this.oscillator4.stop(Tone.now());
+  }
   stop() {
-    this[this.nowPlaying] ? this[this.nowPlaying].triggerRelease(Tone.now()) : this.player.stop(0);
+    console.log(this.nowPlaying);
+    this.nowPlaying !== 'oscillators' ? this.player.stop(Tone.now()) : this.stopOscillators();
     this.nowPlaying = null;
-    this.animationFrame = false;
-    Object.keys(this).forEach((key) => {
-      this[key] instanceof Tone.Oscillator && this[key].stop(Tone.now());
-    });
   }
   play(data) {
     if (data.x <= 0.001) {
@@ -151,18 +144,18 @@ class Noise extends Instrument {
     }
     if (Object.keys(sampleUrls).includes(this.nowPlaying)) {
       data.x < data.width / 2
-        ? (this.player.playbackRate = data.x * 0.01)
-        : (this.player.playbackRate = data.x * 0.01 * (data.x * 0.01));
+        ? (this.player.playbackRate = data.x * 0.001)
+        : (this.player.playbackRate = data.x * 0.001 * (data.x * 0.01));
     } else {
       if (data.x < data.width / 2) {
-        this.oscillator.frequency.value = data.x * -10 * (data.x * -10);
-        this.oscillator4.frequency.value = Math.random() * data.x;
+        this.oscillator.playbackRate = data.x / 5000;
+        this.oscillator4.playbackRate = data.y * 0.001;
       } else {
-        this.oscillator.frequency.value = data.x * 10 * (data.x * 10);
-        this.oscillator4.frequency.value = Math.random() * data.x;
+        this.oscillator.playbackRate = data.x + data.x * 3;
+        this.oscillator4.playbackRate = Math.random() + data.x;
       }
-      this.oscillator2.frequency.value = data.y * 7 * (data.y * 7) + Math.random() * 10;
-      this.oscillator3.frequency.value = ((data.y / 2) * data.x) / 2;
+      this.oscillator2.playbackRate = data.y + Math.random() * 0.1;
+      this.oscillator3.playbackRate = data.y / 2 / (data.x / 2);
     }
   }
 }
@@ -183,17 +176,6 @@ function camelCase(string) {
 }
 
 export default Noise;
-
-// Tone.Offline(() => {
-//   // only nodes created in this callback will be recorded
-//   const oscillator = new Tone.Oscillator(440).toDestination().start(0);
-// }, 0.1).then((buffer) => {
-//   // do something with the output buffer
-//   const p = new Tone.Player().toDestination();
-//   p.loop = true;
-//   p.buffer = buffer;
-//   console.log('Yo, this is the buffer', buffer);
-// });
 
 const sampleUrls = {
   amRadioNoise: amRadioNoise,

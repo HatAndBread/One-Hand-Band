@@ -89,7 +89,8 @@ function App() {
         });
       }
       const interval = setInterval(() => {
-        if (loaded === 2) {
+        if (loaded === 3) {
+          console.log('yay!');
           setInstrumentsLoaded(true);
           clearInterval(interval);
         }
