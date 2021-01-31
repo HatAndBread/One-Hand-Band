@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <div>
       <div className="home-container">
-        <h1>HOOTENANNY</h1>
+        <h1>HOOTENANNY!</h1>
         <div className="home-button-container">
           <Link to="/host" className="home-btn">
             Host a room
@@ -25,7 +25,7 @@ export default function Home() {
         </div>
       </div>
       <div className="home-content">
-        <p>Hootenanny lets you improvise music with your friends live online. Here's how it works:</p>
+        <p>Hootenanny! lets you improvise music with your friends live online. Here's how it works:</p>
         <ul>
           <li>⭐️Step 1: Click on "Host a room" to generate a pin number 🎰</li>
           <li>⭐️Step 2: Send the pin number to your friends 💃🕺</li>
