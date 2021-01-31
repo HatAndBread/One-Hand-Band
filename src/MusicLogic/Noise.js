@@ -42,7 +42,7 @@ class Noise extends Instrument {
       this.loaded = true;
       this.player.connect(this.vibrato);
     });
-    this.oscillatorGain = new Tone.Gain(0.3).connect(this.vibrato);
+    this.oscillatorGain = new Tone.Gain(1).connect(this.vibrato);
     this.oscillatorPulverizer = new Tone.BitCrusher(1).connect(this.oscillatorGain);
     this.oscillator = new Tone.Player().connect(this.oscillatorPulverizer);
     this.oscillator2 = new Tone.Player().connect(this.oscillatorPulverizer);

@@ -17,39 +17,20 @@ export default function SettingsWaves({ instrument }) {
     handleSettings(copy[instrument], socketId, instrument, sessionPin, false, soundSet);
   };
   return (
-    <form onChange={handleChange} className="wave-selector">
-      <div>
-        {settings[instrument].wave === 'sine' ? (
-          <input type="radio" id="sine" name={instrument} value="sine" defaultChecked />
-        ) : (
-          <input type="radio" id="sine" name={instrument} value="sine" />
-        )}
-        <label htmlFor="sine">Sine</label>
-      </div>
-      <div>
-        {settings[instrument].wave === 'triangle' ? (
-          <input type="radio" id="triangle" name={instrument} value="triangle" defaultChecked />
-        ) : (
-          <input type="radio" id="triangle" name={instrument} value="triangle" />
-        )}
-        <label htmlFor="triangle">Triangle</label>
-      </div>
-      <div>
-        {settings[instrument].wave === 'sawtooth' ? (
-          <input type="radio" id="sawtooth" name={instrument} value="sawtooth" defaultChecked />
-        ) : (
-          <input type="radio" id="sawtooth" name={instrument} value="sawtooth" />
-        )}
-        <label htmlFor="sawtooth">Sawtooth</label>
-      </div>
-      <div>
-        {settings[instrument].wave === 'square' ? (
-          <input type="radio" id="square" name={instrument} value="square" defaultChecked />
-        ) : (
-          <input type="radio" id="square" name={instrument} value="square" />
-        )}
-        <label htmlFor="square">Square</label>
-      </div>
-    </form>
+    <select onChange={handleChange} defaultValue={settings[instrument].wave}>
+      <option value="sine">sine</option>
+      <option value="triangle">triangle</option>
+      <option value="sawtooth">sawtooth</option>
+      <option value="square">square</option>
+      <option value="piano">piano</option>
+      <option value="oud">oud</option>
+      <option value="trumpet">trumpet</option>
+      <option value="organ">organ</option>
+      <option value="oboe">oboe</option>
+      <option value="kazoo">kazoo</option>
+      <option value="voice">voice</option>
+      <option value="harmonium">harmonium</option>
+      <option value="swell">swell</option>
+    </select>
   );
 }

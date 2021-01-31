@@ -5,41 +5,16 @@ export default function WaveChooser({ name, number, droneData, setDroneData }) {
     setDroneData(copy);
   };
   return (
-    <div>
-      <form onChange={handleChange} className="wave-selector">
-        <div>
-          {droneData[number].wave === 'sine' ? (
-            <input type="radio" id="sine" name={name} value="sine" defaultChecked />
-          ) : (
-            <input type="radio" id="sine" name={name} value="sine" />
-          )}
-          <label htmlFor="sine">Sine</label>
-        </div>
-        <div>
-          {droneData[number].wave === 'triangle' ? (
-            <input type="radio" id="triangle" name={name} value="triangle" defaultChecked />
-          ) : (
-            <input type="radio" id="triangle" name={name} value="triangle" />
-          )}
-          <label htmlFor="triangle">Triangle</label>
-        </div>
-        <div>
-          {droneData[number].wave === 'sawtooth' ? (
-            <input type="radio" id="sawtooth" name={name} value="sawtooth" defaultChecked />
-          ) : (
-            <input type="radio" id="sawtooth" name={name} value="sawtooth" />
-          )}
-          <label htmlFor="sawtooth">Sawtooth</label>
-        </div>
-        <div>
-          {droneData[number].wave === 'square' ? (
-            <input type="radio" id="square" name={name} value="square" defaultChecked />
-          ) : (
-            <input type="radio" id="square" name={name} value="square" />
-          )}
-          <label htmlFor="square">Square</label>
-        </div>
-      </form>
-    </div>
+    <select onChange={handleChange} defaultValue={droneData[number].wave}>
+      <option value="harmonium">harmonium</option>
+      <option value="organ">organ</option>
+      <option value="kazoo">kazoo</option>
+      <option value="voice">voice</option>
+      <option value="oboe">oboe</option>
+      <option value="sine">sine</option>
+      <option value="triangle">triangle</option>
+      <option value="sawtooth">sawtooth</option>
+      <option value="square">square</option>
+    </select>
   );
 }

@@ -2,7 +2,6 @@ import { useContext, useEffect } from 'react';
 import { Context } from '../../App';
 import AttackSustainDecayRelease from './AttackSustainDecayRelease';
 import handleSettings from '../../MusicLogic/handleSettings';
-import SettingsWaves from './SettingsWaves';
 import '../../Styles/Components/Settings.css';
 
 export default function Settings({ instrument, setSettingsOpen }) {
@@ -80,7 +79,6 @@ export default function Settings({ instrument, setSettingsOpen }) {
         </div>
         {getKnobs()}
       </div>
-      {instrument === 'keyboard' && <SettingsWaves instrument={instrument} />}
     </div>
   );
 }

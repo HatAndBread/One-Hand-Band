@@ -18,7 +18,6 @@ const playNote = (data, soundSet) => {
     const note = Tone.Frequency(data.data.note + data.data.octave).toFrequency();
     if (soundSet) {
       soundSet.keyboard.keyboardPlayer.playbackRate = note / 440;
-      //soundSet.keyboard.oscillator.frequency.rampTo(note, soundSet.keyboard.rampTo);
       soundSet.keyboard.play();
     }
   }

@@ -27,9 +27,11 @@ export default function Keyboard({ setFinalData }) {
     };
   });
   useEffect(() => {
-    window.addEventListener('pointerdown', (e) => {
-      e.pointerType === 'touch' ? setTouchScreen(true) : setTouchScreen(false);
-    });
+    const eventHandler = (e) => (e.pointerType === 'touch' ? setTouchScreen(true) : setTouchScreen(false));
+    window.addEventListener('pointerdown', eventHandler);
+    return () => {
+      window.removeEventListener('pointerdown', eventHandler);
+    };
   }, []);
 
   useEffect(() => {

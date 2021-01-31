@@ -11,14 +11,15 @@ class Keyboard extends Instrument {
     this.keyboardPlayer.loopStart = 0;
     this.rampTo = 0;
     this.playing = false;
-    this.firstKeyboardPlay = true;
+    this.setFirstBuffer = setInterval(() => {
+      if (this.loaded) {
+        this.keyboardPlayer.buffer = this.getWave('sine');
+        clearInterval(this.setFirstBuffer);
+      }
+    }, 100);
   }
 
   play() {
-    if (this.firstKeyboardPlay) {
-      this.keyboardPlayer.buffer = this.getWave('sine');
-      this.firstKeyboardPlay = false;
-    }
     this.envelope.triggerAttack(Tone.now());
     if (!this.playing) {
       this.keyboardPlayer.start(Tone.now());

@@ -12,6 +12,7 @@
   border-width: 1px;
   height: 100%;
   width: 100%;
+  transition: 0.3s;
 }
 
 .black-key {
@@ -23,6 +24,7 @@
   left: 75%;
   height: 60%;
   width: 50%;
+  transition: 0.3s;
 }
 
 .octave-setter-container {
