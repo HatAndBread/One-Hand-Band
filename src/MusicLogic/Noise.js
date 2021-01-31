@@ -99,7 +99,6 @@ class Noise extends Instrument {
     this.loaded && this.startLogic(data);
   }
   startLogic(data) {
-    console.log('STARTIN');
     this.oscillator.buffer = this.getWave(this.randomWaveType());
     this.oscillator2.buffer = this.getWave(this.randomWaveType());
     this.oscillator3.buffer = this.getWave(this.randomWaveType());
@@ -107,11 +106,9 @@ class Noise extends Instrument {
     const which = camelCase(data.which);
     const ranNum = Math.floor(Math.random() * this.types[which].length);
     this.nowPlaying = this.types[which][ranNum];
-    console.log('START', this.nowPlaying);
 
     if (Object.keys(sampleUrls).includes(this.nowPlaying)) {
       this.player.buffer = this.samples.get(this.nowPlaying);
-      console.log(data.x);
       data.x < data.width / 2
         ? (this.player.playbackRate = data.x * 0.01)
         : (this.player.playbackRate = data.x * 0.01 * (data.x * 0.01));
@@ -124,14 +121,12 @@ class Noise extends Instrument {
     }
   }
   stopOscillators() {
-    console.log('YO STOPPPIN');
     this.oscillator.stop(Tone.now());
     this.oscillator2.stop(Tone.now());
     this.oscillator3.stop(Tone.now());
     this.oscillator4.stop(Tone.now());
   }
   stop() {
-    console.log(this.nowPlaying);
     this.nowPlaying !== 'oscillators' ? this.player.stop(Tone.now()) : this.stopOscillators();
     this.nowPlaying = null;
   }
