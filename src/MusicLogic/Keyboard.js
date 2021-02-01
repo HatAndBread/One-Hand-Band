@@ -1,6 +1,8 @@
 import * as Tone from 'tone';
 import defaultEnvelopeSettings from '../Components/Settings/DefaultEnvelopeSettings';
 import Instrument from './Instrument';
+import { checkIfSoundsLoaded } from './Instrument';
+import { setLoaded } from '../App';
 
 class Keyboard extends Instrument {
   constructor() {
@@ -14,20 +16,24 @@ class Keyboard extends Instrument {
       gain: 0
     }).connect(this.keyboardGain);
     this.envelope = new Tone.AmplitudeEnvelope(defaultEnvelopeSettings).connect(this.filter);
-    this.keyboardPlayer = new Tone.Player().connect(this.envelope);
+    this.keyboardPlayer = new Tone.Player();
     this.keyboardPlayer.loop = true;
     this.keyboardPlayer.loopStart = 0;
     this.rampTo = 0;
     this.playing = false;
     this.setFirstBuffer = setInterval(() => {
-      if (this.loaded) {
-        this.keyboardPlayer.buffer = this.getWave('sine');
+      if (checkIfSoundsLoaded()) {
+        this.keyboardPlayer.connect(this.envelope);
         clearInterval(this.setFirstBuffer);
+        setLoaded();
       }
     }, 100);
   }
 
   play() {
+    if (!this.keyboardPlayer.loaded) {
+      this.keyboardPlayer.buffer = this.getWave('sine');
+    }
     this.envelope.triggerAttack(Tone.now());
     if (!this.playing) {
       this.keyboardPlayer.start(Tone.now());

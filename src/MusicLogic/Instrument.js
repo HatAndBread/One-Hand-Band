@@ -14,7 +14,6 @@ import trumpet from '../assets/trumpet.mp3';
 import piano from '../assets/piano.mp3';
 import shepherd from '../assets/shepherd.mp3';
 import voice from '../assets/voice.mp3';
-import { setLoaded } from '../App';
 
 const theLoop = () => {
   Tone.Destination.volume.value = -5;
@@ -40,6 +39,10 @@ const waveUrls = {
 
 let waves;
 
+const checkIfSoundsLoaded = () => (waves ? true : false);
+
+export { checkIfSoundsLoaded };
+
 export default class Instrument {
   constructor() {
     this.gain = new Tone.Gain(0.2).toDestination();
@@ -49,15 +52,9 @@ export default class Instrument {
     this.distortion = new Tone.Distortion(0).connect(this.pulverizer);
     this.pitchShifter = new Tone.PitchShift(0).connect(this.distortion);
     this.vibrato = new Tone.Vibrato(3, 1).connect(this.pitchShifter);
-    this.loaded = false;
     this.setEffects(EffectsObject());
     if (!waves) {
-      waves = new Tone.ToneAudioBuffers(waveUrls, () => {
-        console.log('noise samples loaded!');
-        this.loaded = true;
-        setLoaded();
-        this.player.connect(this.vibrato);
-      });
+      waves = new Tone.ToneAudioBuffers(waveUrls, () => {});
     }
   }
 
