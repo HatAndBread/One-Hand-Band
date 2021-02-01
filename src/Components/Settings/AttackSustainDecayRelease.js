@@ -61,7 +61,7 @@ export default function AttackSustainDecayRelease({ instrument }) {
           onChange={handleChange}
           defaultValue={settings.envelope.release}
           min="0.01"
-          max="1"
+          max="3"
           step="0.01"
         />
         <label htmlFor={'release'}>Release</label>

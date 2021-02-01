@@ -43,7 +43,7 @@ let waves;
 export default class Instrument {
   constructor() {
     this.gain = new Tone.Gain(0.2).toDestination();
-    this.comp = new Tone.Compressor(-30, 10).connect(this.gain);
+    this.comp = new Tone.Compressor().connect(this.gain);
     this.delay = new Tone.FeedbackDelay(0, 1).connect(this.comp);
     this.pulverizer = new Tone.BitCrusher(1).connect(this.delay);
     this.distortion = new Tone.Distortion(0).connect(this.pulverizer);

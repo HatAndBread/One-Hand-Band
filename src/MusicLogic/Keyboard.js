@@ -5,7 +5,15 @@ import Instrument from './Instrument';
 class Keyboard extends Instrument {
   constructor() {
     super();
-    this.envelope = new Tone.AmplitudeEnvelope(defaultEnvelopeSettings).connect(this.vibrato);
+    this.keyboardGain = new Tone.Gain(0.5).connect(this.vibrato);
+    this.filter = new Tone.Filter({
+      type: 'lowpass',
+      frequency: 300,
+      rolloff: -12,
+      Q: 1,
+      gain: 0
+    }).connect(this.keyboardGain);
+    this.envelope = new Tone.AmplitudeEnvelope(defaultEnvelopeSettings).connect(this.filter);
     this.keyboardPlayer = new Tone.Player().connect(this.envelope);
     this.keyboardPlayer.loop = true;
     this.keyboardPlayer.loopStart = 0;

@@ -94,6 +94,13 @@ class Noise extends Instrument {
       }
     });
   }
+  setPlaybackRate(data) {
+    if (data.x < data.width / 2) {
+      this.player.playbackRate = 1 / (data.width / (data.x * 2));
+    } else {
+      this.player.playbackRate = Math.pow(1 / (data.width / (data.x * 2)), 2.5);
+    }
+  }
 
   start(data) {
     this.loaded && this.startLogic(data);
@@ -108,10 +115,9 @@ class Noise extends Instrument {
     this.nowPlaying = this.types[which][ranNum];
 
     if (Object.keys(sampleUrls).includes(this.nowPlaying)) {
+      console.log(data, 'YO');
       this.player.buffer = this.samples.get(this.nowPlaying);
-      data.x < data.width / 2
-        ? (this.player.playbackRate = data.x * 0.01)
-        : (this.player.playbackRate = data.x * 0.01 * (data.x * 0.01));
+      this.setPlaybackRate(data);
       this.player.start(0, Math.floor(Math.random() * 10));
     } else {
       this.oscillator.start(Tone.now());
@@ -138,9 +144,8 @@ class Noise extends Instrument {
       data.y = 0.00101;
     }
     if (Object.keys(sampleUrls).includes(this.nowPlaying)) {
-      data.x < data.width / 2
-        ? (this.player.playbackRate = data.x * 0.001)
-        : (this.player.playbackRate = data.x * 0.001 * (data.x * 0.01));
+      console.log(data.x);
+      this.setPlaybackRate(data);
     } else {
       if (data.x < data.width / 2) {
         this.oscillator.playbackRate = data.x / 5000;

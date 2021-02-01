@@ -5,7 +5,8 @@ import Instrument from './Instrument';
 class Drone extends Instrument {
   constructor() {
     super();
-    this.envelope = new Tone.AmplitudeEnvelope(defaultEnvelopeSettings).connect(this.vibrato);
+    this.droneGain = new Tone.Gain(1).connect(this.vibrato);
+    this.envelope = new Tone.AmplitudeEnvelope(defaultEnvelopeSettings).connect(this.droneGain);
     this.one = new Tone.Player().connect(this.envelope);
     this.two = new Tone.Player().connect(this.envelope);
     this.three = new Tone.Player().connect(this.envelope);
