@@ -7,7 +7,7 @@ import { setLoaded } from '../App';
 class Keyboard extends Instrument {
   constructor() {
     super();
-    this.keyboardGain = new Tone.Gain(0.5).connect(this.vibrato);
+    this.keyboardGain = new Tone.Gain(0.7).connect(this.vibrato);
     this.filter = new Tone.Filter({
       type: 'lowpass',
       frequency: 300,
@@ -25,6 +25,7 @@ class Keyboard extends Instrument {
       if (checkIfSoundsLoaded()) {
         this.keyboardPlayer.connect(this.envelope);
         clearInterval(this.setFirstBuffer);
+        this.connect();
         setLoaded();
       }
     }, 100);
@@ -34,6 +35,7 @@ class Keyboard extends Instrument {
     if (!this.keyboardPlayer.loaded) {
       this.keyboardPlayer.buffer = this.getWave('sine');
     }
+    console.log(this.keyboardPlayer.buffer.sampleRate, Tone.context.sampleRate);
     this.envelope.triggerAttack(Tone.now());
     if (!this.playing) {
       this.keyboardPlayer.start(Tone.now());

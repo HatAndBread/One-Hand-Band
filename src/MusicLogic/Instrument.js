@@ -12,9 +12,9 @@ import organ from '../assets/organ.mp3';
 import swell from '../assets/swell.mp3';
 import trumpet from '../assets/trumpet.mp3';
 import piano from '../assets/piano.mp3';
-import shepherd from '../assets/shepherd.mp3';
 import voice from '../assets/voice.mp3';
-
+import tambura from '../assets/tambura.mp3';
+import singing from '../assets/singing.mp3';
 const theLoop = () => {
   Tone.Destination.volume.value = -5;
   requestAnimationFrame(theLoop);
@@ -33,8 +33,9 @@ const waveUrls = {
   swell,
   trumpet,
   piano,
-  shepherd,
-  voice
+  voice,
+  tambura,
+  singing
 };
 
 let waves;
@@ -42,12 +43,12 @@ let waves;
 const checkIfSoundsLoaded = () => (waves ? true : false);
 
 export { checkIfSoundsLoaded };
-
+let loadedInstrumentNumber = 0;
+const compressor = new Tone.Compressor();
 export default class Instrument {
   constructor() {
-    this.gain = new Tone.Gain(0.2).toDestination();
-    this.comp = new Tone.Compressor().connect(this.gain);
-    this.delay = new Tone.FeedbackDelay(0, 1).connect(this.comp);
+    this.gain = new Tone.Gain(0.2).connect(compressor);
+    this.delay = new Tone.FeedbackDelay(0, 1).connect(this.gain);
     this.pulverizer = new Tone.BitCrusher(1).connect(this.delay);
     this.distortion = new Tone.Distortion(0).connect(this.pulverizer);
     this.pitchShifter = new Tone.PitchShift(0).connect(this.distortion);
@@ -55,6 +56,14 @@ export default class Instrument {
     this.setEffects(EffectsObject());
     if (!waves) {
       waves = new Tone.ToneAudioBuffers(waveUrls, () => {});
+    }
+  }
+
+  connect() {
+    loadedInstrumentNumber += 1;
+    if (loadedInstrumentNumber === 4) {
+      console.log('ALL CONNECTED');
+      compressor.toDestination();
     }
   }
 

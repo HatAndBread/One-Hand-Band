@@ -7,6 +7,7 @@ export default function WaveChooser({ name, number, droneData, setDroneData }) {
   return (
     <select onChange={handleChange} defaultValue={droneData[number].wave}>
       <option value="harmonium">harmonium</option>
+      <option value="tambura">tambura</option>
       <option value="organ">organ</option>
       <option value="kazoo">kazoo</option>
       <option value="voice">voice</option>
@@ -15,6 +16,7 @@ export default function WaveChooser({ name, number, droneData, setDroneData }) {
       <option value="triangle">triangle</option>
       <option value="sawtooth">sawtooth</option>
       <option value="square">square</option>
+      <option value="singing">singing</option>
     </select>
   );
 }

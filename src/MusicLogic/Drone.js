@@ -7,8 +7,15 @@ import { checkIfSoundsLoaded } from './Instrument';
 class Drone extends Instrument {
   constructor() {
     super();
-    this.droneGain = new Tone.Gain(1).connect(this.vibrato);
-    this.envelope = new Tone.AmplitudeEnvelope(defaultEnvelopeSettings).connect(this.droneGain);
+    this.droneGain = new Tone.Gain(0.4).connect(this.vibrato);
+    this.filter = new Tone.Filter({
+      type: 'lowpass',
+      frequency: 300,
+      rolloff: -12,
+      Q: 1,
+      gain: 0
+    }).connect(this.droneGain);
+    this.envelope = new Tone.AmplitudeEnvelope(defaultEnvelopeSettings).connect(this.filter);
     this.one = new Tone.Player();
     this.two = new Tone.Player();
     this.three = new Tone.Player();
@@ -25,6 +32,7 @@ class Drone extends Instrument {
         this.one.connect(this.envelope);
         this.two.connect(this.envelope);
         this.three.connect(this.envelope);
+        this.connect();
         clearInterval(this.setFirstBuffer);
         setLoaded();
       }

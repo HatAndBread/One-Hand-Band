@@ -44,6 +44,7 @@ class Percussion extends Instrument {
       this.four.connect(this.vibrato);
       this.five.connect(this.vibrato);
       this.six.connect(this.vibrato);
+      this.connect();
     });
     this.loop = new Tone.Loop((time) => {}, '16n').start(0);
     this.beat = 0;
