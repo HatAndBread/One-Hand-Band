@@ -6,13 +6,14 @@ function createTables() {
       console.log(err);
     }
   });
-  db.serialize(() => {
-    db.run(/*sql*/ `
+  try {
+    db.serialize(() => {
+      db.run(/*sql*/ `
         CREATE TABLE IF NOT EXISTS sessions(
         id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
         pin TEXT NOT NULL, date TEXT NOT NULL, hostId TEXT NOT NULL)`);
-  });
-  db.run(/*sql*/ `
+    });
+    db.run(/*sql*/ `
         CREATE TABLE IF NOT EXISTS users(
         id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
         socketId TEXT NOT NULL, date TEXT NOT NULL,
@@ -22,6 +23,9 @@ function createTables() {
         FOREIGN KEY (pin) REFERENCES sessions (pin)
         )
     `);
+  } catch {
+    console.log('db not created');
+  }
 
   db.close();
 }
