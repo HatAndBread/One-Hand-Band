@@ -2,6 +2,7 @@ import Keyboard from './Keyboard';
 import Drone from './Drone';
 import Percussion from './Percussion';
 import Noise from './Noise';
+import { waveUrls } from './Instrument';
 
 export default class SoundSet {
   constructor() {
@@ -23,6 +24,17 @@ export default class SoundSet {
     const s = this[instrument];
     if (s) {
       if (settings.envelope) {
+        if (instrument === 'keyboard') {
+          Object.keys(waveUrls).forEach((key) => {
+            const sampler = s[`${key}Sampler`];
+            if (sampler) {
+              sampler.attack = settings.envelope.attack;
+              sampler.decay = settings.envelope.decay;
+              sampler.sustain = settings.envelope.sustain;
+              sampler.release = settings.envelope.release;
+            }
+          });
+        }
         if (s.envelope) {
           s.envelope.attack = settings.envelope.attack;
           s.envelope.decay = settings.envelope.decay;
@@ -51,7 +63,8 @@ export default class SoundSet {
       this[instrument].gain.gain.value = settings.volume;
       if (instrument === 'keyboard') {
         this[instrument].rampTo = settings.rampTo;
-        this.keyboard.keyboardPlayer.buffer = this.keyboard.getWave(settings.wave);
+        //this.keyboard.keyboardPlayer.buffer = this.keyboard.getWave(settings.wave);
+        this.keyboard.currentSampler = settings.wave;
       }
     }
   }

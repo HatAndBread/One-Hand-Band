@@ -28,7 +28,7 @@ const theLoop = () => {
   requestAnimationFrame(theLoop);
 };
 
-const waveUrls = {
+export const waveUrls = {
   sine,
   sawtooth,
   square,

@@ -13,18 +13,26 @@ export default function handleKeyboard(data, soundSet) {
   }
 }
 
+// Sampler = mistake.
 const playNote = (data, soundSet) => {
   if (data.data.note) {
-    const note = Tone.Frequency(data.data.note + data.data.octave).toFrequency();
+    const note =
+      Math.round((Tone.Frequency(data.data.note + data.data.octave).toFrequency() + Number.EPSILON) * 100) / 100;
     if (soundSet) {
-      soundSet.keyboard.keyboardPlayer.playbackRate = Math.round((note / 440 + Number.EPSILON) * 100) / 100;
-      soundSet.keyboard.play();
+      if (!soundSet.keyboard[`${soundSet.keyboard.currentSampler}Sampler`].loaded) {
+        soundSet.keyboard[`${soundSet.keyboard.currentSampler}Sampler`].add('A4', soundSet.keyboard.getWave('sine'));
+      }
+      soundSet.keyboard.playing &&
+        soundSet.keyboard[`${soundSet.keyboard.currentSampler}Sampler`].releaseAll(Tone.now());
+      soundSet.keyboard[`${soundSet.keyboard.currentSampler}Sampler`].triggerAttack(note, Tone.now());
+      soundSet.keyboard.playing = true;
     }
   }
 };
 
 const stopNote = (soundSet) => {
   if (soundSet) {
-    soundSet.keyboard.stop();
+    soundSet.keyboard[`${soundSet.keyboard.currentSampler}Sampler`].releaseAll(Tone.now());
+    soundSet.keyboard.playing = false;
   }
 };
