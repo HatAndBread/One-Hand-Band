@@ -1,4 +1,5 @@
 import * as Tone from 'tone';
+import { setDronePitch } from './playMusic';
 
 export default function handleDrone(data, soundSet) {
   if (soundSet) {
@@ -24,9 +25,7 @@ const setWaves = (waves, soundSet) => {
 };
 const setPitches = (pitches, soundSet) => {
   pitches.forEach((pitch, index, arr) => (arr[index] = Tone.Frequency(pitch).toFrequency()));
-  soundSet.drone.one.playbackRate = pitches[0] / 440;
-  soundSet.drone.two.playbackRate = pitches[1] / 440;
-  soundSet.drone.three.playbackRate = pitches[2] / 440;
+  setDronePitch(pitches[0] / 440, pitches[1] / 440, pitches[2] / 440);
 };
 const play = (drones, soundSet) => {
   drones[0] ? soundSet.drone.play('one') : soundSet.drone.stop('one');

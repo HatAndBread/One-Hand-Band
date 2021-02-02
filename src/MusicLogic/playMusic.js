@@ -8,6 +8,33 @@ const keyboard = 'keyboard';
 const percussion = 'percussion';
 const drone = 'drone';
 
+let soundSetRef;
+let keyboardPitch = 440;
+let oneDronePitch = 440;
+let twoDronePitch = 440;
+let threeDronePitch = 440;
+export const setKeyboardPitch = (value) => (keyboardPitch = value);
+export const setDronePitch = (one, two, three) => {
+  oneDronePitch = one;
+  twoDronePitch = two;
+  threeDronePitch = three;
+};
+
+const pitchUpdater = () => {
+  if (soundSetRef) {
+    soundSetRef.keyboard.keyboardPlayer.playbackRate = Math.round((keyboardPitch / 440 + Number.EPSILON) * 100) / 100;
+    soundSetRef.drone.one.playbackRate = oneDronePitch;
+    soundSetRef.drone.two.playbackRate = twoDronePitch;
+    soundSetRef.drone.three.playbackRate = threeDronePitch;
+  }
+  window.requestAnimationFrame(pitchUpdater);
+};
+
+pitchUpdater();
+pitchUpdater();
+pitchUpdater();
+pitchUpdater();
+
 function handler(data, soundSet) {
   switch (data.instrument) {
     case keyboard:
@@ -28,6 +55,9 @@ function handler(data, soundSet) {
 }
 
 export default function playMusic(data, soundSet) {
+  if (!soundSetRef) {
+    soundSetRef = soundSet;
+  }
   if (data && data.instrument) {
     handler(data, soundSet);
   }

@@ -1,4 +1,5 @@
 import * as Tone from 'tone';
+import { setKeyboardPitch } from './playMusic';
 
 export default function handleKeyboard(data, soundSet) {
   switch (data.type) {
@@ -15,9 +16,8 @@ export default function handleKeyboard(data, soundSet) {
 
 const playNote = (data, soundSet) => {
   if (data.data.note) {
-    const note = Tone.Frequency(data.data.note + data.data.octave).toFrequency();
+    setKeyboardPitch(Tone.Frequency(data.data.note + data.data.octave).toFrequency());
     if (soundSet) {
-      soundSet.keyboard.keyboardPlayer.playbackRate = Math.round((note / 440 + Number.EPSILON) * 100) / 100;
       soundSet.keyboard.play();
     }
   }
