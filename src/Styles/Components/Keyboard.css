@@ -1,5 +1,4 @@
 .keyboard-keys {
-  background-color: ivory;
   box-sizing: border-box;
   display: flex;
   height: 48vh;
@@ -22,7 +21,7 @@
   border-color: black;
   border-width: 1px;
   left: 75%;
-  height: 60%;
+  height: 30vh;
   width: 50%;
   transition: 0.3s;
 }

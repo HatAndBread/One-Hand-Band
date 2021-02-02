@@ -2,9 +2,9 @@ import '../../../Styles/Components/Keyboard.css';
 import { useRef, useEffect, useContext, useState } from 'react';
 import { KeyboardContext } from '../Keyboard';
 
-const blackOnStyle = { backgroundColor: '#9d8df1', borderColor: '#9d8df1' };
+const blackOnStyle = { backgroundColor: '#9d8df1', borderColor: '#9d8df1', height: '29vh' };
 const blackOffStyle = { backgroundColor: 'black' };
-const whiteOnStyle = { backgroundColor: '#9d8df1' };
+const whiteOnStyle = { backgroundColor: '#9d8df1', height: '98%' };
 const whiteOffStyle = { backgroundColor: 'ivory' };
 
 export default function KeyboardKey(props) {
