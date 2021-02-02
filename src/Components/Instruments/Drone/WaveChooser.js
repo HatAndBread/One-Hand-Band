@@ -9,6 +9,7 @@ export default function WaveChooser({ name, number, droneData, setDroneData }) {
       <option value="harmonium">harmonium</option>
       <option value="tambura">tambura</option>
       <option value="organ">organ</option>
+      <option value="cello">cello</option>
       <option value="kazoo">kazoo</option>
       <option value="voice">voice</option>
       <option value="oboe">oboe</option>
@@ -17,6 +18,8 @@ export default function WaveChooser({ name, number, droneData, setDroneData }) {
       <option value="sawtooth">sawtooth</option>
       <option value="square">square</option>
       <option value="singing">singing</option>
+      <option value="violin">violin</option>
+      <option value="saw">saw</option>
     </select>
   );
 }

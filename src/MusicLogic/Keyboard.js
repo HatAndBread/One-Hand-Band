@@ -14,8 +14,8 @@ class Keyboard extends Instrument {
       rolloff: -12,
       Q: 1,
       gain: 0
-    }).connect(this.keyboardGain);
-    this.envelope = new Tone.AmplitudeEnvelope(defaultEnvelopeSettings).connect(this.filter);
+    });
+    this.envelope = new Tone.AmplitudeEnvelope(defaultEnvelopeSettings);
     this.keyboardPlayer = new Tone.Player();
     this.keyboardPlayer.loop = true;
     this.keyboardPlayer.loopStart = 0;
@@ -23,7 +23,7 @@ class Keyboard extends Instrument {
     this.playing = false;
     this.setFirstBuffer = setInterval(() => {
       if (checkIfSoundsLoaded()) {
-        this.keyboardPlayer.connect(this.envelope);
+        this.keyboardPlayer.chain(this.envelope, this.filter, this.keyboardGain);
         clearInterval(this.setFirstBuffer);
         this.connect();
         setLoaded();
@@ -35,7 +35,6 @@ class Keyboard extends Instrument {
     if (!this.keyboardPlayer.loaded) {
       this.keyboardPlayer.buffer = this.getWave('sine');
     }
-    console.log(this.keyboardPlayer.buffer.sampleRate, Tone.context.sampleRate);
     this.envelope.triggerAttack(Tone.now());
     if (!this.playing) {
       this.keyboardPlayer.start(Tone.now());

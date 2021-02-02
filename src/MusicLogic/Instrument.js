@@ -15,6 +15,14 @@ import piano from '../assets/piano.mp3';
 import voice from '../assets/voice.mp3';
 import tambura from '../assets/tambura.mp3';
 import singing from '../assets/singing.mp3';
+import cello from '../assets/cello.mp3';
+import saw from '../assets/saw.mp3';
+import kalimba from '../assets/kalimba.mp3';
+import gamelan from '../assets/gamelan.mp3';
+import gamelan2 from '../assets/gamelan2.mp3';
+import gamelan3 from '../assets/gamelan3.mp3';
+import violin from '../assets/violin.mp3';
+
 const theLoop = () => {
   Tone.Destination.volume.value = -5;
   requestAnimationFrame(theLoop);
@@ -35,7 +43,14 @@ const waveUrls = {
   piano,
   voice,
   tambura,
-  singing
+  singing,
+  cello,
+  saw,
+  kalimba,
+  gamelan,
+  gamelan2,
+  gamelan3,
+  violin
 };
 
 let waves;

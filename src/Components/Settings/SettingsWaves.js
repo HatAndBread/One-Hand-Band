@@ -13,7 +13,6 @@ export default function SettingsWaves({ instrument }) {
     const copy = JSON.parse(JSON.stringify(settings));
     copy[instrument].wave = e.target.value;
     setSettings(copy);
-    console.log(copy);
     handleSettings(copy[instrument], socketId, instrument, sessionPin, false, soundSet);
   };
   return (
@@ -23,6 +22,10 @@ export default function SettingsWaves({ instrument }) {
       <option value="sawtooth">sawtooth</option>
       <option value="square">square</option>
       <option value="piano">piano</option>
+      <option value="gamelan">gamelan</option>
+      <option value="gamelan2">gamelan2</option>
+      <option value="gamelan3">gamelan3</option>
+      <option value="kalimba">kalimba</option>
       <option value="oud">oud</option>
       <option value="trumpet">trumpet</option>
       <option value="organ">organ</option>
@@ -31,6 +34,9 @@ export default function SettingsWaves({ instrument }) {
       <option value="tambura">tambura</option>
       <option value="voice">voice</option>
       <option value="harmonium">harmonium</option>
+      <option value="violin">violin</option>
+      <option value="cello">cello</option>
+      <option value="saw">saw</option>
       <option value="singing">singing</option>
       <option value="swell">swell</option>
     </select>

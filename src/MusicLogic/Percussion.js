@@ -35,7 +35,6 @@ class Percussion extends Instrument {
     this.five = new Tone.Player();
     this.six = new Tone.Player();
     this.samples = new Tone.ToneAudioBuffers(sampleUrls, () => {
-      console.log('percussion samples loaded!');
       setLoaded();
       this.loaded = true;
       this.one.connect(this.vibrato);
@@ -72,7 +71,6 @@ class Percussion extends Instrument {
     }
   }
   setLoop(data) {
-    console.log(data);
     if (this.loaded) {
       this.updateBpmAndTimeSignature(data);
       if (this.playbackRateHasChanged(data)) {

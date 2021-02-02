@@ -74,7 +74,6 @@ function App() {
   useEffect(() => {
     const startContext = () => {
       const init = () => {
-        Tone.context.lookAhead = 0.1;
         Tone.start();
         SetSoundSet(new SoundSet());
         setAudioContextStarted(true);

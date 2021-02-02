@@ -24,13 +24,11 @@ const setWaves = (waves, soundSet) => {
 };
 const setPitches = (pitches, soundSet) => {
   pitches.forEach((pitch, index, arr) => (arr[index] = Tone.Frequency(pitch).toFrequency()));
-  console.log(pitches, 'PITCHES!');
   soundSet.drone.one.playbackRate = pitches[0] / 440;
   soundSet.drone.two.playbackRate = pitches[1] / 440;
   soundSet.drone.three.playbackRate = pitches[2] / 440;
 };
 const play = (drones, soundSet) => {
-  console.log(drones);
   drones[0] ? soundSet.drone.play('one') : soundSet.drone.stop('one');
   drones[1] ? soundSet.drone.play('two') : soundSet.drone.stop('two');
   drones[2] ? soundSet.drone.play('three') : soundSet.drone.stop('three');

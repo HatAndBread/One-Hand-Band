@@ -29,6 +29,9 @@ import saxSkronk11 from '../assets/saxSkronk11.mp3';
 import saxSkronk12 from '../assets/saxSkronk12.mp3';
 import saxSkronk13 from '../assets/saxSkronk13.mp3';
 import saxSkronk14 from '../assets/saxSkronk14.mp3';
+import aluminium from '../assets/aluminium.mp3';
+import spaceDrone from '../assets/spaceDrone.mp3';
+import glitch from '../assets/glitch.mp3';
 import { setLoaded } from '../App';
 
 class Noise extends Instrument {
@@ -36,29 +39,37 @@ class Noise extends Instrument {
     super();
     this.loaded = false;
     this.player = new Tone.Player();
+    this.oscillatorGain = new Tone.Gain(1);
+    this.oscillatorPulverizer = new Tone.BitCrusher(1);
+    this.oscillator = new Tone.Player();
+    this.oscillator2 = new Tone.Player();
+    this.oscillator3 = new Tone.Player();
+    this.oscillator4 = new Tone.Player();
     this.samples = new Tone.ToneAudioBuffers(sampleUrls, () => {
       console.log('noise samples loaded!');
       setLoaded();
       this.loaded = true;
       this.player.connect(this.vibrato);
+      this.oscillatorPulverizer.chain(this.oscillatorGain, this.vibrato);
+      this.oscillator.connect(this.oscillatorPulverizer);
+      this.oscillator2.connect(this.oscillatorPulverizer);
+      this.oscillator3.connect(this.oscillatorPulverizer);
+      this.oscillator4.connect(this.oscillatorPulverizer);
       this.connect();
     });
-    this.oscillatorGain = new Tone.Gain(1).connect(this.vibrato);
-    this.oscillatorPulverizer = new Tone.BitCrusher(1).connect(this.oscillatorGain);
-    this.oscillator = new Tone.Player().connect(this.oscillatorPulverizer);
-    this.oscillator2 = new Tone.Player().connect(this.oscillatorPulverizer);
-    this.oscillator3 = new Tone.Player().connect(this.oscillatorPulverizer);
-    this.oscillator4 = new Tone.Player().connect(this.oscillatorPulverizer);
     this.nowPlaying = null;
     this.types = {
       ambientNoise: [
+        'aluminium',
         'amRadioNoise',
         'analogueWhiteNoise',
         'digitalNoise',
         'heavyStatic',
         'radioBuzz',
         'recordPlayerGlitch',
-        'trumpetHiss'
+        'spaceDrone',
+        'trumpetHiss',
+        'glitch'
       ],
       feedback: [
         'feedback',
@@ -116,7 +127,6 @@ class Noise extends Instrument {
     this.nowPlaying = this.types[which][ranNum];
 
     if (Object.keys(sampleUrls).includes(this.nowPlaying)) {
-      console.log(data, 'YO');
       this.player.buffer = this.samples.get(this.nowPlaying);
       this.setPlaybackRate(data);
       this.player.start(0, Math.floor(Math.random() * 10));
@@ -145,7 +155,6 @@ class Noise extends Instrument {
       data.y = 0.00101;
     }
     if (Object.keys(sampleUrls).includes(this.nowPlaying)) {
-      console.log(data.x);
       this.setPlaybackRate(data);
     } else {
       if (data.x < data.width / 2) {
@@ -207,5 +216,8 @@ const sampleUrls = {
   saxSkronk11: saxSkronk11,
   saxSkronk12: saxSkronk12,
   saxSkronk13: saxSkronk13,
-  saxSkronk14: saxSkronk14
+  saxSkronk14: saxSkronk14,
+  aluminium: aluminium,
+  spaceDrone: spaceDrone,
+  glitch
 };

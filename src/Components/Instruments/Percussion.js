@@ -38,9 +38,6 @@ export default function Percussion({ setFinalData }) {
       setMyInstrument(null);
     };
   }, [setMyInstrument]);
-  useEffect(() => {
-    console.log(percussionData);
-  }, [percussionData]);
   const rhythmMachineClick = () => {
     rhythmMachineExposed ? setRhythmMachineExposed(false) : setRhythmMachineExposed(true);
   };
