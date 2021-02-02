@@ -28,6 +28,7 @@ function App() {
   useEffect(() => {
     instrumentsLoaded && console.log('all instruments loaded');
   }, [instrumentsLoaded]);
+  const [stupidSafari, setStupidSafari] = useState(false);
   const [soundSet, SetSoundSet] = useState(null);
   const [sessionPin, setSessionPin] = useState(null);
   const [socketId, setSocketId] = useState(null);
@@ -82,7 +83,11 @@ function App() {
         init();
       } else {
         // for stupid safari
+        setStupidSafari(true);
+        console.log('Use Chrome please', Tone.context.destination.volume.value);
+        Tone.context.destination.volume.value = -12;
         Tone.context.resume();
+        Tone.context.lookAhead = 0.2;
         Tone.context.on('statechange', () => {
           init();
         });
