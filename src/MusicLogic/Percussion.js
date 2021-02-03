@@ -26,7 +26,17 @@ import { setLoaded } from '../App';
 
 let cb;
 
-export const getCurrentBeat = (arg) => (typeof arg === 'number' || arg === 0 ? cb && cb(arg) : (cb = arg));
+export const getCurrentBeat = (arg) => {
+  if (typeof arg === 'number' || arg === 0) {
+    if (cb) {
+      Tone.Transport.schedule(() => {
+        cb(arg);
+      }, Tone.Context.lookAhead);
+    }
+  } else {
+    cb = arg;
+  }
+};
 
 class Percussion extends Instrument {
   constructor() {
