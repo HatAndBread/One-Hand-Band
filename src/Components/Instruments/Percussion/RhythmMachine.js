@@ -9,6 +9,8 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
   const socketId = useContext(Context).socketId;
   const timeSignature = useContext(Context).timeSignature;
   const setTimeSignature = useContext(Context).setTimeSignature;
+  const drumMachinePlaying = useContext(Context).drumMachinePlaying;
+  const setDrumMachinePlaying = useContext(Context).setDrumMachinePlaying;
   const loopData = useContext(Context).loopData;
   const loopObject = useContext(Context).loopObject;
   const setLoopData = useContext(Context).setLoopData;
@@ -33,7 +35,6 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
       copy[data.number].times[data.beat]
         ? (copy[data.number].times[data.beat] = 0)
         : (copy[data.number].times[data.beat] = 1);
-      console.log(e.target.dataset.drumType, e.target.dataset.beat);
       setLoopData(copy);
     };
 
@@ -130,7 +131,8 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
       loop: loopData,
       socketId: socketId,
       timeSignature: timeSignature,
-      bpm: bpm
+      bpm: bpm,
+      status: 'update'
     });
   }, [loopData, setFinalData, socketId, timeSignature, bpm]);
   const clear = () => {
@@ -143,11 +145,43 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
     }
   }, [timeSignature, tsChanged, loopObject, setLoopData]);
 
+  const handleStartClick = () => {
+    if (drumMachinePlaying) {
+      setDrumMachinePlaying(false);
+      setFinalData({
+        type: 'percussion',
+        drum: 'rhythmMachine',
+        loop: loopData,
+        socketId: socketId,
+        timeSignature: timeSignature,
+        bpm: bpm,
+        status: 'stop'
+      });
+    } else {
+      setDrumMachinePlaying(true);
+      setFinalData({
+        type: 'percussion',
+        drum: 'rhythmMachine',
+        loop: loopData,
+        socketId: socketId,
+        timeSignature: timeSignature,
+        bpm: bpm,
+        status: 'start'
+      });
+    }
+  };
+
   return (
     <div>
       <div className="drum-machine">{buttColumns}</div>
       <div style={{ display: 'flex', justifyContent: 'space-around' }}>
         <button onClick={clear}>Clear</button>
+        <button
+          onClick={handleStartClick}
+          style={drumMachinePlaying ? { backgroundColor: 'red' } : { backgroundColor: '#6249e9' }}
+        >
+          {drumMachinePlaying ? 'Stop' : 'Start'}
+        </button>
         <select name="time-sig-select" onChange={timeSignatureChange} defaultValue={timeSignature}>
           <option value="3">3/4</option>
           <option value="4">4/4</option>

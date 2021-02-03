@@ -73,6 +73,8 @@ export default class Instrument {
     loadedInstrumentNumber += 1;
     if (loadedInstrumentNumber === 4) {
       console.log('ALL CONNECTED');
+      Tone.Transport.start(Tone.now());
+      Tone.Transport.bpm.value = 80;
       compressor.toDestination();
     }
   }

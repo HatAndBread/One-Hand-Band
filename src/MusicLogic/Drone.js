@@ -7,7 +7,7 @@ import { checkIfSoundsLoaded } from './Instrument';
 class Drone extends Instrument {
   constructor() {
     super();
-    this.droneGain = new Tone.Gain(1.2);
+    this.droneGain = new Tone.Gain(1);
     this.filter = new Tone.Filter({
       type: 'lowpass',
       frequency: 700,

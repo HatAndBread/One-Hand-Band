@@ -22,6 +22,7 @@ export default function KeyboardKey(props) {
       setBlackBeingPlayed(false);
     }
   }, [c.pointerDown]);
+
   useEffect(() => {
     if (c.pointerDown) {
       if (
@@ -39,6 +40,8 @@ export default function KeyboardKey(props) {
           setBlackBeingPlayed(true);
           setWhiteBeingPlayed(false);
           c.setCurrentNote({ note: props.blackKey.toUpperCase(), octave: props.octave + c.mainOctave });
+        } else if (props.blackKey === c.currentNote.note) {
+          setBlackBeingPlayed(true);
         }
       } else if (
         checkOverlap(
@@ -59,6 +62,8 @@ export default function KeyboardKey(props) {
           c.setCurrentNote({ note: props.note.toUpperCase(), octave: props.octave + c.mainOctave });
           setWhiteBeingPlayed(true);
           setBlackBeingPlayed(false);
+        } else if (props.note === c.currentNote.note) {
+          setWhiteBeingPlayed(true);
         }
       } else {
         setWhiteBeingPlayed(false);

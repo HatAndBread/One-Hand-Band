@@ -45,9 +45,40 @@ class Percussion extends Instrument {
       this.six.connect(this.vibrato);
       this.connect();
     });
-    this.loop = new Tone.Loop((time) => {}, '16n').start(0);
+    this.loop = new Tone.Loop((time) => {}, '16n');
     this.beat = 0;
     this.drumsNums = ['one', 'two', 'three', 'four', 'five', 'six'];
+  }
+  startMachine() {
+    this.loop.start(Tone.Time('16n'));
+  }
+  stopMachine() {
+    this.beat = 0;
+    this.loop.stop(0);
+  }
+  updateMachine(data) {
+    if (this.loaded) {
+      this.updateBpmAndTimeSignature(data);
+      if (this.playbackRateHasChanged(data)) {
+        this.drumsNums.forEach((num) => {
+          this[num].playbackRate = data.loop[num].drum.sampleRate;
+        });
+      }
+    }
+    const callback = (time) => {
+      this.drumsNums.forEach((num) => {
+        if (data.loop[num].times[this.beat]) {
+          this[num].playbackRate = data.loop[num].drum.sampleRate;
+          this[num].buffer = this.samples.get(data.loop[num].drum.drum);
+          this[num].start(time);
+        }
+      });
+      this.beat += 1;
+      if (this.beat >= Tone.Transport.timeSignature * 4) {
+        this.beat = 0;
+      }
+    };
+    this.loop.callback = callback;
   }
   play(drum, sampleRate, number) {
     if (this.loaded) {
@@ -70,46 +101,7 @@ class Percussion extends Instrument {
       Tone.Transport.timeSignature = parseInt(data.timeSignature, 10);
     }
   }
-  setLoop(data) {
-    if (this.loaded) {
-      this.updateBpmAndTimeSignature(data);
-      if (this.playbackRateHasChanged(data)) {
-        this.drumsNums.forEach((num) => {
-          this[num].playbackRate = data.loop[num].drum.sampleRate;
-        });
-      }
-      if (isStopped(data.loop)) {
-        Tone.Transport.stop();
-        this.beat = 0;
-      } else {
-        const callback = (time) => {
-          this.drumsNums.forEach((num) => {
-            if (data.loop[num].times[this.beat]) {
-              this[num].playbackRate = data.loop[num].drum.sampleRate;
-              this[num].buffer = this.samples.get(data.loop[num].drum.drum);
-              this[num].start(time);
-            }
-          });
-          this.beat += 1;
-          if (this.beat >= Tone.Transport.timeSignature * 4) {
-            this.beat = 0;
-          }
-        };
-        this.loop.callback = callback;
-        Tone.Transport.state === 'stopped' && Tone.Transport.start();
-      }
-    }
-  }
 }
-
-const isStopped = (loop) => {
-  for (let i = 0; i < Object.entries(loop).length; i++) {
-    if (Object.entries(loop)[i][1].times.includes(1)) {
-      return false;
-    }
-  }
-  return true;
-};
 
 const sampleUrls = {
   snare,

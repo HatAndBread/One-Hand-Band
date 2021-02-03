@@ -39,6 +39,7 @@ function App() {
   const [host, setHost] = useState(false);
   const [audioContextStarted, setAudioContextStarted] = useState(false);
   const [dropDownOut, setDropDownOut] = useState(false);
+  const [drumMachinePlaying, setDrumMachinePlaying] = useState(false);
   const [globalInstrumentSettings, setGlobalInstrumentSettings] = useState({
     keyboard: { envelope: defaultEnvelopeSettings, volume: 0.5, rampTo: 0, wave: 'sine' },
     drone: { envelope: defaultEnvelopeSettings, volume: 0.5 },
@@ -85,7 +86,7 @@ function App() {
         // for stupid safari
         setStupidSafari(true);
         console.log('Use Chrome please', Tone.context.destination.volume.value);
-        Tone.context.destination.volume.value = -12;
+        Tone.context.destination.volume.value = -3;
         Tone.context.resume();
         Tone.context.lookAhead = 0.2;
         Tone.context.on('statechange', () => {
@@ -235,6 +236,8 @@ function App() {
         getGlobalSettings,
         percussionData,
         setPercussionData,
+        drumMachinePlaying,
+        setDrumMachinePlaying,
         bpm,
         setBpm,
         timeSignature,

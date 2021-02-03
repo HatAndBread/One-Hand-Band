@@ -39,7 +39,7 @@ class Noise extends Instrument {
     super();
     this.loaded = false;
     this.player = new Tone.Player();
-    this.oscillatorGain = new Tone.Gain(1);
+    this.oscillatorGain = new Tone.Gain(0.7);
     this.oscillatorPulverizer = new Tone.BitCrusher(1);
     this.oscillator = new Tone.Player();
     this.oscillator2 = new Tone.Player();
