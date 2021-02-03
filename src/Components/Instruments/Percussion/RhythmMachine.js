@@ -2,8 +2,10 @@ import { useState, useEffect, useContext } from 'react';
 import { Context } from '../../../App';
 import RhythmMachineDrumSelect from './RhythmMachineDrumSelect';
 import '../../../Styles/Components/DrumMachine.css';
+import { getCurrentBeat } from '../../../MusicLogic/Percussion';
 
 export default function RhythmMachine({ percussionData, setFinalData }) {
+  const [currentBeat, setCurrentBeat] = useState(null);
   const bpm = useContext(Context).bpm;
   const setBpm = useContext(Context).setBpm;
   const socketId = useContext(Context).socketId;
@@ -16,6 +18,37 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
   const setLoopData = useContext(Context).setLoopData;
   const [buttColumns, setButtColumns] = useState(null);
   const [tsChanged, setTsChanged] = useState(false);
+  const [markerStyles, setMarkerStyles] = useState(new Array(16));
+
+  const beatUpdater = (beatNumber) => {
+    setCurrentBeat(beatNumber);
+  };
+
+  useState(() => {
+    getCurrentBeat(beatUpdater);
+  }, []);
+
+  const randomColor = () => {
+    return `rgba(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(
+      Math.random() * 255
+    )},0.5)`;
+  };
+
+  useEffect(() => {
+    if (currentBeat) {
+      const arr = new Array(16);
+      const color = randomColor();
+      console.log(currentBeat);
+      arr[currentBeat] = {
+        backgroundColor: color,
+        boxShadow: `0px 0px 3px 3px ${color}`,
+        borderRadius: '8px'
+      };
+      setMarkerStyles(arr);
+    } else {
+      setMarkerStyles(new Array(16));
+    }
+  }, [currentBeat]);
 
   const timeSignatureChange = (e) => {
     setTimeSignature(e.target.value);
@@ -58,7 +91,7 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
           arr.push(getDrumSelectors(i));
         } else {
           arr.push(
-            <div key={i} className="butt-column">
+            <div key={i} className="butt-column" style={markerStyles[i - 1]}>
               <div
                 id="drum-one-machine"
                 className="machine-butt"
@@ -66,7 +99,11 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
                 data-beat={i - 1}
                 data-number={'one'}
                 onClick={handleClick}
-                style={loopData.one.times[i - 1] ? { backgroundColor: '#9d8df1' } : { backgroundColor: 'gray' }}
+                style={
+                  loopData.one.times[i - 1]
+                    ? { backgroundColor: '#9d8df1', display: 'flex' }
+                    : { backgroundColor: 'gray', display: 'flex' }
+                }
               ></div>
               <div
                 id="drum-two-machine"
@@ -123,7 +160,7 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
       return arr;
     };
     setButtColumns(getOnOffButts);
-  }, [timeSignature, percussionData, loopData, setLoopData]);
+  }, [timeSignature, percussionData, loopData, setLoopData, markerStyles]);
   useEffect(() => {
     setFinalData({
       type: 'percussion',

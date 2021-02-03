@@ -24,6 +24,10 @@ import ruler from '../assets/ruler.mp3';
 import spring from '../assets/spring.mp3';
 import { setLoaded } from '../App';
 
+let cb;
+
+export const getCurrentBeat = (arg) => (typeof arg === 'number' || arg === 0 ? cb && cb(arg) : (cb = arg));
+
 class Percussion extends Instrument {
   constructor() {
     super();
@@ -34,6 +38,7 @@ class Percussion extends Instrument {
     this.four = new Tone.Player();
     this.five = new Tone.Player();
     this.six = new Tone.Player();
+
     this.samples = new Tone.ToneAudioBuffers(sampleUrls, () => {
       setLoaded();
       this.loaded = true;
@@ -47,6 +52,7 @@ class Percussion extends Instrument {
     });
     this.loop = new Tone.Loop((time) => {}, '16n');
     this.beat = 0;
+    getCurrentBeat(this.beat);
     this.drumsNums = ['one', 'two', 'three', 'four', 'five', 'six'];
   }
   startMachine() {
@@ -54,6 +60,7 @@ class Percussion extends Instrument {
   }
   stopMachine() {
     this.beat = 0;
+    getCurrentBeat(this.beat);
     this.loop.stop(0);
   }
   updateMachine(data) {
@@ -66,6 +73,10 @@ class Percussion extends Instrument {
       }
     }
     const callback = (time) => {
+      if (this.beat >= Tone.Transport.timeSignature * 4) {
+        this.beat = 0;
+        getCurrentBeat(this.beat);
+      }
       this.drumsNums.forEach((num) => {
         if (data.loop[num].times[this.beat]) {
           this[num].playbackRate = data.loop[num].drum.sampleRate;
@@ -74,9 +85,7 @@ class Percussion extends Instrument {
         }
       });
       this.beat += 1;
-      if (this.beat >= Tone.Transport.timeSignature * 4) {
-        this.beat = 0;
-      }
+      getCurrentBeat(this.beat);
     };
     this.loop.callback = callback;
   }
