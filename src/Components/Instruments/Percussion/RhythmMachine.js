@@ -16,6 +16,7 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
   const loopData = useContext(Context).loopData;
   const loopObject = useContext(Context).loopObject;
   const setLoopData = useContext(Context).setLoopData;
+  const stupidSafari = useContext(Context).stupidSafari;
   const [buttColumns, setButtColumns] = useState(null);
   const [tsChanged, setTsChanged] = useState(false);
   const [markerStyles, setMarkerStyles] = useState(new Array(16));
@@ -25,7 +26,7 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
   };
 
   useState(() => {
-    getCurrentBeat(beatUpdater);
+    getCurrentBeat(beatUpdater, stupidSafari);
   }, []);
 
   const randomColor = () => {
@@ -38,7 +39,6 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
     if (currentBeat) {
       const arr = new Array(16);
       const color = randomColor();
-      console.log(currentBeat);
       arr[currentBeat] = {
         backgroundColor: color,
         boxShadow: `0px 0px 3px 3px ${color}`,

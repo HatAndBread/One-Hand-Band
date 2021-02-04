@@ -21,30 +21,30 @@ class Keyboard extends Instrument {
     this.keyboardPlayer.loopStart = 0;
     this.rampTo = 0;
     this.playing = false;
+    this.pbr = 1;
     this.setFirstBuffer = setInterval(() => {
       if (checkIfSoundsLoaded()) {
         this.keyboardPlayer.chain(this.envelope, this.filter, this.keyboardGain);
         clearInterval(this.setFirstBuffer);
         this.connect();
         setLoaded();
+        this.keyboardPlayer.buffer = this.getWave('sine');
+        this.keyboardPlayer.start();
       }
     }, 100);
   }
 
   play() {
-    if (!this.keyboardPlayer.loaded) {
-      this.keyboardPlayer.buffer = this.getWave('sine');
+    if (this.playing) {
+      this.envelope.triggerRelease(Tone.now());
     }
+    this.keyboardPlayer.restart(Tone.now());
     this.envelope.triggerAttack(Tone.now());
-    if (!this.playing) {
-      this.keyboardPlayer.start(Tone.now());
-    }
     this.playing = true;
   }
   stop() {
     this.playing = false;
     this.envelope.triggerRelease(Tone.now());
-    this.keyboardPlayer.stop(`+${this.envelope.release}`);
   }
 }
 

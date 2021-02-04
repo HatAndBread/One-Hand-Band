@@ -26,12 +26,16 @@ import { setLoaded } from '../App';
 
 let cb;
 
-export const getCurrentBeat = (arg) => {
+export const getCurrentBeat = (arg, stupidSafari) => {
   if (typeof arg === 'number' || arg === 0) {
     if (cb) {
-      Tone.Transport.schedule(() => {
+      if (stupidSafari) {
+        Tone.Transport.schedule(() => {
+          cb(arg);
+        }, Tone.Context.lookAhead);
+      } else {
         cb(arg);
-      }, Tone.Context.lookAhead);
+      }
     }
   } else {
     cb = arg;

@@ -49,8 +49,9 @@ const waveUrls = {
 };
 
 let waves;
+let wavesReady;
 
-const checkIfSoundsLoaded = () => (waves ? true : false);
+const checkIfSoundsLoaded = () => (wavesReady ? true : false);
 
 export { checkIfSoundsLoaded };
 let loadedInstrumentNumber = 0;
@@ -65,8 +66,13 @@ export default class Instrument {
     this.vibrato = new Tone.Vibrato(3, 1).connect(this.pitchShifter);
     this.setEffects(EffectsObject());
     if (!waves) {
-      waves = new Tone.ToneAudioBuffers(waveUrls, () => {});
+      waves = new Tone.ToneAudioBuffers(waveUrls, () => {
+        wavesReady = true;
+      });
     }
+  }
+  transportTime() {
+    return `+${Tone.TransportTime('16n').toSeconds()}`;
   }
 
   connect() {

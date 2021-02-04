@@ -209,6 +209,7 @@ function App() {
   return (
     <Context.Provider
       value={{
+        stupidSafari,
         instrumentsLoaded,
         soundSet,
         sessionPin,

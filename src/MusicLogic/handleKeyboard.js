@@ -16,7 +16,9 @@ export default function handleKeyboard(data, soundSet) {
 
 const playNote = (data, soundSet) => {
   if (data.data.note) {
-    setKeyboardPitch(Tone.Frequency(data.data.note + data.data.octave).toFrequency());
+    const pbr =
+      Math.round((Tone.Frequency(data.data.note + data.data.octave).toFrequency() / 440 + Number.EPSILON) * 100) / 100;
+    setKeyboardPitch(pbr);
     if (soundSet) {
       soundSet.keyboard.play();
     }
