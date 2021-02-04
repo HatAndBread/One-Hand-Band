@@ -1,6 +1,5 @@
 import Instrument from './Instrument';
-
-import * as Tone from 'tone';
+import { Player, ToneAudioBuffers, Transport, Context, Loop, Time } from 'tone';
 import snare from '../assets/snare.mp3';
 import kick from '../assets/kick.mp3';
 import ride from '../assets/ride.mp3';
@@ -26,18 +25,21 @@ import { setLoaded } from '../App';
 
 let cb;
 
-export const getCurrentBeat = (arg, stupidSafari) => {
+let mount = false;
+
+export const getCurrentBeat = (arg, stupidSafari, mounted) => {
   if (typeof arg === 'number' || arg === 0) {
     if (cb) {
       if (stupidSafari) {
-        Tone.Transport.schedule(() => {
-          cb(arg);
-        }, Tone.Context.lookAhead);
+        Transport.schedule(() => {
+          mount && cb(arg);
+        }, Context.lookAhead);
       } else {
-        cb(arg);
+        mount && cb(arg);
       }
     }
   } else {
+    mount = mounted;
     cb = arg;
   }
 };
@@ -46,14 +48,14 @@ class Percussion extends Instrument {
   constructor() {
     super();
     this.loaded = false;
-    this.one = new Tone.Player();
-    this.two = new Tone.Player();
-    this.three = new Tone.Player();
-    this.four = new Tone.Player();
-    this.five = new Tone.Player();
-    this.six = new Tone.Player();
+    this.one = new Player();
+    this.two = new Player();
+    this.three = new Player();
+    this.four = new Player();
+    this.five = new Player();
+    this.six = new Player();
 
-    this.samples = new Tone.ToneAudioBuffers(sampleUrls, () => {
+    this.samples = new ToneAudioBuffers(sampleUrls, () => {
       setLoaded();
       this.loaded = true;
       this.one.connect(this.vibrato);
@@ -64,13 +66,13 @@ class Percussion extends Instrument {
       this.six.connect(this.vibrato);
       this.connect();
     });
-    this.loop = new Tone.Loop((time) => {}, '16n');
+    this.loop = new Loop((time) => {}, '16n');
     this.beat = 0;
     getCurrentBeat(this.beat);
     this.drumsNums = ['one', 'two', 'three', 'four', 'five', 'six'];
   }
   startMachine() {
-    this.loop.start(Tone.Time('16n'));
+    this.loop.start(Time('16n'));
   }
   stopMachine() {
     this.beat = 0;
@@ -87,7 +89,7 @@ class Percussion extends Instrument {
       }
     }
     const callback = (time) => {
-      if (this.beat >= Tone.Transport.timeSignature * 4) {
+      if (this.beat >= Transport.timeSignature * 4) {
         this.beat = 0;
         getCurrentBeat(this.beat);
       }
@@ -117,11 +119,11 @@ class Percussion extends Instrument {
     return false;
   }
   updateBpmAndTimeSignature(data) {
-    if (Tone.Transport.bpm.value !== parseInt(data.bpm, 10)) {
-      Tone.Transport.bpm.value = parseInt(data.bpm, 10);
+    if (Transport.bpm.value !== parseInt(data.bpm, 10)) {
+      Transport.bpm.value = parseInt(data.bpm, 10);
     }
-    if (Tone.Transport.timeSignature !== parseInt(data.timeSignature, 10)) {
-      Tone.Transport.timeSignature = parseInt(data.timeSignature, 10);
+    if (Transport.timeSignature !== parseInt(data.timeSignature, 10)) {
+      Transport.timeSignature = parseInt(data.timeSignature, 10);
     }
   }
 }

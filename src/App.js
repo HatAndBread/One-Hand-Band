@@ -16,7 +16,7 @@ import percussionObj from './Components/Instruments/Percussion/percussionObj';
 import handleSettings from './MusicLogic/handleSettings';
 import handleEffects from './MusicLogic/handleEffects';
 import SoundSet from './MusicLogic/SoundSet';
-import * as Tone from 'tone';
+import { start, context } from 'tone';
 
 export const Context = createContext();
 
@@ -76,26 +76,24 @@ function App() {
   useEffect(() => {
     const startContext = () => {
       const init = () => {
-        Tone.start();
+        start();
         SetSoundSet(new SoundSet());
         setAudioContextStarted(true);
       };
-      if (Tone.context.state !== 'suspended') {
+      if (context.state !== 'suspended') {
         init();
       } else {
         // for stupid safari
         setStupidSafari(true);
-        console.log('Use Chrome please', Tone.context.destination.volume.value);
-        Tone.context.destination.volume.value = -3;
-        Tone.context.resume();
-        Tone.context.lookAhead = 0.2;
-        Tone.context.on('statechange', () => {
+        context.resume();
+        context.on('statechange', () => {
+          context.destination.volume.value = -3;
+          context.lookAhead = 0.2;
           init();
         });
       }
       const interval = setInterval(() => {
-        if (loaded === 3) {
-          console.log('yay!');
+        if (loaded === 4) {
           setInstrumentsLoaded(true);
           clearInterval(interval);
         }

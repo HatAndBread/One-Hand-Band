@@ -1,4 +1,16 @@
-import * as Tone from 'tone';
+import {
+  Gain,
+  FeedbackDelay,
+  Compressor,
+  BitCrusher,
+  Distortion,
+  PitchShift,
+  Vibrato,
+  ToneAudioBuffers,
+  TransportTime,
+  Transport,
+  now
+} from 'tone';
 import EffectsObject from '../Components/Effects/EffectsObject';
 import sine from '../assets/sine.mp3';
 import sawtooth from '../assets/sawtooth.mp3';
@@ -55,32 +67,32 @@ const checkIfSoundsLoaded = () => (wavesReady ? true : false);
 
 export { checkIfSoundsLoaded };
 let loadedInstrumentNumber = 0;
-const compressor = new Tone.Compressor();
+const compressor = new Compressor();
 export default class Instrument {
   constructor() {
-    this.gain = new Tone.Gain(0.2).connect(compressor);
-    this.delay = new Tone.FeedbackDelay(0, 1).connect(this.gain);
-    this.pulverizer = new Tone.BitCrusher(1).connect(this.delay);
-    this.distortion = new Tone.Distortion(0).connect(this.pulverizer);
-    this.pitchShifter = new Tone.PitchShift(0).connect(this.distortion);
-    this.vibrato = new Tone.Vibrato(3, 1).connect(this.pitchShifter);
+    this.gain = new Gain(0.2).connect(compressor);
+    this.delay = new FeedbackDelay(0, 1).connect(this.gain);
+    this.pulverizer = new BitCrusher(1).connect(this.delay);
+    this.distortion = new Distortion(0).connect(this.pulverizer);
+    this.pitchShifter = new PitchShift(0).connect(this.distortion);
+    this.vibrato = new Vibrato(3, 1).connect(this.pitchShifter);
     this.setEffects(EffectsObject());
     if (!waves) {
-      waves = new Tone.ToneAudioBuffers(waveUrls, () => {
+      waves = new ToneAudioBuffers(waveUrls, () => {
         wavesReady = true;
       });
     }
   }
   transportTime() {
-    return `+${Tone.TransportTime('16n').toSeconds()}`;
+    return `+${TransportTime('16n').toSeconds()}`;
   }
 
   connect() {
     loadedInstrumentNumber += 1;
     if (loadedInstrumentNumber === 4) {
       console.log('ALL CONNECTED');
-      Tone.Transport.start(Tone.now());
-      Tone.Transport.bpm.value = 80;
+      Transport.start(now());
+      Transport.bpm.value = 80;
       compressor.toDestination();
     }
   }
@@ -100,7 +112,7 @@ export default class Instrument {
       }
       switch (effect) {
         case 'pulverizer':
-          this.pulverizer.bits.setValueAtTime(effects.pulverizer.level.level, Tone.now());
+          this.pulverizer.bits.setValueAtTime(effects.pulverizer.level.level, now());
           break;
         case 'delay':
           this.delay.feedback.value = effects.delay.feedback.level;

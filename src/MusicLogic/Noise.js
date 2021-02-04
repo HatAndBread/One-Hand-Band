@@ -1,4 +1,4 @@
-import * as Tone from 'tone';
+import { Player, Gain, BitCrusher, ToneAudioBuffers, now } from 'tone';
 import Instrument from './Instrument';
 import amRadioNoise from '../assets/amradionoise.mp3';
 import analogueWhiteNoise from '../assets/analoguewhitenoise.mp3';
@@ -38,14 +38,14 @@ class Noise extends Instrument {
   constructor() {
     super();
     this.loaded = false;
-    this.player = new Tone.Player();
-    this.oscillatorGain = new Tone.Gain(0.7);
-    this.oscillatorPulverizer = new Tone.BitCrusher(1);
-    this.oscillator = new Tone.Player();
-    this.oscillator2 = new Tone.Player();
-    this.oscillator3 = new Tone.Player();
-    this.oscillator4 = new Tone.Player();
-    this.samples = new Tone.ToneAudioBuffers(sampleUrls, () => {
+    this.player = new Player();
+    this.oscillatorGain = new Gain(0.7);
+    this.oscillatorPulverizer = new BitCrusher(1);
+    this.oscillator = new Player();
+    this.oscillator2 = new Player();
+    this.oscillator3 = new Player();
+    this.oscillator4 = new Player();
+    this.samples = new ToneAudioBuffers(sampleUrls, () => {
       console.log('noise samples loaded!');
       setLoaded();
       this.loaded = true;
@@ -101,7 +101,7 @@ class Noise extends Instrument {
   getRandomSound() {}
   initialize() {
     Object.keys(this).forEach((key) => {
-      if (this[key] instanceof Tone.Player) {
+      if (this[key] instanceof Player) {
         this[key].loop = true;
       }
     });
@@ -131,20 +131,20 @@ class Noise extends Instrument {
       this.setPlaybackRate(data);
       this.player.start(0, Math.floor(Math.random() * 10));
     } else {
-      this.oscillator.start(Tone.now());
-      this.oscillator2.start(Tone.now());
-      this.oscillator3.start(Tone.now());
-      this.oscillator4.start(Tone.now());
+      this.oscillator.start(now());
+      this.oscillator2.start(now());
+      this.oscillator3.start(now());
+      this.oscillator4.start(now());
     }
   }
   stopOscillators() {
-    this.oscillator.stop(Tone.now());
-    this.oscillator2.stop(Tone.now());
-    this.oscillator3.stop(Tone.now());
-    this.oscillator4.stop(Tone.now());
+    this.oscillator.stop(now());
+    this.oscillator2.stop(now());
+    this.oscillator3.stop(now());
+    this.oscillator4.stop(now());
   }
   stop() {
-    this.nowPlaying !== 'oscillators' ? this.player.stop(Tone.now()) : this.stopOscillators();
+    this.nowPlaying !== 'oscillators' ? this.player.stop(now()) : this.stopOscillators();
     this.nowPlaying = null;
   }
   play(data) {

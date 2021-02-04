@@ -33,6 +33,7 @@ const pitchUpdater = () => {
 pitchUpdater();
 pitchUpdater();
 pitchUpdater();
+pitchUpdater();
 
 function handler(data, soundSet) {
   switch (data.instrument) {

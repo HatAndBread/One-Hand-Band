@@ -25,9 +25,13 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
     setCurrentBeat(beatNumber);
   };
 
-  useState(() => {
-    getCurrentBeat(beatUpdater, stupidSafari);
-  }, []);
+  useEffect(() => {
+    getCurrentBeat(beatUpdater, stupidSafari, true);
+
+    return () => {
+      getCurrentBeat(beatUpdater, stupidSafari, false);
+    };
+  }, [stupidSafari]);
 
   const randomColor = () => {
     return `rgba(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(

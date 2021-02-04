@@ -1,24 +1,24 @@
-import * as Tone from 'tone';
 import defaultEnvelopeSettings from '../Components/Settings/DefaultEnvelopeSettings';
 import Instrument from './Instrument';
 import { setLoaded } from '../App';
 import { checkIfSoundsLoaded } from './Instrument';
+import { Gain, Filter, Player, AmplitudeEnvelope, now } from 'tone';
 
 class Drone extends Instrument {
   constructor() {
     super();
-    this.droneGain = new Tone.Gain(1);
-    this.filter = new Tone.Filter({
+    this.droneGain = new Gain(1);
+    this.filter = new Filter({
       type: 'lowpass',
       frequency: 700,
       rolloff: -12,
       Q: 1,
       gain: 0
     });
-    this.envelope = new Tone.AmplitudeEnvelope(defaultEnvelopeSettings);
-    this.one = new Tone.Player();
-    this.two = new Tone.Player();
-    this.three = new Tone.Player();
+    this.envelope = new AmplitudeEnvelope(defaultEnvelopeSettings);
+    this.one = new Player();
+    this.two = new Player();
+    this.three = new Player();
     this.rampTo = 0;
     this.one.loop = true;
     this.two.loop = true;
@@ -44,10 +44,10 @@ class Drone extends Instrument {
     const drone = this[droneNum];
     if (drone.playing) {
       drone.stop(`+${this.envelope.release}`);
-      this.envelope.triggerRelease(Tone.now());
+      this.envelope.triggerRelease(now());
       drone.buffer = this.getWave(waveType);
-      drone.start(Tone.now());
-      this.envelope.triggerAttack(Tone.now());
+      drone.start(now());
+      this.envelope.triggerAttack(now());
     }
     drone.type = waveType;
   }
@@ -56,9 +56,9 @@ class Drone extends Instrument {
     const drone = this[number];
     drone.buffer = this.getWave(drone.type);
     if (!drone.playing) {
-      drone.start(Tone.now());
+      drone.start(now());
       drone.playing = true;
-      this.envelope.triggerAttack(Tone.now());
+      this.envelope.triggerAttack(now());
     }
   }
   stop(number) {
@@ -66,7 +66,7 @@ class Drone extends Instrument {
     if (drone.playing) {
       drone.playing = false;
       drone.stop(`+${this.envelope.release}`);
-      this.envelope.triggerRelease(Tone.now());
+      this.envelope.triggerRelease(now());
     }
   }
 }
