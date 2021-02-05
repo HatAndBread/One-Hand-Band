@@ -1,32 +1,16 @@
 import { Frequency } from 'tone';
-import { setKeyboardPitch } from './playMusic';
 
 export default function handleKeyboard(data, soundSet) {
   switch (data.type) {
     case 'play':
-      playNote(data, soundSet);
+      const pbr =
+        Math.round((Frequency(data.data.note + data.data.octave).toFrequency() / 440 + Number.EPSILON) * 100) / 100;
+      soundSet.keyboard.play(pbr, soundSet.keyboard.getWave(soundSet.keyboard.wave));
       break;
     case 'stop':
-      stopNote(soundSet);
+      soundSet.keyboard.stop();
       break;
     default:
-      console.error('No Note!');
+      console.error('Handle keyboard error');
   }
 }
-
-const playNote = (data, soundSet) => {
-  if (data.data.note) {
-    const pbr =
-      Math.round((Frequency(data.data.note + data.data.octave).toFrequency() / 440 + Number.EPSILON) * 100) / 100;
-    setKeyboardPitch(pbr);
-    if (soundSet) {
-      soundSet.keyboard.play();
-    }
-  }
-};
-
-const stopNote = (soundSet) => {
-  if (soundSet) {
-    soundSet.keyboard.stop();
-  }
-};

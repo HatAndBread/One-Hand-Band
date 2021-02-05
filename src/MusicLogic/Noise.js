@@ -39,7 +39,7 @@ class Noise extends Instrument {
     super();
     this.loaded = false;
     this.player = new Player();
-    this.oscillatorGain = new Gain(0.7);
+    this.oscillatorGain = new Gain(0.3);
     this.oscillatorPulverizer = new BitCrusher(1);
     this.oscillator = new Player();
     this.oscillator2 = new Player();
@@ -165,7 +165,7 @@ class Noise extends Instrument {
         this.oscillator4.playbackRate = Math.random() + data.x;
       }
       this.oscillator2.playbackRate = data.y + Math.random() * 0.1;
-      this.oscillator3.playbackRate = data.y / 2 / (data.x / 2);
+      this.oscillator3.playbackRate = data.y / 8 / (data.x / 2);
     }
   }
 }
@@ -181,7 +181,7 @@ function camelCase(string) {
     case 'Oscillators':
       return 'oscillators';
     default:
-      console.log('huh?');
+      break;
   }
 }
 

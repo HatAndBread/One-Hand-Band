@@ -17,7 +17,6 @@ export default function Effects({ instrument, setSettingsOpen }) {
       <IndividualEffect type={'delay'} params={effects.delay} instrument={instrument} />
       <IndividualEffect type={'pulverizer'} params={effects.pulverizer} instrument={instrument} />
       <IndividualEffect type={'vibrato'} params={effects.vibrato} instrument={instrument} />
-      <IndividualEffect type={'pitchShifter'} params={effects.pitchShifter} instrument={instrument} />
     </div>
   );
 }

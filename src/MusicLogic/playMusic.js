@@ -22,7 +22,7 @@ export const setDronePitch = (one, two, three) => {
 
 const pitchUpdater = () => {
   if (soundSetRef) {
-    soundSetRef.keyboard.keyboardPlayer.playbackRate = keyboardPbr;
+    soundSetRef.keyboard.pbr = keyboardPbr;
     soundSetRef.drone.one.playbackRate = oneDronePitch;
     soundSetRef.drone.two.playbackRate = twoDronePitch;
     soundSetRef.drone.three.playbackRate = threeDronePitch;

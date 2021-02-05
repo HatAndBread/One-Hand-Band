@@ -11,15 +11,15 @@ export default function KeyboardKeys({ windowWidth, windowHeight, lastOctave, oc
       style={windowWidth > windowHeight ? { width: `${windowWidth / 2}px` } : { width: '100%' }}
       onContextMenu={preventer}
     >
-      <KeyboardKey note={'C'} blackKey={'C#'} octave={octave}></KeyboardKey>
-      <KeyboardKey note={'D'} blackKey={'D#'} octave={octave} precededByBlack={1}></KeyboardKey>
-      <KeyboardKey note={'E'} octave={octave} precededByBlack={1}></KeyboardKey>
-      <KeyboardKey note={'F'} blackKey={'F#'} octave={octave}></KeyboardKey>
-      <KeyboardKey note={'G'} blackKey={'G#'} octave={octave} precededByBlack={1}></KeyboardKey>
-      <KeyboardKey note={'A'} blackKey={'A#'} octave={octave} precededByBlack={1}></KeyboardKey>
-      <KeyboardKey note={'B'} octave={octave} precededByBlack={1}></KeyboardKey>
+      <KeyboardKey note={'C'} blackKey={'C#'} octave={octave} />
+      <KeyboardKey note={'D'} blackKey={'D#'} octave={octave} precededByBlack={1} />
+      <KeyboardKey note={'E'} octave={octave} precededByBlack={1} />
+      <KeyboardKey note={'F'} blackKey={'F#'} octave={octave} />
+      <KeyboardKey note={'G'} blackKey={'G#'} octave={octave} precededByBlack={1} />
+      <KeyboardKey note={'A'} blackKey={'A#'} octave={octave} precededByBlack={1} />
+      <KeyboardKey note={'B'} octave={octave} precededByBlack={1} />
 
-      {lastOctave && <KeyboardKey note={'C'} octave={octave === 1 ? 2 : 3}></KeyboardKey>}
+      {lastOctave && <KeyboardKey note={'C'} octave={octave === 1 ? 2 : 3} />}
     </div>
   );
 }

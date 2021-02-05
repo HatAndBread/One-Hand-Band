@@ -20,11 +20,6 @@ export default function EffectsObject() {
       time: { level: 0.2, min: 0, max: 1, step: 0.05 },
       feedback: { level: 0.15, min: 0, max: 1, step: 0.05 },
       on: false
-    },
-    pitchShifter: {
-      wet: { level: 0.5, min: 0, max: 1, step: 0.05 },
-      shift: { level: 0, min: -36, max: 36, step: 1 },
-      on: false
     }
   };
 }

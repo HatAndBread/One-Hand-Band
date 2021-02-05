@@ -16,17 +16,6 @@ export default function Keyboard({ setFinalData }) {
   const [touchScreen, setTouchScreen] = useState(false);
 
   useEffect(() => {
-    let exit = false;
-    const theLoop = () => {
-      !exit && window.requestAnimationFrame(theLoop);
-    };
-    theLoop();
-
-    return () => {
-      exit = true;
-    };
-  });
-  useEffect(() => {
     const eventHandler = (e) => (e.pointerType === 'touch' ? setTouchScreen(true) : setTouchScreen(false));
     window.addEventListener('pointerdown', eventHandler);
     return () => {
@@ -36,7 +25,10 @@ export default function Keyboard({ setFinalData }) {
 
   useEffect(() => {
     const handlePointerUp = () => {
-      !keyboardInfinity && setPointerDown(false);
+      if (!keyboardInfinity) {
+        setPointerDown(false);
+        setCurrentNote({ note: null, octave: 1 });
+      }
     };
     const updateWindowSize = () => setWindowSize({ width: window.innerWidth, height: window.innerHeight });
     const handlePointerMove = (e) => {
@@ -47,8 +39,8 @@ export default function Keyboard({ setFinalData }) {
     const handlePointerDown = (e) => {
       if (e.target.className === 'white-key' || e.target.className === 'black-key') {
         !touchScreen && setCurrentNote({ note: null, octave: 1 });
-        setPointerDown(true);
         setTouches({ x: e.x, y: e.y });
+        setPointerDown(true);
       }
     };
     const handleClick = (e) => {
@@ -70,14 +62,13 @@ export default function Keyboard({ setFinalData }) {
       window.removeEventListener('click', handleClick);
     };
   }, [keyboardInfinity, touchScreen]);
-
   useEffect(() => {
-    if (pointerDown) {
+    if (currentNote.note) {
       setFinalData({ data: currentNote, type: 'play' });
     } else {
-      !keyboardInfinity && setFinalData({ data: 'stop', type: 'stop' });
+      setFinalData({ data: 'stop', type: 'stop' });
     }
-  }, [setFinalData, currentNote, pointerDown, keyboardInfinity]);
+  }, [currentNote]);
 
   return (
     <KeyboardContext.Provider value={{ pointerDown, setTouches, touches, setCurrentNote, currentNote, mainOctave }}>

@@ -12,7 +12,7 @@ export default function KeyboardKey(props) {
   const [blackBeingPlayed, setBlackBeingPlayed] = useState(false);
   const c = useContext(KeyboardContext);
   const white = useRef(null);
-  const black = useRef();
+  const black = useRef(null);
   const preventer = (e) => {
     e.preventDefault();
   };
@@ -70,7 +70,7 @@ export default function KeyboardKey(props) {
         setBlackBeingPlayed(false);
       }
     }
-  }, [c, props.note, props.octave, props.blackKey, props.precededByBlack]);
+  }, [c.pointerDown, c, props.note, props.octave, props.blackKey, props.precededByBlack]);
   return (
     <div
       className="white-key"
@@ -93,9 +93,9 @@ export default function KeyboardKey(props) {
 }
 
 const checkOverlap = (height, width, top, left, x, y, preceded) => {
-  if (x > left && x < left + width && y > top && y < top + height) {
+  if (x > left && x < left + width - 1 && y > top && y < top + height) {
     if (preceded) {
-      if (x <= left + 1 + width / 4 && y < 2 + top + height * 0.6) {
+      if (x <= left + 1 + width / 4 && y < 20 + top + height * 0.6) {
         return false;
       }
     }

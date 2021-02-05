@@ -1,4 +1,4 @@
-import { Gain, Filter, AmplitudeEnvelope, Player, now } from 'tone';
+import { Gain, Filter, AmplitudeEnvelope, Player, now, Offline, Distortion, BitCrusher } from 'tone';
 import defaultEnvelopeSettings from '../Components/Settings/DefaultEnvelopeSettings';
 import Instrument from './Instrument';
 import { checkIfSoundsLoaded } from './Instrument';
@@ -22,6 +22,7 @@ class Keyboard extends Instrument {
     this.rampTo = 0;
     this.playing = false;
     this.pbr = 1;
+    this.wave = 'sine';
     this.setFirstBuffer = setInterval(() => {
       if (checkIfSoundsLoaded()) {
         this.keyboardPlayer.chain(this.envelope, this.filter, this.keyboardGain);
@@ -34,12 +35,27 @@ class Keyboard extends Instrument {
     }, 100);
   }
 
-  play() {
-    if (!this.playing) {
-      this.keyboardPlayer.restart(now());
-    }
-    this.envelope.triggerAttack(now());
+  play(pbr, buff) {
     this.playing = true;
+    this.envelope.triggerRelease(now());
+    Offline(() => {
+      const p = new Player();
+      const dist = new Distortion(this.distortionLevel).toDestination();
+      dist.wet.value = this.distortionWet;
+      let bc = null;
+      if (this.pulverizerWet) {
+        bc = new BitCrusher(this.pulverizerLevel).connect(dist);
+      }
+      bc ? p.connect(bc) : p.connect(dist);
+      p.buffer = buff;
+      p.playbackRate = pbr;
+      p.start(0);
+    }, buff.duration / pbr).then((buffer) => {
+      this.keyboardPlayer.buffer.dispose();
+      this.keyboardPlayer.buffer = buffer;
+      this.keyboardPlayer.start(now());
+      this.envelope.triggerAttack(now());
+    });
   }
   stop() {
     this.playing = false;
