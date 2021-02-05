@@ -1,4 +1,4 @@
-import { Player, Gain, BitCrusher, ToneAudioBuffers, now } from 'tone';
+import { Player, Gain, Distortion, ToneAudioBuffers, now } from 'tone';
 import Instrument from './Instrument';
 import amRadioNoise from '../assets/amradionoise.mp3';
 import analogueWhiteNoise from '../assets/analoguewhitenoise.mp3';
@@ -38,9 +38,9 @@ class Noise extends Instrument {
   constructor() {
     super();
     this.loaded = false;
-    this.player = new Player();
     this.oscillatorGain = new Gain(0.3);
-    this.oscillatorPulverizer = new BitCrusher(1);
+    this.player = new Player();
+    this.oscDist = new Distortion(3);
     this.oscillator = new Player();
     this.oscillator2 = new Player();
     this.oscillator3 = new Player();
@@ -49,12 +49,12 @@ class Noise extends Instrument {
       console.log('noise samples loaded!');
       setLoaded();
       this.loaded = true;
-      this.player.connect(this.vibrato);
-      this.oscillatorPulverizer.chain(this.oscillatorGain, this.vibrato);
-      this.oscillator.connect(this.oscillatorPulverizer);
-      this.oscillator2.connect(this.oscillatorPulverizer);
-      this.oscillator3.connect(this.oscillatorPulverizer);
-      this.oscillator4.connect(this.oscillatorPulverizer);
+      this.player.connect(this.oscDist);
+      this.oscillator.connect(this.oscDist);
+      this.oscillator2.connect(this.oscDist);
+      this.oscillator3.connect(this.oscDist);
+      this.oscillator4.connect(this.oscDist);
+      this.oscDist.connect(this.vibrato);
       this.connect();
     });
     this.nowPlaying = null;

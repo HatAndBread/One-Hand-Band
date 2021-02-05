@@ -1,10 +1,8 @@
 import {
   Gain,
   FeedbackDelay,
-  Compressor,
-  BitCrusher,
   Distortion,
-  PitchShift,
+  Compressor,
   Vibrato,
   ToneAudioBuffers,
   TransportTime,
@@ -72,11 +70,8 @@ export default class Instrument {
   constructor() {
     this.gain = new Gain(0.2).connect(compressor);
     this.delay = new FeedbackDelay(0, 1).connect(this.gain);
-    this.vibrato = new Vibrato(3, 1).connect(this.delay);
-    this.distortionLevel = 0;
-    this.distortionWet = 0;
-    this.pulverizerLevel = 1;
-    this.pulverizerWet = 0;
+    this.distortion = new Distortion().connect(this.delay);
+    this.vibrato = new Vibrato(3, 1).connect(this.distortion);
     this.setEffects(EffectsObject());
     if (!waves) {
       waves = new ToneAudioBuffers(waveUrls, () => {
@@ -107,32 +102,25 @@ export default class Instrument {
   setEffects(effects) {
     Object.keys(effects).forEach((effect) => {
       switch (effect) {
-        case 'pulverizer':
-          this.pulverizerLevel = effects.pulverizer.level.level;
-          if (effects.pulverizer.on) {
-            this.pulverizerWet = 1;
-          } else {
-            this.pulverizerWet = 0;
-          }
-          break;
         case 'delay':
           this.delay.feedback.value = effects.delay.feedback.level;
           this.delay.delayTime.value = effects.delay.time.level;
           effects.delay.on ? (this.delay.wet.value = effects.delay.wet.level) : (this.delay.wet.value = 0);
           break;
         case 'distortion':
-          this.distortionLevel = effects.distortion.level.level;
+          console.log(this.distortion.value);
+          this.distortion.distortion = effects.distortion.level.level;
           if (effects.distortion.on) {
-            this.distortionWet = effects.distortion.wet.level;
+            this.distortion.wet.value = effects.distortion.wet.level;
           } else {
-            this.distortionWet = 0;
+            this.distortion.wet.value = 0;
           }
           break;
         case 'vibrato':
           this.vibrato.depth.value = effects.vibrato.depth.level;
           this.vibrato.frequency.value = effects.vibrato.freq.level;
-          if (effect.on) {
-            this.vibrato.wet.value = effect.wet.value.level;
+          if (effects.vibrato.on) {
+            this.vibrato.wet.value = effects.vibrato.wet.level;
           } else {
             this.vibrato.wet.value = 0;
           }

@@ -6,10 +6,6 @@ export default function EffectsObject() {
       freq: { level: 8, min: 0, max: 20, step: 0.05 },
       on: false
     },
-    pulverizer: {
-      level: { level: 1, min: 1, max: 16, step: 1 },
-      on: false
-    },
     distortion: {
       wet: { level: 0.5, min: 0, max: 1, step: 0.05 },
       level: { level: 1, min: 0.05, max: 3, step: 0.05 },
