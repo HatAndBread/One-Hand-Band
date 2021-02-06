@@ -23,10 +23,20 @@ io.on('connection', (socket) => {
     const session = new Session({ pin: pin, host: socket.id, users: [] });
     console.log(`This is a new session: ${session}`);
     console.log(session);
-    await session.create();
-    socket.join(pin);
-    const newUser = await session.addUser(socket.id, pin);
-    io.to(socket.id).emit('getPin', newUser, session);
+    try {
+      await session.create();
+      socket.join(pin);
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      await session.create();
+      socket.join(pin);
+      const newUser = await session.addUser(socket.id, pin);
+      io.to(socket.id).emit('getPin', newUser, session);
+    } catch (err) {
+      console.log(err);
+    }
   });
   socket.on('joinSession', (pin) => {
     Session.findByPin(pin).then(
@@ -53,15 +63,19 @@ io.on('connection', (socket) => {
     const updatedUser = new User({ userName: userName, socketId: socket.id, pin: pin, instrument: instrument });
     console.log('UPdated user: ');
     console.log(updatedUser);
-    await User.update(updatedUser, pin, userName);
-    Session.findByPin(pin).then(
-      (session) => {
-        io.in(pin).emit('instrumentChange', session);
-      },
-      (rejectReason) => {
-        console.error(rejectReason);
-      }
-    );
+    try {
+      await User.update(updatedUser, pin, userName);
+      Session.findByPin(pin).then(
+        (session) => {
+          io.in(pin).emit('instrumentChange', session);
+        },
+        (rejectReason) => {
+          console.error(rejectReason);
+        }
+      );
+    } catch (err) {
+      return console.error(err);
+    }
   });
   socket.on('settingsChange', (settings, socketId, instrument, sessionPin) => {
     console.log('SETTINGS CHANGE!');

@@ -34,12 +34,17 @@ class Session {
     this.users = params.users;
   }
   async create() {
-    return await run({
-      query: /*sql*/ `
+    try {
+      const result = await run({
+        query: /*sql*/ `
       INSERT INTO sessions (pin, hostId, date)
       VALUES(?, ?, ?)`,
-      parameters: [this.pin, this.host, Date.now()]
-    });
+        parameters: [this.pin, this.host, Date.now()]
+      });
+      return result;
+    } catch (err) {
+      return console.error(err);
+    }
   }
   destroy() {
     console.log(`I'm destroying myself`);
