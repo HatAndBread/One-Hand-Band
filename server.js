@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const clean = require('./db/clean');
-const PORT = 8080 || process.env.PORT;
+const PORT = process.env.PORT || 8080;
 const forceHttps = require('./force-https');
 const server = require('http').createServer(app);
 
