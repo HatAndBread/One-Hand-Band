@@ -18,54 +18,47 @@ export default function AttackSustainDecayRelease({ instrument }) {
   };
   return (
     <div className="envelope">
-      <div style={{ display: 'flex' }}>
-        <input
-          type="range"
-          name="attack"
-          onChange={handleChange}
-          defaultValue={settings.envelope.attack}
-          min="0"
-          max="1"
-          step="0.01"
-        />
-        <label htmlFor={'attack'}>Attack</label>
-      </div>
-      <div style={{ display: 'flex' }}>
-        <input
-          type="range"
-          name="sustain"
-          onChange={handleChange}
-          defaultValue={settings.envelope.sustain}
-          min="0"
-          max="1"
-          step="0.01"
-        />
-        <label htmlFor={'sustain'}>Sustain</label>
-      </div>
-      <div style={{ display: 'flex' }}>
-        <input
-          type="range"
-          name="decay"
-          onChange={handleChange}
-          defaultValue={settings.envelope.decay}
-          min="0"
-          max="1"
-          step="0.1"
-        />
-        <label htmlFor={'decay'}>Decay</label>
-      </div>
-      <div style={{ display: 'flex' }}>
-        <input
-          type="range"
-          name="release"
-          onChange={handleChange}
-          defaultValue={settings.envelope.release}
-          min="0.01"
-          max="3"
-          step="0.01"
-        />
-        <label htmlFor={'release'}>Release</label>
-      </div>
+      <label htmlFor={'attack'}>Attack</label>
+      <input
+        type="range"
+        name="attack"
+        onChange={handleChange}
+        defaultValue={settings.envelope.attack}
+        min="0"
+        max="1"
+        step="0.01"
+      />
+      <label htmlFor={'sustain'}>Sustain</label>
+      <input
+        type="range"
+        name="sustain"
+        onChange={handleChange}
+        defaultValue={settings.envelope.sustain}
+        min="0"
+        max="1"
+        step="0.01"
+      />
+      <label htmlFor={'decay'}>Decay</label>
+      <input
+        type="range"
+        name="decay"
+        onChange={handleChange}
+        defaultValue={settings.envelope.decay}
+        min="0"
+        max="1"
+        step="0.1"
+      />
+
+      <label htmlFor={'release'}>Release</label>
+      <input
+        type="range"
+        name="release"
+        onChange={handleChange}
+        defaultValue={settings.envelope.release}
+        min="0.01"
+        max="3"
+        step="0.01"
+      />
     </div>
   );
 }

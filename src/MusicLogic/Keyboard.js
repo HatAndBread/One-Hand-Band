@@ -7,7 +7,7 @@ import { setLoaded } from '../App';
 class Keyboard extends Instrument {
   constructor() {
     super();
-    this.keyboardGain = new Gain(1).connect(this.vibrato);
+    this.keyboardGain = new Gain(1).connect(this.distortion);
     this.filter = new Filter({
       type: 'lowpass',
       frequency: 700,

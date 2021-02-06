@@ -10,9 +10,10 @@
   align-items: center;
   border-style: ridge;
   border-radius: 6px;
-  width: fit-content;
+  width: 100%;
   height: 100%;
 }
+
 .settings-link-container {
   display: flex;
   justify-content: center;
@@ -25,6 +26,13 @@
   display: flex;
   width: fit-content;
 }
+.envelope {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
 
 .wave-selector {
   justify-content: left;
@@ -32,7 +40,6 @@
   flex-direction: column;
   border-style: ridge;
   border-radius: 6px;
-  width: fit-content !important;
 }
 .wave-selector div {
   align-self: baseline;

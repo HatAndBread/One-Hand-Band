@@ -15,7 +15,6 @@ export default function Effects({ instrument, setSettingsOpen }) {
     <div className="effects-container">
       <IndividualEffect type={'distortion'} params={effects.distortion} instrument={instrument} />
       <IndividualEffect type={'delay'} params={effects.delay} instrument={instrument} />
-      <IndividualEffect type={'vibrato'} params={effects.vibrato} instrument={instrument} />
     </div>
   );
 }

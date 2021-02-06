@@ -1,11 +1,5 @@
 export default function EffectsObject() {
   return {
-    vibrato: {
-      wet: { level: 0.5, min: 0, max: 1, step: 0.05 },
-      depth: { level: 0.3, min: 0, max: 1, step: 0.05 },
-      freq: { level: 8, min: 0, max: 20, step: 0.05 },
-      on: false
-    },
     distortion: {
       wet: { level: 0.5, min: 0, max: 1, step: 0.05 },
       level: { level: 1, min: 0.05, max: 3, step: 0.05 },

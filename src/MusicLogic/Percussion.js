@@ -58,12 +58,12 @@ class Percussion extends Instrument {
     this.samples = new ToneAudioBuffers(sampleUrls, () => {
       setLoaded();
       this.loaded = true;
-      this.one.connect(this.vibrato);
-      this.two.connect(this.vibrato);
-      this.three.connect(this.vibrato);
-      this.four.connect(this.vibrato);
-      this.five.connect(this.vibrato);
-      this.six.connect(this.vibrato);
+      this.one.connect(this.distortion);
+      this.two.connect(this.distortion);
+      this.three.connect(this.distortion);
+      this.four.connect(this.distortion);
+      this.five.connect(this.distortion);
+      this.six.connect(this.distortion);
       this.connect();
     });
     this.loop = new Loop((time) => {}, '16n');

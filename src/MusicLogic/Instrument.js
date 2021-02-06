@@ -1,14 +1,4 @@
-import {
-  Gain,
-  FeedbackDelay,
-  Distortion,
-  Compressor,
-  Vibrato,
-  ToneAudioBuffers,
-  TransportTime,
-  Transport,
-  now
-} from 'tone';
+import { Gain, FeedbackDelay, Distortion, Compressor, ToneAudioBuffers, TransportTime, Transport, now } from 'tone';
 import EffectsObject from '../Components/Effects/EffectsObject';
 import sine from '../assets/sine.mp3';
 import sawtooth from '../assets/sawtooth.mp3';
@@ -71,7 +61,6 @@ export default class Instrument {
     this.gain = new Gain(0.2).connect(compressor);
     this.delay = new FeedbackDelay(0, 1).connect(this.gain);
     this.distortion = new Distortion().connect(this.delay);
-    this.vibrato = new Vibrato(3, 1).connect(this.distortion);
     this.setEffects(EffectsObject());
     if (!waves) {
       waves = new ToneAudioBuffers(waveUrls, () => {
@@ -108,21 +97,11 @@ export default class Instrument {
           effects.delay.on ? (this.delay.wet.value = effects.delay.wet.level) : (this.delay.wet.value = 0);
           break;
         case 'distortion':
-          console.log(this.distortion.value);
           this.distortion.distortion = effects.distortion.level.level;
           if (effects.distortion.on) {
             this.distortion.wet.value = effects.distortion.wet.level;
           } else {
             this.distortion.wet.value = 0;
-          }
-          break;
-        case 'vibrato':
-          this.vibrato.depth.value = effects.vibrato.depth.level;
-          this.vibrato.frequency.value = effects.vibrato.freq.level;
-          if (effects.vibrato.on) {
-            this.vibrato.wet.value = effects.vibrato.wet.level;
-          } else {
-            this.vibrato.wet.value = 0;
           }
           break;
         default:

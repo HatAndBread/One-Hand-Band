@@ -9,31 +9,28 @@ const percussion = 'percussion';
 const drone = 'drone';
 
 let soundSetRef;
-let keyboardPbr = 1;
-let oneDronePitch = 440;
-let twoDronePitch = 440;
-let threeDronePitch = 440;
-export const setKeyboardPitch = (value) => (keyboardPbr = value);
+
+export const setKeyboardPitch = (value) => (soundSetRef.keyboard.pbr = value);
 export const setDronePitch = (one, two, three) => {
-  oneDronePitch = one;
-  twoDronePitch = two;
-  threeDronePitch = three;
+  soundSetRef.drone.one.playbackRate = one;
+  soundSetRef.drone.two.playbackRate = two;
+  soundSetRef.drone.three.playbackRate = three;
 };
 
-const pitchUpdater = () => {
-  if (soundSetRef) {
-    soundSetRef.keyboard.pbr = keyboardPbr;
-    soundSetRef.drone.one.playbackRate = oneDronePitch;
-    soundSetRef.drone.two.playbackRate = twoDronePitch;
-    soundSetRef.drone.three.playbackRate = threeDronePitch;
-  }
-  window.requestAnimationFrame(pitchUpdater);
-};
+// const pitchUpdater = () => {
+//   if (soundSetRef) {
+//     soundSetRef.keyboard.pbr = keyboardPbr;
+//     soundSetRef.drone.one.playbackRate = oneDronePitch;
+//     soundSetRef.drone.two.playbackRate = twoDronePitch;
+//     soundSetRef.drone.three.playbackRate = threeDronePitch;
+//   }
+//   window.requestAnimationFrame(pitchUpdater);
+// };
 
-pitchUpdater();
-pitchUpdater();
-pitchUpdater();
-pitchUpdater();
+// pitchUpdater();
+// pitchUpdater();
+// pitchUpdater();
+// pitchUpdater();
 
 function handler(data, soundSet) {
   switch (data.instrument) {

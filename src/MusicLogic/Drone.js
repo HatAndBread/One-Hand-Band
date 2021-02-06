@@ -24,12 +24,11 @@ class Drone extends Instrument {
     this.two.loop = true;
     this.three.loop = true;
     this.setFirstBuffer = setInterval(() => {
-      console.log(checkIfSoundsLoaded());
       if (checkIfSoundsLoaded()) {
         this.one.buffer = this.getWave('sine');
         this.two.buffer = this.getWave('sine');
         this.three.buffer = this.getWave('sine');
-        this.envelope.chain(this.filter, this.droneGain, this.vibrato);
+        this.envelope.chain(this.filter, this.droneGain, this.distortion);
         this.one.connect(this.envelope);
         this.two.connect(this.envelope);
         this.three.connect(this.envelope);

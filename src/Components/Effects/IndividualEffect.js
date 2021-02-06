@@ -49,7 +49,9 @@ export default function IndividualEffect({ type, params, instrument }) {
       {Object.entries(params).map((entry) => {
         if (entry[0] !== 'on') {
           return (
-            <div key={entry[0]}>
+            <div key={entry[0]} style={{ width: '100%' }}>
+              <label>{entry[0][0].toUpperCase() + entry[0].substring(1, entry[0].length) + ''}</label>
+              <br></br>
               <input
                 data-type={entry[0]}
                 type="range"
@@ -59,8 +61,6 @@ export default function IndividualEffect({ type, params, instrument }) {
                 step={entry[1].step}
                 onChange={handleChange}
               />
-              <label>{entry[0][0].toUpperCase() + entry[0].substring(1, entry[0].length) + ''}</label>
-              {entry[0] === 'shift: ' && entry[1].level}
             </div>
           );
         }

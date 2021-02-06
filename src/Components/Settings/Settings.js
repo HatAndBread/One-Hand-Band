@@ -30,24 +30,7 @@ export default function Settings({ instrument, setSettingsOpen }) {
       case 'drone':
         return <AttackSustainDecayRelease instrument={instrument} />;
       case 'keyboard':
-        return (
-          <div>
-            <AttackSustainDecayRelease instrument={instrument} />
-            <div style={{ display: 'flex' }}>
-              <input
-                type="range"
-                id="rampTo"
-                name="rampTo"
-                min="0"
-                max="0.5"
-                step="0.01"
-                defaultValue={globalInstrumentSettings[instrument].rampTo}
-                onChange={handleChange}
-              />
-              <label htmlFor="rampTo">Ramp</label>
-            </div>
-          </div>
-        );
+        return <AttackSustainDecayRelease instrument={instrument} />;
       case 'noise':
         return;
       case 'theremin':
@@ -64,19 +47,17 @@ export default function Settings({ instrument, setSettingsOpen }) {
   return (
     <div className="settings-container">
       <div className="main-settings-container">
-        <div style={{ display: 'flex' }}>
-          <input
-            type="range"
-            id="volume"
-            name="volume"
-            min="0"
-            max="1"
-            step="0.05"
-            defaultValue={globalInstrumentSettings[instrument].volume}
-            onChange={handleChange}
-          />
-          <label htmlFor="volume">Volume</label>
-        </div>
+        <label htmlFor="volume">Volume</label>
+        <input
+          type="range"
+          id="volume"
+          name="volume"
+          min="0"
+          max="1"
+          step="0.05"
+          defaultValue={globalInstrumentSettings[instrument].volume}
+          onChange={handleChange}
+        />
         {getKnobs()}
       </div>
     </div>

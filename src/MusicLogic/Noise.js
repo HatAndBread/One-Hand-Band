@@ -49,12 +49,12 @@ class Noise extends Instrument {
       console.log('noise samples loaded!');
       setLoaded();
       this.loaded = true;
-      this.player.connect(this.oscDist);
+      this.player.connect(this.distortion);
       this.oscillator.connect(this.oscDist);
       this.oscillator2.connect(this.oscDist);
       this.oscillator3.connect(this.oscDist);
       this.oscillator4.connect(this.oscDist);
-      this.oscDist.connect(this.vibrato);
+      this.oscDist.connect(this.distortion);
       this.connect();
     });
     this.nowPlaying = null;
