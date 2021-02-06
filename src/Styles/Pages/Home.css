@@ -18,6 +18,18 @@ h1 {
   font-size: 9vw;
 }
 
+h2 {
+  font-family: 'Amatic SC', monospace;
+  font-size: 32px;
+}
+
+.home-content {
+  margin: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .home-btn {
   background-color: #6249e9;
   text-align: center;
@@ -34,10 +46,6 @@ h1 {
   justify-content: space-around;
 }
 
-.home-content {
-  margin: 16px;
-}
-
 footer {
   background-color: #9d8df1;
   padding: 16px;
@@ -49,12 +57,62 @@ footer a {
   text-decoration: underline;
 }
 
+.fa {
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
 footer .link-icons {
   font-size: 42px;
-  justify-content: space-evenly;
+  justify-content: center;
   display: flex;
 }
 
+.cards-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 64px;
+}
+
+.card {
+  background-color: #9d8df1;
+  padding: 16px;
+  flex-grow: 1;
+  margin: 16px;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0px 0px 8px 8px #6249e9;
+}
+
+.card p {
+  width: 220px;
+}
+
+.emoji {
+  font-size: 100px;
+  margin: 0px;
+}
+.card h2 {
+  margin: 0px;
+}
+
+.card h1 {
+  margin: 0px;
+}
+
+@media only screen and (max-width: 1160px) {
+  .cards-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .card {
+    flex-grow: 0;
+    width: 300px;
+  }
+}
 @media (orientation: portrait) {
   h1 {
     font-size: 15vw;

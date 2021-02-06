@@ -3,8 +3,9 @@ import '../Styles/Pages/Home.css';
 import { useContext } from 'react';
 import { Context } from '../App';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebook } from '@fortawesome/free-brands-svg-icons';
+import { faPaypal } from '@fortawesome/free-brands-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import Card from '../Components/Home/Card';
 
 export default function Home() {
   const loggedIn = useContext(Context).sessionPin;
@@ -25,23 +26,40 @@ export default function Home() {
         </div>
       </div>
       <div className="home-content">
-        <p>Hootenanny! lets you improvise music with your friends live online. Here's how it works:</p>
-        <ul>
-          <li>⭐️Step 1: Click on "Host a room" to generate a pin number 🎰</li>
-          <li>⭐️Step 2: Send the pin number to your friends 💃🕺</li>
-          <li>⭐️Step 3:Choose an instrument and start playing ✨</li>
-        </ul>
+        <h2>How It Works</h2>
+        <div className="cards-container">
+          <Card
+            title={'Play Music Live Online'}
+            info={`Hootenanny lets you make noise with your friends live online.`}
+            emoji={'🪕'}
+          />
+          <Card
+            title={'Step 1: Create a pin'}
+            info={`Have friends? Click "Host a room" and share the generated pin number with up to four of your friends.`}
+            emoji={'🎰'}
+          />
+          <Card
+            title={'Step 2: Choose your axe'}
+            info={`Choose an instrument and start playing. You should be able to hear the noise that your friends are making from anywhere in the world with only a slight delay.`}
+            emoji={'🎺'}
+          />
+          <Card
+            title={'Play solo'}
+            info={`Don't have any friends? Don't worry! Click "Play solo" to play by yourself.`}
+            emoji={'🧚‍♀️'}
+          />
+        </div>
       </div>
       <footer>
         <div className="link-icons">
-          <a href="https://www.facebook.com/">
-            <FontAwesomeIcon icon={faFacebook} />
-          </a>
-          <a href="https://github.com/HatAndBread">
+          <a className="fa" href="https://github.com/HatAndBread">
             <FontAwesomeIcon icon={faGithub} />
           </a>
+          <a className="fa" href="https://www.paypal.com/paypalme/hatandbread">
+            <FontAwesomeIcon icon={faPaypal} />
+          </a>
         </div>
-        Enjoy Hootenanny? Buy me a <a href="https://github.com/HatAndBread">beer 🍺</a> or
+        Enjoy Hootenanny? Buy me a <a href="https://www.paypal.com/paypalme/hatandbread">beer 🍺</a> or
         <a href="https://github.com/HatAndBread"> give me a job.</a>
       </footer>
     </div>

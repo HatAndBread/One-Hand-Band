@@ -23,6 +23,10 @@ button {
   background-color: #6249e9;
   color: snow;
   border-radius: 6px;
+  transition: 0.3s;
+}
+button:hover {
+  background-color: #41463d;
 }
 
 .link-btn {
@@ -30,4 +34,9 @@ button {
   padding: 8px 16px 8px 16px;
   border-radius: 6px;
   color: snow;
+  transition: 0.3s;
+}
+
+.link-btn:hover {
+  background-color: #41463d;
 }
