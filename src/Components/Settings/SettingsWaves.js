@@ -31,6 +31,8 @@ export default function SettingsWaves({ instrument }) {
       <option value="organ">organ</option>
       <option value="oboe">oboe</option>
       <option value="kazoo">kazoo</option>
+      <option value="ruler">ruler</option>
+      <option value="spring">spring</option>
       <option value="tambura">tambura</option>
       <option value="voice">voice</option>
       <option value="harmonium">harmonium</option>

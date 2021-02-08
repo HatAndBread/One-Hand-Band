@@ -21,6 +21,8 @@ import kalimba from '../assets/kalimba.mp3';
 import gamelan from '../assets/gamelan.mp3';
 import gamelan2 from '../assets/gamelan2.mp3';
 import gamelan3 from '../assets/gamelan3.mp3';
+import spring from '../assets/tuned-spring.mp3';
+import ruler from '../assets/tuned-ruler.mp3';
 import violin from '../assets/violin.mp3';
 
 const waveUrls = {
@@ -45,7 +47,9 @@ const waveUrls = {
   gamelan,
   gamelan2,
   gamelan3,
-  violin
+  violin,
+  spring,
+  ruler
 };
 
 let waves;
