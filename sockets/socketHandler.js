@@ -41,10 +41,14 @@ io.on('connection', (socket) => {
   socket.on('joinSession', (pin) => {
     Session.findByPin(pin).then(
       async (session) => {
-        const newUser = await session.addUser(socket.id, pin);
-        socket.join(pin);
-        io.to(socket.id).emit('joinSuccess', newUser);
-        io.in(pin).emit('newMember', session);
+        if (session.users.length >= 4) {
+          io.to(socket.id).emit('tooManyMessage');
+        } else {
+          const newUser = await session.addUser(socket.id, pin);
+          socket.join(pin);
+          io.to(socket.id).emit('joinSuccess', newUser);
+          io.in(pin).emit('newMember', session);
+        }
       },
       (reason) => {
         console.log('rejected because' + reason);
@@ -59,8 +63,12 @@ io.on('connection', (socket) => {
     io.in(pin).emit('musicData', musicData, user);
   });
   socket.on('instrumentChange', async (instrument, pin, userName) => {
-    console.log('INSTRUMENT CHANGE');
-    const updatedUser = new User({ userName: userName, socketId: socket.id, pin: pin, instrument: instrument });
+    const updatedUser = new User({
+      userName: userName,
+      socketId: socket.id,
+      pin: pin,
+      instrument: instrument
+    });
     console.log('UPdated user: ');
     console.log(updatedUser);
     try {

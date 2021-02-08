@@ -1,7 +1,8 @@
 .drones-container {
   display: flex;
-  margin: 8px;
+  width: 100vw;
   justify-content: center;
+  flex-direction: column;
 }
 
 .single-drone-container {
@@ -34,11 +35,11 @@
   width: 100%;
 }
 .volume-fader input {
-  width: 65%;
+  width: 80%;
 }
 
 .pitch-fader input {
-  width: 67%;
+  width: 80%;
 }
 
 .pitch-fader .pitch-label {
@@ -69,7 +70,7 @@
 }
 
 @media (orientation: portrait) {
-  .drones-container {
-    flex-direction: column;
+  .chord-container button {
+    font-size: 10px;
   }
 }

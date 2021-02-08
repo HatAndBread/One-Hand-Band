@@ -68,7 +68,7 @@ export default function Keyboard({ setFinalData }) {
     } else {
       setFinalData({ data: 'stop', type: 'stop' });
     }
-  }, [currentNote]);
+  }, [currentNote, setFinalData]);
 
   return (
     <KeyboardContext.Provider value={{ pointerDown, setTouches, touches, setCurrentNote, currentNote, mainOctave }}>

@@ -45,7 +45,8 @@ export default function InstrumentTemplate({ instrument }) {
   };
 
   useEffect(() => {
-    setMyInstrument({ instrument });
+    console.log(instrument);
+    setMyInstrument(instrument);
     return () => {
       setMyInstrument(null);
     };

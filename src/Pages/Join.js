@@ -25,6 +25,16 @@ export default function Join() {
   const join = () => {
     socket.emit('joinSession', enteredPin);
   };
+
+  useEffect(() => {
+    const handleTooManyMessage = () => {
+      alert('There are too many users in that room. Please create a new room ✨🌈');
+    };
+    socket.on('tooManyMessage', handleTooManyMessage);
+
+    return () => socket.removeAllListeners('tooManyMessage', handleTooManyMessage);
+  });
+
   const keyUp = (e) => {
     let value;
     e.key ? (value = e.key) : (value = e.target.innerText);

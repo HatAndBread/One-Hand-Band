@@ -1,11 +1,26 @@
 .instrument-links {
   width: 100vw;
+  height: 60px;
   display: flex;
   justify-content: space-evenly;
 }
 
-.instrument-links a {
-  font-size: 48px;
+.instrument-links .icon {
+  font-size: 42px;
   padding-left: 10px;
   padding-right: 10px;
+}
+.instrument-links .username {
+  background-color: rgba(48, 24, 24, 0.8);
+  border-radius: 6px;
+  font-weight: 900;
+  font-size: 12px;
+  width: 76px;
+  min-height: 42px;
+  justify-content: center;
+  top: -60px;
+  padding: 4px;
+  text-align: center;
+  display: flex;
+  position: relative;
 }

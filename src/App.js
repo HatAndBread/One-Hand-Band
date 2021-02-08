@@ -35,7 +35,7 @@ function App() {
   const [userName, setUserName] = useState(null);
   const [musicData, setMusicData] = useState(null);
   const [myInstrument, setMyInstrument] = useState(undefined);
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState({});
   const [host, setHost] = useState(false);
   const [audioContextStarted, setAudioContextStarted] = useState(false);
   const [dropDownOut, setDropDownOut] = useState(false);
@@ -119,7 +119,6 @@ function App() {
     };
     socket.on('newMember', handleInstrumentChange);
     socket.on('instrumentChange', handleInstrumentChange);
-    users.length && console.info(users);
     return () => {
       socket.removeAllListeners('instrumentChange', handleInstrumentChange);
       socket.removeAllListeners('newMember', handleInstrumentChange);
@@ -152,7 +151,7 @@ function App() {
   }, [users]);
 
   useEffect(() => {
-    const handleSocketMusic = (musicData, user) => {
+    const handleSocketMusic = (musicData) => {
       playMusic(musicData, soundSet);
     };
     socket.on('musicData', handleSocketMusic);

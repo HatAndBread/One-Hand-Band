@@ -1,4 +1,4 @@
-import { Gain, Filter, AmplitudeEnvelope, Player, now, Offline, Distortion, BitCrusher } from 'tone';
+import { Gain, Filter, AmplitudeEnvelope, Player, now } from 'tone';
 import defaultEnvelopeSettings from '../Components/Settings/DefaultEnvelopeSettings';
 import Instrument from './Instrument';
 import { checkIfSoundsLoaded } from './Instrument';
@@ -37,6 +37,7 @@ class Keyboard extends Instrument {
   play(pbr, buff) {
     this.playing = true;
     this.keyboardPlayer.buffer = buff;
+    this.keyboardPlayer.restart();
     this.keyboardPlayer.playbackRate = pbr;
     this.envelope.triggerAttack(now());
   }
