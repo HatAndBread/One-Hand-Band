@@ -8,8 +8,7 @@
   width: 100vw;
   height: 100vh;
   background-image: linear-gradient(180deg, rgba(22, 0, 13, 0.5), rgba(11, 0, 21, 0.2)), url('../../assets/hero.jpg');
-  background-size: cover;
-  background-position-x: center;
+  background-size: contain;
 }
 
 h1 {
@@ -87,7 +86,7 @@ footer .link-icons {
 }
 
 .card p {
-  width: 220px;
+  width: 25vw;
 }
 
 .emoji {
@@ -102,14 +101,17 @@ footer .link-icons {
   margin: 0px;
 }
 
-@media only screen and (max-width: 1160px) {
+@media only screen and (max-width: 900px) {
   .cards-container {
     flex-direction: column;
     align-items: center;
   }
   .card {
     flex-grow: 0;
-    width: 300px;
+    width: 80vw;
+  }
+  .card p {
+    width: 90%;
   }
 }
 @media (orientation: portrait) {

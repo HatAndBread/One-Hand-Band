@@ -42,14 +42,27 @@ export default function Noise({ setFinalData }) {
       setFinalData({ which: e.target.dataset.name, x: e.offsetX, y: e.offsetY, stop: true });
       setColors();
     };
+    const handleTouchMove = (e) => {
+      if (e.touches[1] && e.touches[1].target.dataset.name) {
+        setFinalData({
+          which: e.touches[1].target.dataset.name,
+          x: e.touches[1].clientX,
+          x2: e.touches[1].clientX,
+          y: e.touches[1].clientY,
+          width: width
+        });
+      }
+    };
     document.addEventListener('pointerdown', handlePointerDown);
     document.addEventListener('pointermove', handlePointerMove);
     document.addEventListener('pointerup', handlePointerUp);
+    document.addEventListener('touchmove', handleTouchMove);
 
     return () => {
       document.removeEventListener('pointerdown', handlePointerDown);
       document.removeEventListener('pointermove', handlePointerMove);
       document.removeEventListener('pointerup', handlePointerUp);
+      document.removeEventListener('touchmove', handleTouchMove);
     };
   });
 

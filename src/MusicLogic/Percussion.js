@@ -54,6 +54,12 @@ class Percussion extends Instrument {
     this.four = new Player();
     this.five = new Player();
     this.six = new Player();
+    this.oneSingle = new Player();
+    this.twoSingle = new Player();
+    this.threeSingle = new Player();
+    this.fourSingle = new Player();
+    this.fiveSingle = new Player();
+    this.sixSingle = new Player();
 
     this.samples = new ToneAudioBuffers(sampleUrls, () => {
       setLoaded();
@@ -64,6 +70,12 @@ class Percussion extends Instrument {
       this.four.connect(this.distortion);
       this.five.connect(this.distortion);
       this.six.connect(this.distortion);
+      this.oneSingle.connect(this.distortion);
+      this.twoSingle.connect(this.distortion);
+      this.threeSingle.connect(this.distortion);
+      this.fourSingle.connect(this.distortion);
+      this.fiveSingle.connect(this.distortion);
+      this.sixSingle.connect(this.distortion);
       this.connect();
     });
     this.loop = new Loop((time) => {}, '16n');
@@ -107,9 +119,9 @@ class Percussion extends Instrument {
   }
   play(drum, sampleRate, number) {
     if (this.loaded) {
-      this[number].buffer = this.samples.get(drum);
-      this[number].playbackRate = sampleRate;
-      this[number].start();
+      this[`${number}Single`].buffer = this.samples.get(drum);
+      this[`${number}Single`].playbackRate = sampleRate;
+      this[`${number}Single`].start();
     }
   }
   playbackRateHasChanged(data) {

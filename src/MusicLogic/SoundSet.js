@@ -29,28 +29,9 @@ export default class SoundSet {
           s.envelope.sustain = settings.envelope.sustain;
           s.envelope.release = settings.envelope.release;
         }
-        if (s.envelopeOne) {
-          s.envelopeOne.attack = settings.envelope.attack;
-          s.envelopeOne.decay = settings.envelope.decay;
-          s.envelopeOne.sustain = settings.envelope.sustain;
-          s.envelopeOne.release = settings.envelope.release;
-        }
-        if (s.envelopeTwo) {
-          s.envelopeTwo.attack = settings.envelope.attack;
-          s.envelopeTwo.decay = settings.envelope.decay;
-          s.envelopeTwo.sustain = settings.envelope.sustain;
-          s.envelopeTwo.release = settings.envelope.release;
-        }
-        if (s.envelopeThree) {
-          s.envelopeThree.attack = settings.envelope.attack;
-          s.envelopeThree.decay = settings.envelope.decay;
-          s.envelopeThree.sustain = settings.envelope.sustain;
-          s.envelopeThree.release = settings.envelope.release;
-        }
       }
       this[instrument].gain.gain.value = settings.volume;
       if (instrument === 'keyboard') {
-        //this[instrument].rampTo = settings.rampTo;
         this.keyboard.keyboardPlayer.stop(`+${this.keyboard.envelope.release}`);
         this.keyboard.keyboardPlayer.buffer = this.keyboard.getWave(settings.wave);
         this.keyboard.wave = settings.wave;

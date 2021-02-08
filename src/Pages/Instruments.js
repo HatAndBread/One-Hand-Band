@@ -1,5 +1,5 @@
 import { Link, Route } from 'react-router-dom';
-import { useContext, useEffect, useState, useRef } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Context } from '../App';
 import InstrumentTemplate from '../Components/Instruments/InstrumentTemplate';
 import '../Styles/Components/Instruments.css';
@@ -27,10 +27,6 @@ export default function Instruments() {
       });
     }
   }, [users, sessionPin]);
-
-  useEffect(() => {
-    console.log(takenInstruments);
-  }, [takenInstruments]);
 
   return (
     <div>

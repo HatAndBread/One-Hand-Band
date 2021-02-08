@@ -40,6 +40,10 @@ class Noise extends Instrument {
     this.loaded = false;
     this.oscillatorGain = new Gain(0.3);
     this.player = new Player();
+    this.playerFeedback = new Player();
+    this.ambientNoisePlayer = new Player();
+    this.feedbackPlayer = new Player();
+    this.skronkPlayer = new Player();
     this.oscDist = new Distortion(3);
     this.oscillator = new Player();
     this.oscillator2 = new Player();
@@ -50,6 +54,9 @@ class Noise extends Instrument {
       setLoaded();
       this.loaded = true;
       this.player.connect(this.distortion);
+      this.ambientNoisePlayer.connect(this.distortion);
+      this.feedbackPlayer.connect(this.distortion);
+      this.skronkPlayer.connect(this.distortion);
       this.oscillator.connect(this.oscDist);
       this.oscillator2.connect(this.oscDist);
       this.oscillator3.connect(this.oscDist);
@@ -107,10 +114,12 @@ class Noise extends Instrument {
     });
   }
   setPlaybackRate(data) {
-    if (data.x < data.width / 2) {
-      this.player.playbackRate = 1 / (data.width / (data.x * 2));
-    } else {
-      this.player.playbackRate = Math.pow(1 / (data.width / (data.x * 2)), 2.5);
+    if (this[`${camelCase(data.which)}Player`]) {
+      if (data.x < data.width / 2) {
+        this[`${camelCase(data.which)}Player`].playbackRate = 1 / (data.width / (data.x * 2));
+      } else {
+        this[`${camelCase(data.which)}Player`].playbackRate = Math.pow(1 / (data.width / (data.x * 2)), 2.5);
+      }
     }
   }
 
@@ -127,9 +136,9 @@ class Noise extends Instrument {
     this.nowPlaying = this.types[which][ranNum];
 
     if (Object.keys(sampleUrls).includes(this.nowPlaying)) {
-      this.player.buffer = this.samples.get(this.nowPlaying);
+      this[`${which}Player`].buffer = this.samples.get(this.nowPlaying);
       this.setPlaybackRate(data);
-      this.player.start(0, Math.floor(Math.random() * 10));
+      this[`${which}Player`].start(0, Math.floor(Math.random() * 10));
     } else {
       this.oscillator.start(now());
       this.oscillator2.start(now());
@@ -143,9 +152,11 @@ class Noise extends Instrument {
     this.oscillator3.stop(now());
     this.oscillator4.stop(now());
   }
-  stop() {
-    this.nowPlaying !== 'oscillators' ? this.player.stop(now()) : this.stopOscillators();
-    this.nowPlaying = null;
+  stop(which) {
+    this[`${camelCase(which)}Player`] && this[`${camelCase(which)}Player`].stop(now());
+    which === 'Oscillators' && this.stopOscillators();
+    //this.nowPlaying !== 'oscillators' ? this.player.stop(now()) : this.stopOscillators();
+    //this.nowPlaying = null;
   }
   play(data) {
     if (data.x <= 0.001) {

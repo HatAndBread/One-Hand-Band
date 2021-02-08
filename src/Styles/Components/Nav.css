@@ -34,6 +34,7 @@ nav {
   width: 24px;
   height: 3px;
   margin: 6px;
+  border-radius: 25%;
   pointer-events: initial;
 }
 

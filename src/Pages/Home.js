@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <div>
       <div className="home-container">
-        <h1>HOOTENANNY!</h1>
+        <h1>ONE HAND BAND</h1>
         <div className="home-button-container">
           <Link to="/host" className="home-btn">
             Host a room
@@ -30,23 +30,18 @@ export default function Home() {
         <div className="cards-container">
           <Card
             title={'Play Music Live Online'}
-            info={`Hootenanny lets you make noise with your friends live online.`}
+            info={`ONE HAND BAND lets you make music on your mobile device or computer. Choose from a sampler keyboard, drum machine, drone machine, or noise machine.`}
             emoji={'🪕'}
-          />
-          <Card
-            title={'Step 1: Create a pin'}
-            info={`Have friends? Click "Host a room" and share the generated pin number with up to four of your friends.`}
-            emoji={'🎰'}
-          />
-          <Card
-            title={'Step 2: Choose your axe'}
-            info={`Choose an instrument and start playing. You should be able to hear the noise that your friends are making from anywhere in the world with only a slight delay.`}
-            emoji={'🎺'}
           />
           <Card
             title={'Play solo'}
             info={`Don't have any friends? Don't worry! Click "Play solo" to play by yourself.`}
             emoji={'🧚‍♀️'}
+          />
+          <Card
+            title={'Play with friends'}
+            info={`Have friends? Click "Host a room" and share the generated pin number with up to four of your friends. You should be able to hear the noise that your friends are making from anywhere in the world with only a slight delay.`}
+            emoji={'👯‍♀️'}
           />
         </div>
       </div>
