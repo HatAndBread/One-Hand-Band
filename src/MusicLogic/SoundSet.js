@@ -29,6 +29,12 @@ export default class SoundSet {
           s.envelope.sustain = settings.envelope.sustain;
           s.envelope.release = settings.envelope.release;
         }
+        if (s.envelope2) {
+          s.envelope2.attack = settings.envelope.attack;
+          s.envelope2.decay = settings.envelope.decay;
+          s.envelope2.sustain = settings.envelope.sustain;
+          s.envelope2.release = settings.envelope.release;
+        }
       }
       this[instrument].gain.gain.value = settings.volume;
       if (instrument === 'keyboard') {

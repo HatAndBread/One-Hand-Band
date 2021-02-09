@@ -12,6 +12,8 @@ export default function Keyboard({ setFinalData }) {
   const [touches, setTouches] = useState({ x: null, y: null });
   const [pointerDown, setPointerDown] = useState(keyboardInfinity ? true : false);
   const [currentNote, setCurrentNote] = useState({ note: null, octave: 1 });
+  const [secondTouch, setSecondTouch] = useState({ x: null, y: null });
+  const [secondNote, setSecondNote] = useState({ note: null, octave: 1 });
   const [mainOctave, setMainOctave] = useState(2);
   const [touchScreen, setTouchScreen] = useState(false);
 
@@ -48,11 +50,26 @@ export default function Keyboard({ setFinalData }) {
         e.preventDefault();
       }
     };
+    const handleTouches = (e) => {
+      if (e.touches[1].target.className === 'white-key' || e.touches[1].target.className === 'black-key') {
+        setSecondTouch({ x: Math.floor(e.touches[1].clientX), y: Math.floor(e.touches[1].clientY) });
+      }
+    };
+    const handleTouchStart = (e) => e.touches[1] && handleTouches(1);
+    const handleTouchMove = (e) => e.touches[1] && handleTouches(1);
+
+    const handleTouchEnd = (e) => {
+      console.log(e.touches);
+    };
+
     window.addEventListener('resize', updateWindowSize);
     window.addEventListener('pointerup', handlePointerUp);
     window.addEventListener('pointerdown', handlePointerDown);
     window.addEventListener('pointermove', handlePointerMove);
     window.addEventListener('click', handleClick);
+    window.addEventListener('touchstart', handleTouchStart);
+    window.addEventListener('touchend', handleTouchEnd);
+    window.addEventListener('touchmove', handleTouchMove);
 
     return () => {
       window.removeEventListener('resize', updateWindowSize);
@@ -60,6 +77,9 @@ export default function Keyboard({ setFinalData }) {
       window.removeEventListener('pointerdown', handlePointerDown);
       window.removeEventListener('pointermove', handlePointerMove);
       window.removeEventListener('click', handleClick);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchend', handleTouchEnd);
+      window.removeEventListener('touchmove', handleTouchMove);
     };
   }, [keyboardInfinity, touchScreen]);
   useEffect(() => {
@@ -70,8 +90,29 @@ export default function Keyboard({ setFinalData }) {
     }
   }, [currentNote, setFinalData]);
 
+  useEffect(() => {
+    if (secondNote.note) {
+      setFinalData({ data: secondNote, type: 'play', second: true });
+    } else {
+      setFinalData({ data: 'stop', type: 'stop', second: true });
+    }
+  }, [secondNote, setFinalData]);
+
   return (
-    <KeyboardContext.Provider value={{ pointerDown, setTouches, touches, setCurrentNote, currentNote, mainOctave }}>
+    <KeyboardContext.Provider
+      value={{
+        pointerDown,
+        setTouches,
+        touches,
+        secondTouch,
+        setSecondTouch,
+        secondNote,
+        setSecondNote,
+        setCurrentNote,
+        currentNote,
+        mainOctave
+      }}
+    >
       <OctaveSetter setPointerDown={setPointerDown} setOctave={setMainOctave}></OctaveSetter>
       <div style={{ display: 'flex' }}>
         <KeyboardKeys

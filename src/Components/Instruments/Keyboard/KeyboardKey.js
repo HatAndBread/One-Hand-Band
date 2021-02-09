@@ -69,8 +69,41 @@ export default function KeyboardKey(props) {
         setWhiteBeingPlayed(false);
         setBlackBeingPlayed(false);
       }
+      // Check for second touch
+      if (
+        black.current &&
+        checkOverlap(
+          black.current.offsetHeight,
+          black.current.offsetWidth,
+          black.current.offsetTop,
+          black.current.offsetLeft,
+          c.secondTouch.x,
+          c.secondTouch.y
+        )
+      ) {
+        if (props.blackKey !== c.secondNote.note) {
+          c.setSecondNote({ note: props.blackKey.toUpperCase(), octave: props.octave + c.mainOctave });
+        }
+      } else if (
+        checkOverlap(
+          white.current.offsetHeight,
+          white.current.offsetWidth,
+          white.current.offsetTop,
+          white.current.offsetLeft,
+          c.secondTouch.x,
+          c.secondTouch.y,
+          props.precededByBlack
+        )
+      ) {
+        if (props.octave + c.mainOctave !== c.secondNote.octave) {
+          c.setSecondNote({ note: props.note.toUpperCase(), octave: props.octave + c.mainOctave });
+        } else if (props.note !== c.secondNote.note) {
+          c.setSecondNote({ note: props.note.toUpperCase(), octave: props.octave + c.mainOctave });
+        }
+      }
     }
   }, [c.pointerDown, c, props.note, props.octave, props.blackKey, props.precededByBlack]);
+
   return (
     <div
       className="white-key"
