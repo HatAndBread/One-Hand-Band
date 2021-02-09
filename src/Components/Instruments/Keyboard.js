@@ -56,7 +56,10 @@ export default function Keyboard({ setFinalData }) {
       }
     };
     const handleTouchStart = (e) => e.touches[1] && handleTouches(1);
-    const handleTouchMove = (e) => e.touches[1] && handleTouches(1);
+    const handleTouchMove = (e) => {
+      console.log(e);
+      e.touches[1] && handleTouches(1);
+    };
 
     const handleTouchEnd = (e) => {
       console.log(e.touches);
@@ -91,6 +94,7 @@ export default function Keyboard({ setFinalData }) {
   }, [currentNote, setFinalData]);
 
   useEffect(() => {
+    console.log(secondNote);
     if (secondNote.note) {
       setFinalData({ data: secondNote, type: 'play', second: true });
     } else {
