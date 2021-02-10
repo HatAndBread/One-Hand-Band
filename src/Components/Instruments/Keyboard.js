@@ -51,38 +51,55 @@ export default function Keyboard({ setFinalData }) {
       }
     };
     const handleTouches = (e) => {
-      if (e.touches[1].target.className === 'white-key' || e.touches[1].target.className === 'black-key') {
-        setSecondTouch({ x: Math.floor(e.touches[1].clientX), y: Math.floor(e.touches[1].clientY) });
+      if (e.touches[0].target.className === 'white-key' || e.touches[0].target.className === 'black-key') {
+        setTouches({ x: Math.floor(e.touches[0].clientX), y: Math.floor(e.touches[0].clientY) });
+        setPointerDown(true);
       }
-    };
-    const handleTouchStart = (e) => e.touches[1] && handleTouches(1);
-    const handleTouchMove = (e) => {
-      console.log(e);
-      e.touches[1] && handleTouches(1);
+      if (e.touches[1]) {
+        if (e.touches[1].target.className === 'white-key' || e.touches[1].target.className === 'black-key') {
+          setSecondTouch({ x: Math.floor(e.touches[1].clientX), y: Math.floor(e.touches[1].clientY) });
+        }
+      }
     };
 
     const handleTouchEnd = (e) => {
-      console.log(e.touches);
+      if (e.touches.length && !keyboardInfinity) {
+        setSecondNote({ note: null, octave: 1 });
+      } else {
+        if (!keyboardInfinity) {
+          setPointerDown(false);
+          setCurrentNote({ note: null, octave: 1 });
+        }
+      }
     };
 
+    if (!touchScreen) {
+      window.addEventListener('pointerup', handlePointerUp);
+      window.addEventListener('pointerdown', handlePointerDown);
+      window.addEventListener('pointermove', handlePointerMove);
+    } else {
+      window.addEventListener('touchstart', handleTouches);
+      window.addEventListener('touchend', handleTouchEnd);
+      window.addEventListener('touchmove', handleTouches);
+    }
+
     window.addEventListener('resize', updateWindowSize);
-    window.addEventListener('pointerup', handlePointerUp);
-    window.addEventListener('pointerdown', handlePointerDown);
-    window.addEventListener('pointermove', handlePointerMove);
     window.addEventListener('click', handleClick);
-    window.addEventListener('touchstart', handleTouchStart);
-    window.addEventListener('touchend', handleTouchEnd);
-    window.addEventListener('touchmove', handleTouchMove);
+    window.addEventListener('mousedown', handleClick);
 
     return () => {
       window.removeEventListener('resize', updateWindowSize);
-      window.removeEventListener('pointerup', handlePointerUp);
-      window.removeEventListener('pointerdown', handlePointerDown);
-      window.removeEventListener('pointermove', handlePointerMove);
       window.removeEventListener('click', handleClick);
-      window.removeEventListener('touchstart', handleTouchStart);
-      window.removeEventListener('touchend', handleTouchEnd);
-      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('mousedown', handleClick);
+      if (!touchScreen) {
+        window.removeEventListener('pointerup', handlePointerUp);
+        window.removeEventListener('pointerdown', handlePointerDown);
+        window.removeEventListener('pointermove', handlePointerMove);
+      } else {
+        window.removeEventListener('touchstart', handleTouches);
+        window.removeEventListener('touchend', handleTouchEnd);
+        window.removeEventListener('touchmove', handleTouches);
+      }
     };
   }, [keyboardInfinity, touchScreen]);
   useEffect(() => {

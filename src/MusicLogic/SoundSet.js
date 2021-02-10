@@ -40,8 +40,11 @@ export default class SoundSet {
       if (instrument === 'keyboard') {
         this.keyboard.keyboardPlayer.stop(`+${this.keyboard.envelope.release}`);
         this.keyboard.keyboardPlayer.buffer = this.keyboard.getWave(settings.wave);
+        this.keyboard.keyboardPlayer2.stop(`+${this.keyboard.envelope.release}`);
+        this.keyboard.keyboardPlayer2.buffer = this.keyboard.getWave(settings.wave);
         this.keyboard.wave = settings.wave;
         this.keyboard.keyboardPlayer.start();
+        this.keyboard.keyboardPlayer2.start();
       }
     }
   }

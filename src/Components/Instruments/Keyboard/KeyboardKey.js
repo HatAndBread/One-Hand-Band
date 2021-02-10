@@ -83,6 +83,10 @@ export default function KeyboardKey(props) {
       ) {
         if (props.blackKey !== c.secondNote.note) {
           c.setSecondNote({ note: props.blackKey.toUpperCase(), octave: props.octave + c.mainOctave });
+          setBlackBeingPlayed(true);
+          setWhiteBeingPlayed(false);
+        } else if (props.blackKey === c.currentNote.note) {
+          setBlackBeingPlayed(true);
         }
       } else if (
         checkOverlap(
@@ -97,8 +101,15 @@ export default function KeyboardKey(props) {
       ) {
         if (props.octave + c.mainOctave !== c.secondNote.octave) {
           c.setSecondNote({ note: props.note.toUpperCase(), octave: props.octave + c.mainOctave });
+          setWhiteBeingPlayed(true);
+          setBlackBeingPlayed(false);
         } else if (props.note !== c.secondNote.note) {
+          setWhiteBeingPlayed(true);
+          setBlackBeingPlayed(false);
           c.setSecondNote({ note: props.note.toUpperCase(), octave: props.octave + c.mainOctave });
+        } else {
+          setWhiteBeingPlayed(false);
+          setBlackBeingPlayed(false);
         }
       }
     }
