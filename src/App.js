@@ -61,6 +61,9 @@ function App() {
     two: { wave: 'sine', volume: '-4', pitch: 'C3', playing: false },
     three: { wave: 'sine', volume: '-4', pitch: 'C3', playing: false }
   });
+  const [droneOctave, setDroneOctave] = useState(4);
+  const [droneChord, setDroneChord] = useState(null);
+  const [chordProgression, setChordProgression] = useState([]);
   const [percussionData, setPercussionData] = useState(percussionObj);
   const [keyboardInfinity, setKeyboardInfinity] = useState(false);
 
@@ -230,6 +233,12 @@ function App() {
         setGlobalEffectsSettings,
         droneData,
         setDroneData,
+        droneOctave,
+        setDroneOctave,
+        droneChord,
+        setDroneChord,
+        chordProgression,
+        setChordProgression,
         getGlobalEffects,
         getGlobalSettings,
         percussionData,

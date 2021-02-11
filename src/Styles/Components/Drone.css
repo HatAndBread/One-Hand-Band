@@ -24,6 +24,21 @@
   background-color: gray;
 }
 
+.drone-top-btns a {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 4px 0px 4px 0px;
+  font-size: 12px;
+  background-color: gray;
+  border-radius: 6px;
+  border-style: outset;
+  border-color: gray;
+  border-width: 2px;
+}
+
 .pitch-fader {
   display: flex;
   justify-content: center;

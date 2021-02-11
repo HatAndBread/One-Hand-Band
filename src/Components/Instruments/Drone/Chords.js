@@ -1,8 +1,9 @@
 import '../../../Styles/Components/Drone.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import OctaveButton from './OctaveButton';
 import ChordButton from './ChordButton';
 import useTrigger from '../../../Hooks/useTrigger';
+import { Context } from '../../../App';
 
 const NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
@@ -31,9 +32,11 @@ const getNotes = (chord, octave) => {
 };
 
 export default function Chords({ droneData, setDroneData, chordChange, setChordChange }) {
-  const [chord, setChord] = useState(null);
+  const chord = useContext(Context).droneChord;
+  const setChord = useContext(Context).setDroneChord;
   const [previousChord, setPreviousChord] = useState(null);
-  const [octave, setOctave] = useState(3);
+  const octave = useContext(Context).droneOctave;
+  const setOctave = useContext(Context).setDroneOctave;
   const [chordUpdated, setChordUpdated] = useState(false);
 
   useTrigger(() => {

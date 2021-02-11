@@ -1,32 +1,21 @@
 import { useEffect, useState, useContext } from 'react';
 import { Context } from '../../App';
+import { Link, Route } from 'react-router-dom';
 import DroneFader from './Drone/DroneFader';
 import VolumeFader from './Drone/VolumeFader';
 import StartButton from './Drone/StartButton';
 import WaveChooser from './Drone/WaveChooser';
+import ChordProgression from './Drone/ChordProgression';
 import Chords from './Drone/Chords';
 import '../../Styles/Components/Drone.css';
 
 export default function Drone({ setFinalData }) {
   const droneData = useContext(Context).droneData;
   const setDroneData = useContext(Context).setDroneData;
-
-  const [showChords, setShowChords] = useState(false);
   const [chordChange, setChordChange] = useState(false);
-  const [chordButtText, setChordButtText] = useState('Chords');
   useEffect(() => {
     setFinalData(droneData);
-    console.log(droneData);
   }, [droneData, setFinalData]);
-  const chordsClick = () => {
-    if (showChords) {
-      setShowChords(false);
-      setChordButtText('Chords');
-    } else {
-      setShowChords(true);
-      setChordButtText('Hide Chords');
-    }
-  };
 
   const all = (e) => {
     const copy = JSON.parse(JSON.stringify(droneData));
@@ -45,7 +34,7 @@ export default function Drone({ setFinalData }) {
   return (
     <div>
       <div className="drone-top-btns">
-        <button onClick={chordsClick}>{chordButtText}</button>
+        <Link to="/instrument/chord-progression">Chord Progression</Link>
         <button onClick={all} value="start">
           Start All ▶️
         </button>
@@ -53,14 +42,12 @@ export default function Drone({ setFinalData }) {
           Stop All ⏹
         </button>
       </div>
-      {showChords && (
-        <Chords
-          droneData={droneData}
-          setDroneData={setDroneData}
-          chordChange={chordChange}
-          setChordChange={setChordChange}
-        />
-      )}
+      <Chords
+        droneData={droneData}
+        setDroneData={setDroneData}
+        chordChange={chordChange}
+        setChordChange={setChordChange}
+      />
       <div className="drones-container">
         <div className="single-drone-container">
           <DroneFader

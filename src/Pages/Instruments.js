@@ -1,6 +1,7 @@
 import { Link, Route } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import { Context } from '../App';
+import ChordProgression from '../Components/Instruments/Drone/ChordProgression';
 import InstrumentTemplate from '../Components/Instruments/InstrumentTemplate';
 import '../Styles/Components/Instruments.css';
 
@@ -115,6 +116,9 @@ export default function Instruments() {
           <Route path="/instrument/keyboard">
             <InstrumentTemplate instrument={'keyboard'} />
           </Route>
+          <Route path="/instrument/chord-progression">
+            <ChordProgression />
+          </Route>
         </div>
       ) : (
         <div>
@@ -149,6 +153,9 @@ export default function Instruments() {
           </Route>
           <Route path="/instrument/keyboard">
             <InstrumentTemplate instrument={'keyboard'} />
+          </Route>
+          <Route path="/instrument/chord-progression">
+            <ChordProgression />
           </Route>
         </div>
       )}
