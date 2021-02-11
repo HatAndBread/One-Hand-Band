@@ -64,6 +64,7 @@ export default function Keyboard({ setFinalData }) {
 
     const handleTouchEnd = (e) => {
       if (e.touches.length && !keyboardInfinity) {
+        setSecondTouch({ x: null, y: null });
         setSecondNote({ note: null, octave: 1 });
       } else {
         if (!keyboardInfinity) {
@@ -111,13 +112,19 @@ export default function Keyboard({ setFinalData }) {
   }, [currentNote, setFinalData]);
 
   useEffect(() => {
-    console.log(secondNote);
     if (secondNote.note) {
       setFinalData({ data: secondNote, type: 'play', second: true });
     } else {
       setFinalData({ data: 'stop', type: 'stop', second: true });
     }
   }, [secondNote, setFinalData]);
+
+  useEffect(() => {
+    if (!pointerDown) {
+      setFinalData({ data: 'stop', type: 'stop', second: true });
+      setFinalData({ data: 'stop', type: 'stop' });
+    }
+  }, [pointerDown, setFinalData]);
 
   return (
     <KeyboardContext.Provider

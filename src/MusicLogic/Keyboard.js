@@ -41,7 +41,6 @@ class Keyboard extends Instrument {
     }, 100);
   }
   play(pbr, buff, second) {
-    console.log(second);
     if (!second) {
       this.playing = true;
       this.keyboardPlayer.buffer = buff;
@@ -49,7 +48,6 @@ class Keyboard extends Instrument {
       this.keyboardPlayer.playbackRate = pbr;
       this.envelope.triggerAttack(now());
     } else {
-      console.log(pbr, buff, second);
       this.playing2 = true;
       this.keyboardPlayer2.buffer = buff;
       restartList.includes(this.wave) && this.keyboardPlayer2.restart();

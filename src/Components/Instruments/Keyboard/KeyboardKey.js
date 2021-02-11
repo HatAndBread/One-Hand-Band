@@ -65,12 +65,8 @@ export default function KeyboardKey(props) {
         } else if (props.note === c.currentNote.note) {
           setWhiteBeingPlayed(true);
         }
-      } else {
-        setWhiteBeingPlayed(false);
-        setBlackBeingPlayed(false);
-      }
-      // Check for second touch
-      if (
+      } else if (
+        // check for second touch
         black.current &&
         checkOverlap(
           black.current.offsetHeight,
@@ -82,9 +78,9 @@ export default function KeyboardKey(props) {
         )
       ) {
         if (props.blackKey !== c.secondNote.note) {
-          c.setSecondNote({ note: props.blackKey.toUpperCase(), octave: props.octave + c.mainOctave });
           setBlackBeingPlayed(true);
           setWhiteBeingPlayed(false);
+          c.setSecondNote({ note: props.blackKey.toUpperCase(), octave: props.octave + c.mainOctave });
         } else if (props.blackKey === c.currentNote.note) {
           setBlackBeingPlayed(true);
         }
@@ -104,13 +100,13 @@ export default function KeyboardKey(props) {
           setWhiteBeingPlayed(true);
           setBlackBeingPlayed(false);
         } else if (props.note !== c.secondNote.note) {
+          c.setSecondNote({ note: props.note.toUpperCase(), octave: props.octave + c.mainOctave });
           setWhiteBeingPlayed(true);
           setBlackBeingPlayed(false);
-          c.setSecondNote({ note: props.note.toUpperCase(), octave: props.octave + c.mainOctave });
-        } else {
-          setWhiteBeingPlayed(false);
-          setBlackBeingPlayed(false);
         }
+      } else {
+        setWhiteBeingPlayed(false);
+        setBlackBeingPlayed(false);
       }
     }
   }, [c.pointerDown, c, props.note, props.octave, props.blackKey, props.precededByBlack]);

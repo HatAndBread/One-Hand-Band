@@ -1,5 +1,7 @@
-# Hootenanny
+# One Hand Band
 
-Hootenany allows users to play improvised music in real-time with their friends. Powered by React, Socket IO, and Tone JS.
+This is the source code for the web app One Hand Band. One Hand Band allows users to play improvised music solo or remotely with friends (via web sockets). One Hand Band provides users with a sampler/keyboard, drum machine, drone machine and noise machine.
 
-Try it here 👉 https://hootenanny.glitch.me/
+Powered by React, Socket IO, and Tone JS.
+
+Try it here 👉 https://one-hand-band.glitch.me/
