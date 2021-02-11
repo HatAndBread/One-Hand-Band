@@ -16,6 +16,7 @@ export default function Drone({ setFinalData }) {
   const [chordButtText, setChordButtText] = useState('Chords');
   useEffect(() => {
     setFinalData(droneData);
+    console.log(droneData);
   }, [droneData, setFinalData]);
   const chordsClick = () => {
     if (showChords) {
@@ -29,7 +30,6 @@ export default function Drone({ setFinalData }) {
 
   const all = (e) => {
     const copy = JSON.parse(JSON.stringify(droneData));
-    console.log(copy);
     if (e.target.value === 'start') {
       copy.one.playing = true;
       copy.two.playing = true;

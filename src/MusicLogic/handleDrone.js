@@ -28,7 +28,12 @@ const setPitches = (pitches, soundSet) => {
   setDronePitch(pitches[0] / 440, pitches[1] / 440, pitches[2] / 440);
 };
 const play = (drones, soundSet) => {
-  drones[0] ? soundSet.drone.play('one') : soundSet.drone.stop('one');
-  drones[1] ? soundSet.drone.play('two') : soundSet.drone.stop('two');
-  drones[2] ? soundSet.drone.play('three') : soundSet.drone.stop('three');
+  console.log('LOOK HERE', drones);
+  if (drones.includes(true)) {
+    drones[0] ? soundSet.drone.play('one') : soundSet.drone.stop('one');
+    drones[1] ? soundSet.drone.play('two') : soundSet.drone.stop('two');
+    drones[2] ? soundSet.drone.play('three') : soundSet.drone.stop('three');
+  } else {
+    soundSet.drone.stopAll();
+  }
 };

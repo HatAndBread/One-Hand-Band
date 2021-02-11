@@ -64,9 +64,17 @@ class Drone extends Instrument {
     const drone = this[number];
     if (drone.playing) {
       drone.playing = false;
-      drone.stop(`+${this.envelope.release}`);
-      this.envelope.triggerRelease(now());
+      drone.stop(now());
     }
+  }
+  stopAll() {
+    [this.one, this.two, this.three].forEach((drone) => {
+      if (drone.playing) {
+        drone.playing = false;
+        drone.stop(`+${this.envelope.release}`);
+        this.envelope.triggerRelease(now());
+      }
+    });
   }
 }
 
