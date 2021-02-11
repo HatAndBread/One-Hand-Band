@@ -119,13 +119,6 @@ export default function Keyboard({ setFinalData }) {
     }
   }, [secondNote, setFinalData]);
 
-  useEffect(() => {
-    if (!pointerDown) {
-      setFinalData({ data: 'stop', type: 'stop', second: true });
-      setFinalData({ data: 'stop', type: 'stop' });
-    }
-  }, [pointerDown, setFinalData]);
-
   return (
     <KeyboardContext.Provider
       value={{
