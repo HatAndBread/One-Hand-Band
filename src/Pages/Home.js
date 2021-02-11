@@ -30,7 +30,7 @@ export default function Home() {
         <div className="cards-container">
           <Card
             title={'Play Music Live Online'}
-            info={`ONE HAND BAND lets you make music on your mobile device or computer. Choose from a sampler keyboard, drum machine, drone machine, or noise machine.`}
+            info={`ONE HAND BAND lets you make music on your mobile device or computer. Choose from a sampler keyboard, drum machine, drone machine, or noise machine. Although One Hand Band works fine with an old fashioned desktop or laptop, a touch screen is highly recommended for the best experience. 👉📱✨`}
             emoji={'🪕'}
           />
           <Card
