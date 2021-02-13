@@ -16,7 +16,10 @@ import percussionObj from './Components/Instruments/Percussion/percussionObj';
 import handleSettings from './MusicLogic/handleSettings';
 import handleEffects from './MusicLogic/handleEffects';
 import SoundSet from './MusicLogic/SoundSet';
+import { getCurrentBeat } from './MusicLogic/Percussion';
 import { start, context } from 'tone';
+import getChord from './GlobalMethods/getChord';
+import handlePercussion from './MusicLogic/handlePercussion';
 
 export const Context = createContext();
 
@@ -28,7 +31,6 @@ function App() {
   useEffect(() => {
     instrumentsLoaded && console.log('all instruments loaded');
   }, [instrumentsLoaded]);
-  const [stupidSafari, setStupidSafari] = useState(false);
   const [soundSet, SetSoundSet] = useState(null);
   const [sessionPin, setSessionPin] = useState(null);
   const [socketId, setSocketId] = useState(null);
@@ -56,6 +58,7 @@ function App() {
     skronk: effectsObject(),
     percussion: effectsObject()
   });
+  const [globalBeat, setGlobalBeat] = useState(null);
   const [droneData, setDroneData] = useState({
     one: { wave: 'sine', volume: '-4', pitch: 'C3', playing: false },
     two: { wave: 'sine', volume: '-4', pitch: 'C3', playing: false },
@@ -63,8 +66,22 @@ function App() {
   });
   const [droneOctave, setDroneOctave] = useState(4);
   const [droneChord, setDroneChord] = useState(null);
+  const [chordUpdated, setChordUpdated] = useState(false);
   const [chordProgression, setChordProgression] = useState([]);
+  const [chordProgressionPlaying, setChordProgressionPlaying] = useState(false);
+  const [chordChange, setChordChange] = useState(false);
   const [percussionData, setPercussionData] = useState(percussionObj);
+  const [bpm, setBpm] = useState('90');
+  const [timeSignature, setTimeSignature] = useState('4');
+  const loopObject = {
+    one: { drum: percussionData.one, times: new Array(timeSignature * 4) },
+    two: { drum: percussionData.two, times: new Array(timeSignature * 4) },
+    three: { drum: percussionData.three, times: new Array(timeSignature * 4) },
+    four: { drum: percussionData.four, times: new Array(timeSignature * 4) },
+    five: { drum: percussionData.five, times: new Array(timeSignature * 4) },
+    six: { drum: percussionData.six, times: new Array(timeSignature * 4) }
+  };
+  const [loopData, setLoopData] = useState(loopObject);
   const [keyboardInfinity, setKeyboardInfinity] = useState(false);
 
   const getGlobalSettings = () => {
@@ -73,8 +90,23 @@ function App() {
   const getGlobalEffects = () => {
     return JSON.parse(JSON.stringify(globalEffectsSettings));
   };
-  const [bpm, setBpm] = useState('90');
-  const [timeSignature, setTimeSignature] = useState('4');
+
+  useEffect(() => {
+    if (audioContextStarted) {
+      handlePercussion(
+        {
+          type: 'percussion',
+          drum: 'rhythmMachine',
+          loop: loopData,
+          socketId: socketId,
+          timeSignature: timeSignature,
+          bpm: bpm,
+          status: 'update'
+        },
+        soundSet
+      );
+    }
+  }, [bpm, timeSignature, socketId, loopData, audioContextStarted, soundSet]);
 
   useEffect(() => {
     const startContext = () => {
@@ -82,12 +114,14 @@ function App() {
         start();
         SetSoundSet(new SoundSet());
         setAudioContextStarted(true);
+        getCurrentBeat((beat) => {
+          setGlobalBeat(beat);
+        });
       };
       if (context.state !== 'suspended') {
         init();
       } else {
         // for stupid safari
-        setStupidSafari(true);
         context.resume();
         context.on('statechange', () => {
           context.destination.volume.value = -3;
@@ -196,20 +230,38 @@ function App() {
       }
     }
   }, [musicData, sessionPin, userName, soundSet]);
-  const loopObject = {
-    one: { drum: percussionData.one, times: new Array(timeSignature * 4) },
-    two: { drum: percussionData.two, times: new Array(timeSignature * 4) },
-    three: { drum: percussionData.three, times: new Array(timeSignature * 4) },
-    four: { drum: percussionData.four, times: new Array(timeSignature * 4) },
-    five: { drum: percussionData.five, times: new Array(timeSignature * 4) },
-    six: { drum: percussionData.six, times: new Array(timeSignature * 4) }
-  };
-  const [loopData, setLoopData] = useState(loopObject);
+
+  useEffect(() => {
+    if (
+      chordProgression[globalBeat] &&
+      chordProgression[globalBeat].chord &&
+      chordProgression[globalBeat].chord !== 'silence' &&
+      chordProgressionPlaying
+    ) {
+      setDroneChord(chordProgression[globalBeat].chord);
+      setChordUpdated(false);
+    }
+  }, [globalBeat, chordProgression, chordProgressionPlaying]);
+
+  useEffect(() => {
+    // update chord progression globally
+    if (droneChord && !chordUpdated) {
+      const copy = JSON.parse(JSON.stringify(droneData));
+      const notes = getChord(droneChord, droneOctave);
+      copy.one.pitch = notes[0];
+      copy.two.pitch = notes[1];
+      copy.three.pitch = notes[2];
+      setDroneData(copy);
+      setChordUpdated(true);
+      copy.socketId = socketId;
+      copy.instrument = 'drone';
+      setMusicData(copy);
+    }
+  }, [droneChord, droneData, droneOctave, setDroneData, chordUpdated, setChordUpdated, setChordChange, socketId]);
 
   return (
     <Context.Provider
       value={{
-        stupidSafari,
         instrumentsLoaded,
         soundSet,
         sessionPin,
@@ -231,14 +283,21 @@ function App() {
         setGlobalInstrumentSettings,
         globalEffectsSettings,
         setGlobalEffectsSettings,
+        globalBeat,
         droneData,
         setDroneData,
         droneOctave,
         setDroneOctave,
+        chordChange,
+        setChordChange,
         droneChord,
         setDroneChord,
+        chordUpdated,
+        setChordUpdated,
         chordProgression,
         setChordProgression,
+        chordProgressionPlaying,
+        setChordProgressionPlaying,
         getGlobalEffects,
         getGlobalSettings,
         percussionData,

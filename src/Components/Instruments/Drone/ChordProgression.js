@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { Context } from '../../../App';
 import ChordDefiner from './ChordDefiner';
 import '../../../Styles/Components/ChordProgression.css';
@@ -6,6 +6,7 @@ import '../../../Styles/Components/ChordProgression.css';
 export default function ChordProgression() {
   const chordProgression = useContext(Context).chordProgression;
   const setChordProgression = useContext(Context).setChordProgression;
+
   const addNewChord = () => {
     const copy = [...chordProgression];
     copy.push({ chord: 'silence', length: 1 });
@@ -29,14 +30,10 @@ export default function ChordProgression() {
     setChordProgression([]);
   };
 
-  useEffect(() => {
-    console.log(chordProgression);
-  }, [chordProgression]);
   return (
     <div className="chord-progression-container">
       <button onClick={addNewChord}>Add New Chord</button>
       {chordProgression.map((el, index) => {
-        console.log(chordProgression);
         return (
           <ChordDefiner
             key={index}

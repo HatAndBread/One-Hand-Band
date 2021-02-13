@@ -60,6 +60,7 @@ class Drone extends Instrument {
       this.envelope.triggerAttack(now());
     }
   }
+
   stop(number) {
     const drone = this[number];
     if (drone.playing) {

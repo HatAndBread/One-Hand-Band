@@ -25,21 +25,12 @@ import { setLoaded } from '../App';
 
 let cb;
 
-let mount = false;
-
-export const getCurrentBeat = (arg, stupidSafari, mounted) => {
+export const getCurrentBeat = (arg) => {
   if (typeof arg === 'number' || arg === 0) {
     if (cb) {
-      if (stupidSafari) {
-        Transport.schedule(() => {
-          mount && cb(arg);
-        }, Context.lookAhead);
-      } else {
-        mount && cb(arg);
-      }
+      cb(arg);
     }
   } else {
-    mount = mounted;
     cb = arg;
   }
 };
@@ -60,6 +51,8 @@ class Percussion extends Instrument {
     this.fourSingle = new Player();
     this.fiveSingle = new Player();
     this.sixSingle = new Player();
+    this.loop = new Loop((time) => {}, '16n');
+    this.beat = 0;
 
     this.samples = new ToneAudioBuffers(sampleUrls, () => {
       setLoaded();
@@ -77,9 +70,8 @@ class Percussion extends Instrument {
       this.fiveSingle.connect(this.distortion);
       this.sixSingle.connect(this.distortion);
       this.connect();
+      this.loop.start(Time('16n'));
     });
-    this.loop = new Loop((time) => {}, '16n');
-    this.beat = 0;
     getCurrentBeat(this.beat);
     this.drumsNums = ['one', 'two', 'three', 'four', 'five', 'six'];
   }
@@ -92,6 +84,7 @@ class Percussion extends Instrument {
     this.loop.stop(0);
   }
   updateMachine(data) {
+    console.log('HOI UPDATING MACHINE');
     if (this.loaded) {
       this.updateBpmAndTimeSignature(data);
       if (this.playbackRateHasChanged(data)) {

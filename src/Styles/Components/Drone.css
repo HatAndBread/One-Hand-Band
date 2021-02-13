@@ -74,6 +74,7 @@
 
 .chord-container button {
   flex-grow: 1;
+  height: width;
 }
 
 .octave-button-container {

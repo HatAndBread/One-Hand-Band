@@ -1,18 +1,20 @@
 import { useEffect, useState, useContext } from 'react';
 import { Context } from '../../App';
-import { Link, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import DroneFader from './Drone/DroneFader';
 import VolumeFader from './Drone/VolumeFader';
 import StartButton from './Drone/StartButton';
 import WaveChooser from './Drone/WaveChooser';
-import ChordProgression from './Drone/ChordProgression';
 import Chords from './Drone/Chords';
 import '../../Styles/Components/Drone.css';
 
 export default function Drone({ setFinalData }) {
   const droneData = useContext(Context).droneData;
+  const chordProgressionPlaying = useContext(Context).chordProgressionPlaying;
+  const setChordProgressionPlaying = useContext(Context).setChordProgressionPlaying;
   const setDroneData = useContext(Context).setDroneData;
-  const [chordChange, setChordChange] = useState(false);
+  const chordChange = useContext(Context).chordChange;
+  const setChordChange = useContext(Context).setChordChange;
   useEffect(() => {
     setFinalData(droneData);
   }, [droneData, setFinalData]);
@@ -31,10 +33,15 @@ export default function Drone({ setFinalData }) {
     setDroneData(copy);
   };
 
+  const playProgressionClick = () => {
+    chordProgressionPlaying ? setChordProgressionPlaying(false) : setChordProgressionPlaying(true);
+  };
+
   return (
     <div>
       <div className="drone-top-btns">
-        <Link to="/instrument/chord-progression">Chord Progression</Link>
+        <Link to="/instrument/chord-progression">Make Chord Progression</Link>
+        <button onClick={playProgressionClick}>{chordProgressionPlaying ? 'Stop' : 'Play'} Chord Progression</button>
         <button onClick={all} value="start">
           Start All ▶️
         </button>

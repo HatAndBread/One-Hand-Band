@@ -2,10 +2,9 @@ import { useState, useEffect, useContext } from 'react';
 import { Context } from '../../../App';
 import RhythmMachineDrumSelect from './RhythmMachineDrumSelect';
 import '../../../Styles/Components/DrumMachine.css';
-import { getCurrentBeat } from '../../../MusicLogic/Percussion';
 
 export default function RhythmMachine({ percussionData, setFinalData }) {
-  const [currentBeat, setCurrentBeat] = useState(null);
+  const currentBeat = useContext(Context).globalBeat;
   const bpm = useContext(Context).bpm;
   const setBpm = useContext(Context).setBpm;
   const socketId = useContext(Context).socketId;
@@ -16,22 +15,9 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
   const loopData = useContext(Context).loopData;
   const loopObject = useContext(Context).loopObject;
   const setLoopData = useContext(Context).setLoopData;
-  const stupidSafari = useContext(Context).stupidSafari;
   const [buttColumns, setButtColumns] = useState(null);
   const [tsChanged, setTsChanged] = useState(false);
   const [markerStyles, setMarkerStyles] = useState(new Array(16));
-
-  const beatUpdater = (beatNumber) => {
-    setCurrentBeat(beatNumber);
-  };
-
-  useEffect(() => {
-    getCurrentBeat(beatUpdater, stupidSafari, true);
-
-    return () => {
-      getCurrentBeat(beatUpdater, stupidSafari, false);
-    };
-  }, [stupidSafari]);
 
   const randomColor = () => {
     return `rgba(${Math.floor(Math.random() * 255)},${Math.floor(Math.random() * 255)},${Math.floor(
@@ -165,17 +151,7 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
     };
     setButtColumns(getOnOffButts);
   }, [timeSignature, percussionData, loopData, setLoopData, markerStyles]);
-  useEffect(() => {
-    setFinalData({
-      type: 'percussion',
-      drum: 'rhythmMachine',
-      loop: loopData,
-      socketId: socketId,
-      timeSignature: timeSignature,
-      bpm: bpm,
-      status: 'update'
-    });
-  }, [loopData, setFinalData, socketId, timeSignature, bpm]);
+
   const clear = () => {
     setLoopData(loopObject);
   };
