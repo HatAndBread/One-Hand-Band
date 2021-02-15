@@ -53,7 +53,9 @@ export default function ChordDefiner({ myNumber, updateChords, myData, removeCho
             Length <br></br>
             <select name="chord-length" onChange={lengthChange} value={myData.length}>
               <option value={1}>Quarter note</option>
-              <option value={4}>1 measure</option>
+              <option value={2}>Half note</option>
+              <option value={3}>Dotted half note</option>
+              <option value={4}>Whole note</option>
             </select>
           </label>
         </div>

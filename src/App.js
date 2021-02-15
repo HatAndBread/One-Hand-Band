@@ -1,6 +1,6 @@
 import './App.css';
 import { Route, BrowserRouter as Router } from 'react-router-dom';
-import { useEffect, useState, createContext } from 'react';
+import { useEffect, useState, createContext, useRef } from 'react';
 import DropDownMenu from './Components/Nav/DropDownMenu';
 import Home from './Pages/Home';
 import About from './Pages/About';
@@ -66,9 +66,12 @@ function App() {
   });
   const [droneOctave, setDroneOctave] = useState(4);
   const [droneChord, setDroneChord] = useState(null);
+  const [stopChord, setStopChord] = useState(false);
   const [chordUpdated, setChordUpdated] = useState(false);
   const [chordProgression, setChordProgression] = useState([]);
   const [chordProgressionPlaying, setChordProgressionPlaying] = useState(false);
+  const [fullLengthChordProgression, setFullLengthChordProgression] = useState([]);
+  const timesThroughChordLoop = useRef(0);
   const [chordChange, setChordChange] = useState(false);
   const [percussionData, setPercussionData] = useState(percussionObj);
   const [bpm, setBpm] = useState('90');
@@ -90,6 +93,10 @@ function App() {
   const getGlobalEffects = () => {
     return JSON.parse(JSON.stringify(globalEffectsSettings));
   };
+
+  useEffect(() => {
+    setChordProgression([]);
+  }, [timeSignature]);
 
   useEffect(() => {
     if (audioContextStarted) {
@@ -232,16 +239,38 @@ function App() {
   }, [musicData, sessionPin, userName, soundSet]);
 
   useEffect(() => {
-    if (
-      chordProgression[globalBeat] &&
-      chordProgression[globalBeat].chord &&
-      chordProgression[globalBeat].chord !== 'silence' &&
-      chordProgressionPlaying
-    ) {
-      setDroneChord(chordProgression[globalBeat].chord);
-      setChordUpdated(false);
+    const handleSilence = () => {};
+    if (chordProgressionPlaying && fullLengthChordProgression[0]) {
+      if (globalBeat === 0) {
+        const timesGreater = fullLengthChordProgression.length / (timeSignature * 4);
+        if (timesGreater > 1) {
+          if (timesThroughChordLoop.current + 1 < timesGreater) {
+            timesThroughChordLoop.current += 1;
+          } else {
+            timesThroughChordLoop.current = 0;
+          }
+        }
+      }
+      const theBeat = timesThroughChordLoop.current * (timeSignature * 4) + globalBeat;
+      if (fullLengthChordProgression[theBeat]) {
+        if (theBeat === fullLengthChordProgression.length) {
+          if (fullLengthChordProgression[0].chord !== 'silence') {
+            setDroneChord(fullLengthChordProgression[0].chord);
+            setChordUpdated(false);
+            setStopChord(false);
+          } else {
+            setStopChord(true);
+          }
+        } else if (fullLengthChordProgression[theBeat].chord === 'silence') {
+          setStopChord(true);
+        } else if (globalBeat !== fullLengthChordProgression.length) {
+          setDroneChord(fullLengthChordProgression[theBeat].chord);
+          setChordUpdated(false);
+          setStopChord(false);
+        }
+      }
     }
-  }, [globalBeat, chordProgression, chordProgressionPlaying]);
+  }, [globalBeat, fullLengthChordProgression, chordProgressionPlaying, timeSignature]);
 
   useEffect(() => {
     // update chord progression globally
@@ -258,6 +287,21 @@ function App() {
       setMusicData(copy);
     }
   }, [droneChord, droneData, droneOctave, setDroneData, chordUpdated, setChordUpdated, setChordChange, socketId]);
+
+  useEffect(() => {
+    if (chordProgressionPlaying) {
+      if (stopChord) {
+        const copy = JSON.parse(JSON.stringify(droneData));
+        console.log(copy);
+        copy.one.playing = false;
+        copy.two.playing = false;
+        copy.three.playing = false;
+        copy.socketId = socketId;
+        copy.instrument = 'drone';
+        setMusicData(copy);
+      }
+    }
+  }, [stopChord, chordProgressionPlaying, droneData, droneChord, droneOctave, socketId]);
 
   return (
     <Context.Provider
@@ -298,6 +342,8 @@ function App() {
         setChordProgression,
         chordProgressionPlaying,
         setChordProgressionPlaying,
+        fullLengthChordProgression,
+        setFullLengthChordProgression,
         getGlobalEffects,
         getGlobalSettings,
         percussionData,

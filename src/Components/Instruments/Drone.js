@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import { Context } from '../../App';
 import { Link } from 'react-router-dom';
 import DroneFader from './Drone/DroneFader';

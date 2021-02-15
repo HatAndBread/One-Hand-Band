@@ -12,6 +12,7 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
   const setTimeSignature = useContext(Context).setTimeSignature;
   const drumMachinePlaying = useContext(Context).drumMachinePlaying;
   const setDrumMachinePlaying = useContext(Context).setDrumMachinePlaying;
+  const setFullLengthChordProgression = useContext(Context).setFullLengthChordProgression;
   const loopData = useContext(Context).loopData;
   const loopObject = useContext(Context).loopObject;
   const setLoopData = useContext(Context).setLoopData;
@@ -43,6 +44,7 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
   const timeSignatureChange = (e) => {
     setTimeSignature(e.target.value);
     console.log(timeSignature);
+    setFullLengthChordProgression([]);
     setTsChanged(true);
   };
 

@@ -25,7 +25,6 @@ export default function InstrumentTemplate({ instrument }) {
   const [settingsOpen, setSettingsOpen] = useState(false);
 
   if (!mounted.includes(instrument)) {
-    console.log('Ho! Mounting for the first time');
     handleEffects(getGlobalEffects(), socketId, instrument, sessionPin, false, soundSet);
     mounted.push(instrument);
   }

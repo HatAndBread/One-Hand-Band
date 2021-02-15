@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { Context } from '../../../App';
 import ChordDefiner from './ChordDefiner';
 import '../../../Styles/Components/ChordProgression.css';
@@ -6,6 +6,9 @@ import '../../../Styles/Components/ChordProgression.css';
 export default function ChordProgression() {
   const chordProgression = useContext(Context).chordProgression;
   const setChordProgression = useContext(Context).setChordProgression;
+  const fullLengthChordProgression = useContext(Context).fullLengthChordProgression;
+  const setFullLengthChordProgression = useContext(Context).setFullLengthChordProgression;
+  const timeSignature = useContext(Context).timeSignature;
 
   const addNewChord = () => {
     const copy = [...chordProgression];
@@ -29,6 +32,22 @@ export default function ChordProgression() {
   const deleteAll = () => {
     setChordProgression([]);
   };
+
+  useEffect(() => {
+    const arr = [];
+    chordProgression.forEach((chord) => {
+      for (let i = 0; i < chord.length * 4; i++) {
+        arr.push(chord);
+      }
+    });
+    let remainder = arr.length % (timeSignature * 4);
+    if (remainder !== 0) {
+      for (let i = 0; i < timeSignature * 4 - remainder; i++) {
+        arr.push({ chord: 'silence', length: 1 });
+      }
+    }
+    setFullLengthChordProgression(arr);
+  }, [chordProgression, timeSignature, setFullLengthChordProgression]);
 
   return (
     <div className="chord-progression-container">
