@@ -86,6 +86,7 @@ function App() {
   };
   const [loopData, setLoopData] = useState(loopObject);
   const [keyboardInfinity, setKeyboardInfinity] = useState(false);
+  const [mainOctave, setMainOctave] = useState(2);
 
   const getGlobalSettings = () => {
     return JSON.parse(JSON.stringify(globalInstrumentSettings));
@@ -239,7 +240,6 @@ function App() {
   }, [musicData, sessionPin, userName, soundSet]);
 
   useEffect(() => {
-    const handleSilence = () => {};
     if (chordProgressionPlaying && fullLengthChordProgression[0]) {
       if (globalBeat === 0) {
         const timesGreater = fullLengthChordProgression.length / (timeSignature * 4);
@@ -292,7 +292,6 @@ function App() {
     if (chordProgressionPlaying) {
       if (stopChord) {
         const copy = JSON.parse(JSON.stringify(droneData));
-        console.log(copy);
         copy.one.playing = false;
         copy.two.playing = false;
         copy.three.playing = false;
@@ -359,6 +358,8 @@ function App() {
         loopObject,
         keyboardInfinity,
         setKeyboardInfinity,
+        mainOctave,
+        setMainOctave,
         dropDownOut,
         setDropDownOut,
         audioContextStarted

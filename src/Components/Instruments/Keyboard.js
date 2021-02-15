@@ -14,7 +14,8 @@ export default function Keyboard({ setFinalData }) {
   const [currentNote, setCurrentNote] = useState({ note: null, octave: 1 });
   const [secondTouch, setSecondTouch] = useState({ x: null, y: null });
   const [secondNote, setSecondNote] = useState({ note: null, octave: 1 });
-  const [mainOctave, setMainOctave] = useState(2);
+  const mainOctave = useContext(Context).mainOctave;
+  const setMainOctave = useContext(Context).setMainOctave;
   const [touchScreen, setTouchScreen] = useState(false);
 
   useEffect(() => {

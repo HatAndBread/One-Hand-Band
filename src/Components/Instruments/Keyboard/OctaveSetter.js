@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Context } from '../../../App';
 import '../../../Styles/Components/Keyboard.css';
 import SettingsWaves from '../../Settings/SettingsWaves';
@@ -9,8 +9,20 @@ const offStyle = { backgroundColor: 'gray', borderRadius: '0px' };
 export default function OctaveSetter({ setPointerDown, setOctave }) {
   const keyboardInfinity = useContext(Context).keyboardInfinity;
   const setKeyboardInfinity = useContext(Context).setKeyboardInfinity;
+  const mainOctave = useContext(Context).mainOctave;
   const [infinityStyle, setInfinityStyle] = useState(keyboardInfinity ? onStyle : offStyle);
   const [colors, setColors] = useState([offStyle, offStyle, onStyle, offStyle, offStyle, offStyle]);
+  useEffect(() => {
+    const arr = new Array(6);
+    for (let i = 0; i < arr.length; i++) {
+      if (i === mainOctave) {
+        arr[i] = onStyle;
+      } else {
+        arr[i] = offStyle;
+      }
+    }
+    setColors(arr);
+  }, [mainOctave, keyboardInfinity]);
 
   const handleClick = (e) => {
     setOctave(parseInt(e.target.value, 10));
@@ -20,7 +32,7 @@ export default function OctaveSetter({ setPointerDown, setOctave }) {
     }
     setColors(newColors);
   };
-  const handleInifinityClick = () => {
+  const handleInfinityClick = () => {
     if (keyboardInfinity) {
       setKeyboardInfinity(false);
       setPointerDown(false);
@@ -39,7 +51,7 @@ export default function OctaveSetter({ setPointerDown, setOctave }) {
           style={i < 6 ? colors[i] : infinityStyle}
           value={i}
           key={i}
-          onClick={i < 6 ? handleClick : handleInifinityClick}
+          onClick={i < 6 ? handleClick : handleInfinityClick}
         >
           {text[i]}
         </button>
