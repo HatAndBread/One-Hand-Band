@@ -1,9 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import { Context } from '../../App';
 import '../../Styles/Components/Noise.css';
 import NoiseArea from './Noise/NoiseArea';
 
+const onStyle = { backgroundColor: 'red' };
+
 export default function Noise({ setFinalData }) {
   const [width, setWidth] = useState(null);
+  const noiseInfinity = useContext(Context).noiseInfinity;
+  const setNoiseInfinity = useContext(Context).setNoiseInfinity;
   const [feedbackColor, setFeedbackColor] = useState({ backgroundColor: 'gray' });
   const [skronkColor, setSkronkColor] = useState({ backgroundColor: 'gray' });
   const [oscillatorsColor, setOscillatorsColor] = useState({ backgroundColor: 'gray' });
@@ -39,8 +44,10 @@ export default function Noise({ setFinalData }) {
       setColors(e.target.dataset.name);
     };
     const handlePointerUp = (e) => {
-      setFinalData({ which: e.target.dataset.name, x: e.offsetX, y: e.offsetY, stop: true });
-      setColors();
+      if (!noiseInfinity[camelCase(e.target.dataset.name)]) {
+        setFinalData({ which: e.target.dataset.name, x: e.offsetX, y: e.offsetY, stop: true });
+        setColors();
+      }
     };
     const handleTouchMove = (e) => {
       if (e.touches[1] && e.touches[1].target.dataset.name) {
@@ -64,10 +71,39 @@ export default function Noise({ setFinalData }) {
       document.removeEventListener('pointerup', handlePointerUp);
       document.removeEventListener('touchmove', handleTouchMove);
     };
-  });
+  }, [noiseInfinity, setFinalData, width]);
+
+  const handleInfinityClick = (e) => {
+    const copy = { ...noiseInfinity };
+    console.log(e.target.value, copy);
+    if (copy[e.target.value]) {
+      copy[e.target.value] = false;
+    } else {
+      copy[e.target.value] = true;
+    }
+    setNoiseInfinity(copy);
+  };
 
   return (
     <div className="noise-container">
+      <div className="infinity-buttons">
+        <button value="feedback" onClick={handleInfinityClick}>
+          {noiseInfinity.feedback ? '🚀' : '✋'}
+          <br></br>Feedback
+        </button>
+        <button value="skronk" onClick={handleInfinityClick}>
+          {noiseInfinity.skronk ? '🚀' : '✋'}
+          <br></br>Skronk
+        </button>
+        <button value="oscillators" onClick={handleInfinityClick}>
+          {noiseInfinity.oscillators ? '🚀' : '✋'}
+          <br></br>Oscillators
+        </button>
+        <button value="ambientNoise" onClick={handleInfinityClick}>
+          {noiseInfinity.ambientNoise ? '🚀' : '✋'}
+          <br></br>Ambient Noise
+        </button>
+      </div>
       <div className="noise-row">
         <NoiseArea name={'Feedback'} setWidth={setWidth} color={feedbackColor} />
         <NoiseArea name={'Skronk'} color={skronkColor} />
@@ -78,4 +114,19 @@ export default function Noise({ setFinalData }) {
       </div>
     </div>
   );
+}
+
+function camelCase(string) {
+  switch (string) {
+    case 'Ambient Noise':
+      return 'ambientNoise';
+    case 'Skronk':
+      return 'skronk';
+    case 'Feedback':
+      return 'feedback';
+    case 'Oscillators':
+      return 'oscillators';
+    default:
+      break;
+  }
 }

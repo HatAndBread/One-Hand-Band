@@ -87,6 +87,12 @@ function App() {
   const [loopData, setLoopData] = useState(loopObject);
   const [keyboardInfinity, setKeyboardInfinity] = useState(false);
   const [mainOctave, setMainOctave] = useState(2);
+  const [noiseInfinity, setNoiseInfinity] = useState({
+    feedback: false,
+    skronk: false,
+    oscillators: false,
+    ambientNoise: false
+  });
 
   const getGlobalSettings = () => {
     return JSON.parse(JSON.stringify(globalInstrumentSettings));
@@ -362,6 +368,8 @@ function App() {
         setMainOctave,
         dropDownOut,
         setDropDownOut,
+        noiseInfinity,
+        setNoiseInfinity,
         audioContextStarted
       }}
     >

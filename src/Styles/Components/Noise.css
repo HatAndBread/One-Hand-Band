@@ -26,6 +26,14 @@
   position: absolute;
 }
 
+.infinity-buttons {
+  display: flex;
+}
+
+.infinity-buttons button {
+  flex-grow: 1;
+}
+
 @media (orientation: portrait) {
   .noise-container {
     height: 66vh;
