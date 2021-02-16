@@ -40,10 +40,13 @@ nav {
 
 .dropdown-menu {
   position: fixed;
-  background-color: #9d8df1;
+  background-color: #6249e9;
   width: 100vw;
   height: 100vh;
-  display: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   z-index: 100;
   top: -100vh;
   transition: ease-in-out 0.3s;

@@ -4,6 +4,7 @@ import '../../Styles/Components/Noise.css';
 import NoiseArea from './Noise/NoiseArea';
 
 const onStyle = { backgroundColor: 'red' };
+const offStyle = { backgroundColor: '#6249e9' };
 
 export default function Noise({ setFinalData }) {
   const [width, setWidth] = useState(null);
@@ -87,19 +88,27 @@ export default function Noise({ setFinalData }) {
   return (
     <div className="noise-container">
       <div className="infinity-buttons">
-        <button value="feedback" onClick={handleInfinityClick}>
+        <button value="feedback" onClick={handleInfinityClick} style={noiseInfinity.feedback ? onStyle : offStyle}>
           {noiseInfinity.feedback ? '🚀' : '✋'}
           <br></br>Feedback
         </button>
-        <button value="skronk" onClick={handleInfinityClick}>
+        <button value="skronk" onClick={handleInfinityClick} style={noiseInfinity.skronk ? onStyle : offStyle}>
           {noiseInfinity.skronk ? '🚀' : '✋'}
           <br></br>Skronk
         </button>
-        <button value="oscillators" onClick={handleInfinityClick}>
+        <button
+          value="oscillators"
+          onClick={handleInfinityClick}
+          style={noiseInfinity.oscillators ? onStyle : offStyle}
+        >
           {noiseInfinity.oscillators ? '🚀' : '✋'}
           <br></br>Oscillators
         </button>
-        <button value="ambientNoise" onClick={handleInfinityClick}>
+        <button
+          value="ambientNoise"
+          onClick={handleInfinityClick}
+          style={noiseInfinity.ambientNoise ? onStyle : offStyle}
+        >
           {noiseInfinity.ambientNoise ? '🚀' : '✋'}
           <br></br>Ambient Noise
         </button>

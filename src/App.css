@@ -9,6 +9,7 @@
 }
 
 body {
+  background-color: #9d8df1;
   background: linear-gradient(to bottom right, #41463d 9%, #787375 100%);
   min-height: 100vh;
   color: snow;

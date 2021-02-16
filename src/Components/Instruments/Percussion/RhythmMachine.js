@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { Context } from '../../../App';
+import PercussionPresets from './PercussionPresets';
 import RhythmMachineDrumSelect from './RhythmMachineDrumSelect';
 import '../../../Styles/Components/DrumMachine.css';
 
@@ -7,11 +8,8 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
   const currentBeat = useContext(Context).globalBeat;
   const bpm = useContext(Context).bpm;
   const setBpm = useContext(Context).setBpm;
-  const socketId = useContext(Context).socketId;
   const timeSignature = useContext(Context).timeSignature;
   const setTimeSignature = useContext(Context).setTimeSignature;
-  const drumMachinePlaying = useContext(Context).drumMachinePlaying;
-  const setDrumMachinePlaying = useContext(Context).setDrumMachinePlaying;
   const setFullLengthChordProgression = useContext(Context).setFullLengthChordProgression;
   const loopData = useContext(Context).loopData;
   const loopObject = useContext(Context).loopObject;
@@ -164,43 +162,28 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
     }
   }, [timeSignature, tsChanged, loopObject, setLoopData]);
 
-  const handleStartClick = () => {
-    if (drumMachinePlaying) {
-      setDrumMachinePlaying(false);
-      setFinalData({
-        type: 'percussion',
-        drum: 'rhythmMachine',
-        loop: loopData,
-        socketId: socketId,
-        timeSignature: timeSignature,
-        bpm: bpm,
-        status: 'stop'
-      });
-    } else {
-      setDrumMachinePlaying(true);
-      setFinalData({
-        type: 'percussion',
-        drum: 'rhythmMachine',
-        loop: loopData,
-        socketId: socketId,
-        timeSignature: timeSignature,
-        bpm: bpm,
-        status: 'start'
-      });
-    }
+  const handlePreset = (e) => {
+    setLoopData(PercussionPresets(e.target.value));
   };
+
+  useEffect(() => {
+    console.log(loopData);
+  }, [loopData]);
 
   return (
     <div>
       <div className="drum-machine">{buttColumns}</div>
-      <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '18px' }}>
+        <select onChange={handlePreset} defaultValue="dis">
+          <option hidden disabled value="dis">
+            🥁presets🥁
+          </option>
+          <option value="drum circle">Drum Circle</option>
+          <option value="rock">Rock</option>
+          <option value="gamelan">Gamelan</option>
+          <option value="junk">Junk</option>
+        </select>
         <button onClick={clear}>Clear</button>
-        <button
-          onClick={handleStartClick}
-          style={drumMachinePlaying ? { backgroundColor: 'red' } : { backgroundColor: '#6249e9' }}
-        >
-          {drumMachinePlaying ? 'Stop' : 'Start'}
-        </button>
         <select name="time-sig-select" onChange={timeSignatureChange} defaultValue={timeSignature}>
           <option value="3">3/4</option>
           <option value="4">4/4</option>

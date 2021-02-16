@@ -20,7 +20,7 @@ export default function RhythmMachineDrumSelect({ number }) {
   };
   return (
     <div className="drum-rate-input">
-      <select defaultValue={loopData[number].drum.drum} onChange={handleChange} data-number={number}>
+      <select value={loopData[number].drum.drum} onChange={handleChange} data-number={number}>
         {percussionTypes.map((type) => {
           return <option key={type}>{type}</option>;
         })}
@@ -31,7 +31,7 @@ export default function RhythmMachineDrumSelect({ number }) {
         min="0.1"
         max="3"
         step="0.01"
-        defaultValue={loopData[number].drum.sampleRate}
+        value={loopData[number].drum.sampleRate}
       />
     </div>
   );
