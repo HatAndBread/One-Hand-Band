@@ -91,7 +91,7 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
                 onClick={handleClick}
                 style={
                   loopData.one.times[i - 1]
-                    ? { backgroundColor: '#6249e9', display: 'flex' }
+                    ? { backgroundColor: '#9d8df1', display: 'flex' }
                     : { backgroundColor: 'gray', display: 'flex' }
                 }
               ></div>
@@ -102,7 +102,7 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
                 data-beat={i - 1}
                 data-number={'two'}
                 onClick={handleClick}
-                style={loopData.two.times[i - 1] ? { backgroundColor: '#6249e9' } : { backgroundColor: 'gray' }}
+                style={loopData.two.times[i - 1] ? { backgroundColor: '#9d8df1' } : { backgroundColor: 'gray' }}
               ></div>
               <div
                 id="drum-three-machine"
@@ -111,7 +111,7 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
                 data-beat={i - 1}
                 data-number={'three'}
                 onClick={handleClick}
-                style={loopData.three.times[i - 1] ? { backgroundColor: '#6249e9' } : { backgroundColor: 'gray' }}
+                style={loopData.three.times[i - 1] ? { backgroundColor: '#9d8df1' } : { backgroundColor: 'gray' }}
               ></div>
               <div
                 id="drum-four-machine"
@@ -120,7 +120,7 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
                 data-beat={i - 1}
                 data-number={'four'}
                 onClick={handleClick}
-                style={loopData.four.times[i - 1] ? { backgroundColor: '#6249e9' } : { backgroundColor: 'gray' }}
+                style={loopData.four.times[i - 1] ? { backgroundColor: '#9d8df1' } : { backgroundColor: 'gray' }}
               ></div>
               <div
                 id="drum-five-machine"
@@ -129,7 +129,7 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
                 data-beat={i - 1}
                 data-number={'five'}
                 onClick={handleClick}
-                style={loopData.five.times[i - 1] ? { backgroundColor: '#6249e9' } : { backgroundColor: 'gray' }}
+                style={loopData.five.times[i - 1] ? { backgroundColor: '#9d8df1' } : { backgroundColor: 'gray' }}
               ></div>
               <div
                 id="drum-six-machine"
@@ -138,7 +138,7 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
                 data-beat={i - 1}
                 data-number={'six'}
                 onClick={handleClick}
-                style={loopData.six.times[i - 1] ? { backgroundColor: '#6249e9' } : { backgroundColor: 'gray' }}
+                style={loopData.six.times[i - 1] ? { backgroundColor: '#9d8df1' } : { backgroundColor: 'gray' }}
               ></div>
             </div>
           );
