@@ -43,6 +43,7 @@ export default function Home() {
             info={`Have friends? Click "Host a room" and share the generated pin number with up to four of your friends. You should be able to hear the noise that your friends are making from anywhere in the world with only a slight delay.`}
             emoji={'👯‍♀️'}
           />
+          <Card title={'Installation'} info={''} install={true} emoji={'📱'} />
         </div>
       </div>
       <footer>
