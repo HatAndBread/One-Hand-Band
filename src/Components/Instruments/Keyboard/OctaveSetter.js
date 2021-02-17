@@ -3,7 +3,7 @@ import { Context } from '../../../App';
 import '../../../Styles/Components/Keyboard.css';
 import SettingsWaves from '../../Settings/SettingsWaves';
 
-const onStyle = { backgroundColor: '#9d8df1', borderRadius: '0px' };
+const onStyle = { backgroundColor: '#6249e9', borderRadius: '0px' };
 const offStyle = { backgroundColor: 'gray', borderRadius: '0px' };
 
 export default function OctaveSetter({ setPointerDown, setOctave }) {

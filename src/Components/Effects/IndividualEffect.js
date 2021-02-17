@@ -4,7 +4,7 @@ import handleEffects from '../../MusicLogic/handleEffects';
 import '../../Styles/Components/Effects.css';
 
 const onStyle = {
-  backgroundColor: '#9d8df1',
+  backgroundColor: '#6249e9',
   color: 'snow'
 };
 const offStyle = {

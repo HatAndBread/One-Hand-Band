@@ -25,7 +25,7 @@
 
 .closer:hover {
   font-size: 17px;
-  color: #9d8df1;
+  color: #6249e9;
 }
 
 .divider {
@@ -33,7 +33,7 @@
   height: 1px;
   border-radius: 50%;
   margin: 8px 0px 8px 0px;
-  background-color: #9d8df1;
+  background-color: #6249e9;
 }
 
 @media only screen and (min-width: 300px) {

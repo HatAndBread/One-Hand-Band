@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const onStyle = { padding: '0', backgroundColor: '#9d8df1', borderRadius: '0px' };
+const onStyle = { padding: '0', backgroundColor: '#6249e9', borderRadius: '0px' };
 const offStyle = { padding: '0', backgroundColor: '#41463d', borderRadius: '0px' };
 
 export default function ChordButton({ note, chord, setChord, setChordChange }) {

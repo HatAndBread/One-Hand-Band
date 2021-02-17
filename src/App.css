@@ -9,7 +9,7 @@
 }
 
 body {
-  background: linear-gradient(to bottom right, #41463d 9%, #787375 100%);
+  background-color: #9d8df1;
   min-height: 100vh;
   color: snow;
 }
@@ -24,9 +24,6 @@ button {
   color: snow;
   border-radius: 6px;
   transition: 0.3s;
-}
-button:hover {
-  background-color: #9d8df1;
 }
 
 .link-btn {
