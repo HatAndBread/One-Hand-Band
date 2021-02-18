@@ -70,7 +70,7 @@ export default function Home() {
             <FontAwesomeIcon icon={faPaypal} />
           </a>
         </div>
-        Enjoy Hootenanny? Buy me a <a href="https://www.paypal.com/paypalme/hatandbread">beer 🍺</a> or
+        Enjoy One Hand Band? Buy me a <a href="https://www.paypal.com/paypalme/hatandbread">beer 🍺</a> or
         <a href="https://github.com/HatAndBread"> give me a job.</a>
       </footer>
     </div>
