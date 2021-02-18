@@ -33,6 +33,7 @@ function App() {
   }, [instrumentsLoaded]);
   const [soundSet, SetSoundSet] = useState(null);
   const [sessionPin, setSessionPin] = useState(null);
+  const [openedFromLanding, setOpenedFromLanding] = useState(false);
   const [socketId, setSocketId] = useState(null);
   const [userName, setUserName] = useState(null);
   const [musicData, setMusicData] = useState(null);
@@ -320,6 +321,8 @@ function App() {
         setSocketId,
         setUserName,
         setAll,
+        openedFromLanding,
+        setOpenedFromLanding,
         musicData,
         setMusicData,
         myInstrument,

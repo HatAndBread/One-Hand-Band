@@ -9,6 +9,7 @@ import Card from '../Components/Home/Card';
 
 export default function Home() {
   const loggedIn = useContext(Context).sessionPin;
+  const setOpenedFromLanding = useContext(Context).setOpenedFromLanding;
   return (
     <div>
       <div className="home-container">
@@ -20,12 +21,26 @@ export default function Home() {
           <Link to="/join" className="home-btn">
             Join a room
           </Link>
-          <Link to="/instrument/keyboard" className="home-btn">
-            {loggedIn ? 'Instrument' : 'Play solo'}
+          <Link
+            to="/instrument/keyboard"
+            className="home-btn"
+            onClick={() => {
+              setOpenedFromLanding(true);
+            }}
+          >
+            {loggedIn ? 'Instruments' : 'Play solo'}
           </Link>
         </div>
       </div>
       <div className="home-content">
+        <iframe
+          width="300"
+          src="https://www.youtube.com/embed/XWfBwchcjDM"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          title="video"
+          allowFullScreen
+        ></iframe>
         <h2>How It Works</h2>
         <div className="cards-container">
           <Card

@@ -41,14 +41,12 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
 
   const timeSignatureChange = (e) => {
     setTimeSignature(e.target.value);
-    console.log(timeSignature);
     setFullLengthChordProgression([]);
     setTsChanged(true);
   };
 
   const bpmChange = (e) => {
     setBpm(e.target.value);
-    console.log(bpm);
   };
 
   useEffect(() => {
@@ -165,10 +163,6 @@ export default function RhythmMachine({ percussionData, setFinalData }) {
   const handlePreset = (e) => {
     setLoopData(PercussionPresets(e.target.value));
   };
-
-  useEffect(() => {
-    console.log(loopData);
-  }, [loopData]);
 
   return (
     <div>

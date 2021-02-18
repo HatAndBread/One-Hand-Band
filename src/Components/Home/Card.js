@@ -7,25 +7,30 @@ export default function Card({ title, info, emoji, install }) {
     <div className="card">
       <h2>{title}</h2>
       <div className="emoji">{emoji}</div>
-      <p>
-        {info}
-        {install && (
+
+      <p>{info}</p>
+      {install && (
+        <div
+          style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' }}
+        >
+          It is possible to install One Hand Band on the home screen of your mobile device without using an app store.
+          It's free! <br></br>
           <div
             style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' }}
           >
-            <h5>In Safari on iOS</h5>
+            <br></br>
             <div>
-              ① <img src={iosSource} alt="ios  button" style={{ borderRadius: '8px' }} width="40px" /> <br></br>{' '}
+              ①
+              <img src={iosSource} alt="ios  button" style={{ borderRadius: '8px' }} width="40px" /> on iOS or
+              <img src={androidSource} alt="ios  button" style={{ borderRadius: '8px' }} />
+              on Android.
             </div>
-            ② "Add to Home Screen"
-            <h5>In Chrome on Android</h5>
             <div>
-              ① <img src={androidSource} alt="ios  button" style={{ borderRadius: '8px' }} />
+              <br></br>② "Add to Home Screen"
             </div>
-            ② "Add to Home Screen"
           </div>
-        )}
-      </p>
+        </div>
+      )}
     </div>
   );
 }

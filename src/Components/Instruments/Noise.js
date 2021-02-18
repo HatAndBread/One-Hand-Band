@@ -76,7 +76,6 @@ export default function Noise({ setFinalData }) {
 
   const handleInfinityClick = (e) => {
     const copy = { ...noiseInfinity };
-    console.log(e.target.value, copy);
     if (copy[e.target.value]) {
       copy[e.target.value] = false;
     } else {

@@ -34,9 +34,10 @@ select {
 .hit-pad {
   height: 100%;
   width: 100%;
-  background-color: #6249e9;
+  background-color: #9d8df1;
   border-radius: 8px;
   transition: 0.2s;
+  touch-action: none;
 }
 
 @media (orientation: portrait) {
