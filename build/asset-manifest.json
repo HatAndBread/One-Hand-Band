@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/static/css/main.8d896077.chunk.css",
-    "main.js": "/static/js/main.474797e1.chunk.js",
-    "main.js.map": "/static/js/main.474797e1.chunk.js.map",
+    "main.js": "/static/js/main.2f22081f.chunk.js",
+    "main.js.map": "/static/js/main.2f22081f.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.14cffa66.js",
     "runtime-main.js.map": "/static/js/runtime-main.14cffa66.js.map",
     "static/js/2.9c5d68d0.chunk.js": "/static/js/2.9c5d68d0.chunk.js",
@@ -15,6 +15,7 @@
     "static/media/aluminium.351bcc91.mp3": "/static/media/aluminium.351bcc91.mp3",
     "static/media/amradionoise.27361837.mp3": "/static/media/amradionoise.27361837.mp3",
     "static/media/analoguewhitenoise.c3b9cf21.mp3": "/static/media/analoguewhitenoise.c3b9cf21.mp3",
+    "static/media/atmosphere.4d705bcd.mp3": "/static/media/atmosphere.4d705bcd.mp3",
     "static/media/bowl.9573baa5.mp3": "/static/media/bowl.9573baa5.mp3",
     "static/media/bugara1.ec45a24a.mp3": "/static/media/bugara1.ec45a24a.mp3",
     "static/media/bugara2.1c293c67.mp3": "/static/media/bugara2.1c293c67.mp3",
@@ -33,11 +34,15 @@
     "static/media/gamelan3.4c1888be.mp3": "/static/media/gamelan3.4c1888be.mp3",
     "static/media/glitch.a68389f0.mp3": "/static/media/glitch.a68389f0.mp3",
     "static/media/guitarfeedback.85a16f4a.mp3": "/static/media/guitarfeedback.85a16f4a.mp3",
+    "static/media/guitarnoise.5605fe7b.mp3": "/static/media/guitarnoise.5605fe7b.mp3",
     "static/media/guitarnoise1.c8696756.mp3": "/static/media/guitarnoise1.c8696756.mp3",
     "static/media/guitarnoise2.4568c6af.mp3": "/static/media/guitarnoise2.4568c6af.mp3",
     "static/media/guitarnoise3.acf451d7.mp3": "/static/media/guitarnoise3.acf451d7.mp3",
     "static/media/guitarnoise4.e744d313.mp3": "/static/media/guitarnoise4.e744d313.mp3",
+    "static/media/guitarnoise5.a7153bd3.mp3": "/static/media/guitarnoise5.a7153bd3.mp3",
+    "static/media/guitarsmash.1bb0f5ce.mp3": "/static/media/guitarsmash.1bb0f5ce.mp3",
     "static/media/harmonium.04562397.mp3": "/static/media/harmonium.04562397.mp3",
+    "static/media/harsh.b9436594.mp3": "/static/media/harsh.b9436594.mp3",
     "static/media/hat.f19fe675.mp3": "/static/media/hat.f19fe675.mp3",
     "static/media/heavystatic.51911ee8.mp3": "/static/media/heavystatic.51911ee8.mp3",
     "static/media/hero copy.f4058936.jpg": "/static/media/hero copy.f4058936.jpg",
@@ -56,6 +61,7 @@
     "static/media/oud.15a74423.mp3": "/static/media/oud.15a74423.mp3",
     "static/media/piano.7f2a6831.mp3": "/static/media/piano.7f2a6831.mp3",
     "static/media/radioBuzz.9070eb0d.mp3": "/static/media/radioBuzz.9070eb0d.mp3",
+    "static/media/radiostatic.fb55c7bd.mp3": "/static/media/radiostatic.fb55c7bd.mp3",
     "static/media/rebana.14364c0f.mp3": "/static/media/rebana.14364c0f.mp3",
     "static/media/recordPlayerGlitch.4ff862d2.mp3": "/static/media/recordPlayerGlitch.4ff862d2.mp3",
     "static/media/ride.e7d62cef.mp3": "/static/media/ride.e7d62cef.mp3",
@@ -91,13 +97,15 @@
     "static/media/trumpethiss.9bad6c5a.mp3": "/static/media/trumpethiss.9bad6c5a.mp3",
     "static/media/tuned-ruler.5638b114.mp3": "/static/media/tuned-ruler.5638b114.mp3",
     "static/media/tuned-spring.5cd45f7b.mp3": "/static/media/tuned-spring.5cd45f7b.mp3",
+    "static/media/underwater.9bc6c99a.mp3": "/static/media/underwater.9bc6c99a.mp3",
     "static/media/violin.0843f254.mp3": "/static/media/violin.0843f254.mp3",
+    "static/media/violinnoise.7d231106.mp3": "/static/media/violinnoise.7d231106.mp3",
     "static/media/voice.41c838cd.mp3": "/static/media/voice.41c838cd.mp3"
   },
   "entrypoints": [
     "static/js/runtime-main.14cffa66.js",
     "static/js/2.9c5d68d0.chunk.js",
     "static/css/main.8d896077.chunk.css",
-    "static/js/main.474797e1.chunk.js"
+    "static/js/main.2f22081f.chunk.js"
   ]
 }

@@ -9,6 +9,7 @@ import guitarNoise1 from '../assets/guitarnoise1.mp3';
 import guitarNoise2 from '../assets/guitarnoise2.mp3';
 import guitarNoise3 from '../assets/guitarnoise3.mp3';
 import guitarNoise4 from '../assets/guitarnoise4.mp3';
+import guitarNoise5 from '../assets/guitarnoise5.mp3';
 import heavyStatic from '../assets/heavystatic.mp3';
 import micFeedback from '../assets/micfeedback.mp3';
 import radioBuzz from '../assets/radioBuzz.mp3';
@@ -31,7 +32,14 @@ import saxSkronk13 from '../assets/saxSkronk13.mp3';
 import saxSkronk14 from '../assets/saxSkronk14.mp3';
 import aluminium from '../assets/aluminium.mp3';
 import spaceDrone from '../assets/spaceDrone.mp3';
+import atmosphere from '../assets/atmosphere.mp3';
+import violinNoise from '../assets/violinnoise.mp3';
+import radioStatic from '../assets/radiostatic.mp3';
 import glitch from '../assets/glitch.mp3';
+import harsh from '../assets/harsh.mp3';
+import guitarSmash from '../assets/guitarsmash.mp3';
+import guitarNoise from '../assets/guitarnoise.mp3';
+import underWater from '../assets/underwater.mp3';
 import { setLoaded } from '../App';
 
 class Noise extends Instrument {
@@ -70,22 +78,29 @@ class Noise extends Instrument {
         'aluminium',
         'amRadioNoise',
         'analogueWhiteNoise',
+        'atmosphere',
         'digitalNoise',
         'heavyStatic',
         'radioBuzz',
         'recordPlayerGlitch',
         'spaceDrone',
         'trumpetHiss',
-        'glitch'
+        'radioStatic',
+        'glitch',
+        'harsh',
+        'underWater'
       ],
       feedback: [
         'feedback',
         'guitarFeedback',
+        'guitarNoise',
         'guitarNoise1',
         'guitarNoise2',
         'guitarNoise3',
         'guitarNoise4',
-        'micFeedback'
+        'guitarNoise5',
+        'micFeedback',
+        'guitarSmash'
       ],
       skronk: [
         'saxSqueek',
@@ -95,7 +110,8 @@ class Noise extends Instrument {
         'saxSkronk4',
         'saxSkronk5',
         'saxSkronk6',
-        'saxSkronk7'
+        'saxSkronk7',
+        'violinNoise'
       ],
       oscillators: ['oscillators']
     };
@@ -203,14 +219,20 @@ const sampleUrls = {
   analogueWhiteNoise: analogueWhiteNoise,
   digitalNoise: digitalNoise,
   feedback: feedback,
+  atmosphere: atmosphere,
   guitarFeedback: guitarFeedback,
+  guitarNoise: guitarNoise,
   guitarNoise1: guitarNoise1,
   guitarNoise2: guitarNoise2,
   guitarNoise3: guitarNoise3,
   guitarNoise4: guitarNoise4,
+  guitarNoise5: guitarNoise5,
+  guitarSmash: guitarSmash,
   heavyStatic: heavyStatic,
   micFeedback: micFeedback,
+  harsh: harsh,
   radioBuzz: radioBuzz,
+  radioStatic: radioStatic,
   recordPlayerGlitch: recordPlayerGlitch,
   saxSqueek: saxSqueek,
   trumpetHiss: trumpetHiss,
@@ -229,6 +251,8 @@ const sampleUrls = {
   saxSkronk13: saxSkronk13,
   saxSkronk14: saxSkronk14,
   aluminium: aluminium,
+  violinNoise: violinNoise,
   spaceDrone: spaceDrone,
+  underWater: underWater,
   glitch
 };
