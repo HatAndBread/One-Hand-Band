@@ -9,6 +9,7 @@
   height: 100vh;
   background-image: linear-gradient(180deg, rgba(22, 0, 13, 0.5), rgba(11, 0, 21, 0.2)), url('../../assets/hero.jpg');
   background-size: contain;
+  background-position-x: center;
 }
 
 h1 {
@@ -117,5 +118,8 @@ footer .link-icons {
 @media (orientation: portrait) {
   h1 {
     font-size: 15vw;
+  }
+  .home-container {
+    background-size: cover;
   }
 }

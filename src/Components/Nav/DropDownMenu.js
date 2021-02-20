@@ -17,21 +17,24 @@ export default function DropDownMenu({ sessionPin, userName }) {
   };
 
   return (
-    <div ref={menu} className="dropdown-menu" onClick={closeMenu}>
-      <h3>Session pin: {sessionPin ? sessionPin : 'Not joined'}</h3>
-      <h3>Your username: {userName ? userName : 'None'}</h3>
-      <h3>Current band members: </h3>
-      <ol>
-        {users &&
-          users.users &&
-          users.users.map((user) => {
-            return (
-              <li key={user.userName}>
-                {user.userName}: {user.instrument}
-              </li>
-            );
-          })}
-      </ol>
+    <div>
+      <div ref={menu} className="dropdown-menu" onClick={closeMenu}>
+        <div className="dropdown-closer">X</div>
+        <h3>Session pin: {sessionPin ? sessionPin : 'Not joined'}</h3>
+        <h3>Your username: {userName ? userName : 'None'}</h3>
+        <h3>Current band members: </h3>
+        <ol>
+          {users &&
+            users.users &&
+            users.users.map((user) => {
+              return (
+                <li key={user.userName}>
+                  {user.userName}: {user.instrument}
+                </li>
+              );
+            })}
+        </ol>
+      </div>
     </div>
   );
 }
