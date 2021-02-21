@@ -61,9 +61,9 @@ function App() {
   });
   const [globalBeat, setGlobalBeat] = useState(null);
   const [droneData, setDroneData] = useState({
-    one: { wave: 'sine', volume: '-4', pitch: 'C3', playing: false },
-    two: { wave: 'sine', volume: '-4', pitch: 'C3', playing: false },
-    three: { wave: 'sine', volume: '-4', pitch: 'C3', playing: false }
+    one: { wave: 'harmonium', volume: '-4', pitch: 'C3', playing: false },
+    two: { wave: 'tambura', volume: '-4', pitch: 'C3', playing: false },
+    three: { wave: 'voice', volume: '-4', pitch: 'C3', playing: false }
   });
   const [droneOctave, setDroneOctave] = useState(4);
   const [droneChord, setDroneChord] = useState(null);

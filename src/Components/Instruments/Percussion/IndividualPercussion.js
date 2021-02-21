@@ -1,4 +1,4 @@
-import { useState, useContext, useRef } from 'react';
+import { useState, useContext, useRef, useEffect } from 'react';
 import '../../../Styles/Components/Percussion.css';
 import { percussionTypes } from '../Percussion';
 import { Context } from '../../../App';
@@ -40,9 +40,14 @@ export default function IndividualPercussion({ defaultDrum, number, setFinalData
   const changeColorBack = () => {
     hitPad.current.style.backgroundColor = '#9d8df1';
   };
+  useEffect(() => {
+    if (percussionData[number].drum !== drum) {
+      setDrum(percussionData[number].drum);
+    }
+  }, [percussionData, number, drum]);
   return (
     <div className="individual-percussion-container">
-      <select onChange={drumChange} defaultValue={defaultDrum}>
+      <select value={percussionData[number].drum} onChange={drumChange}>
         {percussionTypes.map((type) => {
           return <option key={type}>{type}</option>;
         })}

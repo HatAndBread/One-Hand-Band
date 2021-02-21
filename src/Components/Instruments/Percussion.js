@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Context } from '../../App';
 import IndividualPercussion from './Percussion/IndividualPercussion';
 import RhythmMachine from './Percussion/RhythmMachine';
+import IndividualPercussionPresets from './Percussion/IndividualPercussionPresets';
 
 export const percussionTypes = [
   'snare',
@@ -31,6 +32,7 @@ Object.freeze(percussionTypes);
 export default function Percussion({ setFinalData }) {
   const percussionData = useContext(Context).percussionData;
   const setMyInstrument = useContext(Context).setMyInstrument;
+  const setPercussionData = useContext(Context).setPercussionData;
   const [rhythmMachineExposed, setRhythmMachineExposed] = useState(false);
   useEffect(() => {
     setMyInstrument('percussion');
@@ -41,6 +43,12 @@ export default function Percussion({ setFinalData }) {
   const rhythmMachineClick = () => {
     rhythmMachineExposed ? setRhythmMachineExposed(false) : setRhythmMachineExposed(true);
   };
+  const handlePreset = (e) => {
+    setPercussionData(IndividualPercussionPresets(e.target.value));
+  };
+  useEffect(() => {
+    console.log(percussionData);
+  }, [percussionData]);
   return (
     <div className="percussion-container">
       <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -93,6 +101,15 @@ export default function Percussion({ setFinalData }) {
           </div>
         </div>
       )}
+      <select onChange={handlePreset} defaultValue="dis" style={{ margin: '32px' }}>
+        <option hidden disabled value="dis">
+          🥁presets🥁
+        </option>
+        <option value="drum circle">Drum Circle</option>
+        <option value="rock">Rock</option>
+        <option value="gamelan">Gamelan</option>
+        <option value="junk">Junk</option>
+      </select>
     </div>
   );
 }
